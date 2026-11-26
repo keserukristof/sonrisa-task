@@ -1,0 +1,2 @@
+-- Demo data for local development and reviewers. Applied by `pnpm db:reset`.
+-- Keep it idempotent and realistic: reviewers see the app through this data.
