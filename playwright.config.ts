@@ -1,7 +1,17 @@
+import process from "node:process";
 import { defineConfig, devices } from "@playwright/test";
 
-// Each git worktree runs its own dev server; give it a distinct PORT to avoid collisions.
-const port = Number(process.env.PORT ?? 3000);
+// Parallel agents each work in their own git worktree and may run e2e at the same
+// time. A worktree derives a stable port from its path so their dev servers never collide.
+function defaultPort(): number {
+  const cwd = process.cwd();
+  if (!cwd.includes("/.claude/worktrees/")) return 3000;
+  let hash = 0;
+  for (const char of cwd) hash = (hash * 31 + char.charCodeAt(0)) % 800;
+  return 3100 + hash;
+}
+
+const port = Number(process.env.PORT ?? defaultPort());
 const baseURL = process.env.E2E_BASE_URL ?? `http://localhost:${port}`;
 
 export default defineConfig({

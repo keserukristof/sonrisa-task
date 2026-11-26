@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
       "Bash(pnpm install*)",
       "Bash(pnpm add *)",
@@ -32,7 +31,6 @@
       "Bash(pnpm exec supabase migration new *)",
       "Bash(pnpm exec supabase migration list*)",
       "Bash(pnpm dlx shadcn@latest add *)",
-      "Bash(PORT=* pnpm e2e*)",
       "Bash(git status*)",
       "Bash(git diff*)",
       "Bash(git log*)",
@@ -65,14 +63,6 @@
       "mcp__playwright",
       "mcp__context7"
     ],
-    "ask": [
-      "Bash(git push*)",
-      "Bash(gh pr merge*)",
-      "Bash(pnpm exec supabase link*)",
-      "Bash(pnpm exec supabase db push*)",
-      "Bash(vercel *)",
-      "Bash(pnpm dlx vercel *)"
-    ],
     "deny": [
       "Bash(git push --force*)",
       "Bash(git push -f*)",
@@ -88,14 +78,16 @@
       "Edit(.env.*.local)",
       "Edit(/src/lib/supabase/database.types.ts)",
       "Edit(/pnpm-lock.yaml)"
-    ]
-  },
-  "worktree": {
-    "baseRef": "head"
-  },
-  "enabledPlugins": {
-    "mattpocock-skills@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true
+    ],
+    "ask": [
+      "Bash(git push*)",
+      "Bash(gh pr merge*)",
+      "Bash(pnpm exec supabase link*)",
+      "Bash(pnpm exec supabase db push*)",
+      "Bash(vercel *)",
+      "Bash(pnpm dlx vercel *)"
+    ],
+    "defaultMode": "acceptEdits"
   },
   "enabledMcpjsonServers": [
     "next-devtools",
@@ -139,5 +131,12 @@
         ]
       }
     ]
+  },
+  "worktree": {
+    "baseRef": "head"
+  },
+  "enabledPlugins": {
+    "mattpocock-skills@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true
   }
 }

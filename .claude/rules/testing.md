@@ -10,7 +10,7 @@ paths:
 
 # Testing rules
 
-Tests verify behaviour through public interfaces at the seams the spec agreed. They are written test-first with the `tdd` skill.
+Tests verify behaviour through public interfaces at the seams the spec agreed. They are written test-first with the `mattpocock-skills:tdd` skill.
 
 ## Which test for what
 
@@ -36,7 +36,7 @@ Tests verify behaviour through public interfaces at the seams the spec agreed. T
 - Locate by role, label and text. No CSS selectors, no test ids unless nothing else is stable.
 - Each test sets up what it needs and does not depend on another test's leftovers.
 - Each user-facing page gets an axe scan (see `e2e/smoke.spec.ts`).
-- In a worktree, run with its own port: `PORT=31xx pnpm e2e`.
+- Inside a git worktree `playwright.config.ts` derives its own dev-server port from the worktree path, so parallel agents never share one.
 
 ## Integrity
 

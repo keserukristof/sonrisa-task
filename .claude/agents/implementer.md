@@ -16,11 +16,11 @@ You implement one ticket from the project's issue tracker, test-first, inside yo
 
 ## Build
 
-- Call the Skill tool with `tdd` and work in red, green cycles at the seams the ticket names.
+- Call the Skill tool with `mattpocock-skills:tdd` and work in red, green cycles at the seams the ticket names.
 - Follow `CLAUDE.md` and the rules in `.claude/rules/`. Read the bundled Next.js docs in `node_modules/next/dist/docs/` before using an API you have not used in this session.
 - Build the screens as designed in `docs/design/`, including the loading, empty and error states.
 - Run a single test file while iterating, and `pnpm typecheck` regularly.
-- For end-to-end tests use your own port so you do not collide with other worktrees: `PORT=$((3100 + <ticket number>)) pnpm e2e e2e/<feature>.spec.ts`.
+- Run end-to-end tests for your feature with `pnpm e2e e2e/<feature>.spec.ts`. Inside a worktree the Playwright config picks a port of its own, so you do not collide with other implementers.
 
 ## Boundaries
 

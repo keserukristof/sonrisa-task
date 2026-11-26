@@ -62,6 +62,7 @@ Phases 1 and 3 run in the main session, so the user switches the session model f
 - The spec splits scope into **Must / Should / Could**. Build Must first; scope freezes four hours before the deadline.
 - **Ticket 1 is always "Contracts" and blocks every other ticket.** See `/contracts` for why.
 - A small change (one feature folder, no schema change) skips phases 1 to 4: implement it directly with `/tdd`. The gates still apply.
+- `/design`, `/contracts` and `/ship` are project skills in `.claude/skills/`. Every other command in the table comes from the `mattpocock-skills` plugin and is namespaced: `/mattpocock-skills:to-spec`, and `mattpocock-skills:tdd` when calling the Skill tool. Use the plugin's `code-review`, not the built-in one of the same name.
 - After each phase, add one line to `docs/ai-workflow.md` saying what was used and what it produced.
 
 ## Agent routing

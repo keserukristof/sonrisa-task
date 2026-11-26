@@ -1,7 +1,6 @@
 ---
 name: contracts
 description: Contracts phase. Lands everything parallel implementers share (database schema with RLS, generated types, Zod schemas, route skeletons, dependencies, UI primitives, design tokens) in one serial pass, so the remaining tickets can run in parallel worktrees without conflicts. Run for ticket 1, after /to-tickets and before /implement-spec.
-disable-model-invocation: true
 argument-hint: "[contracts ticket number]"
 ---
 

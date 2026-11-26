@@ -1,7 +1,6 @@
 ---
 name: design
 description: Design phase. Turns the spec into an approved design system and screen designs as Claude Design artifacts, then exports them into docs/design/ so implementers can build from files. Run after /to-spec and before /to-tickets or /contracts.
-disable-model-invocation: true
 argument-hint: "[spec issue number or path]"
 ---
 
@@ -21,7 +20,7 @@ Show the list to the user and confirm it before designing.
 
 ## 2. Choose the look and feel
 
-Call the Skill tool with `frontend-design` for aesthetic direction.
+Call the Skill tool with `frontend-design:frontend-design` for aesthetic direction.
 
 Propose two or three directions in words. For each: the mood in one sentence, the palette, the typeface pairing, density, and corner and shadow character. Tie each to the product's audience. Recommend one and ask the user to choose. Do not start building until they have.
 
