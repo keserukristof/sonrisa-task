@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "next-devtools": {
+      "command": "pnpm",
+      "args": ["exec", "next-devtools-mcp"]
+    },
+    "shadcn": {
+      "command": "pnpm",
+      "args": ["exec", "shadcn", "mcp"]
+    },
+    "playwright": {
+      "command": "pnpm",
+      "args": ["dlx", "@playwright/mcp@latest", "--isolated", "--headless"]
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    }
+  }
+}

@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sonrisa Task
 
-## Getting Started
+A Next.js 16 and Supabase application.
 
-First, run the development server:
+> **Status:** starter only. The feature work begins when the task arrives; this file is rewritten for reviewers during the ship phase.
+
+- **Live:** _added after the first deployment_
+- **How it was built with AI:** [docs/ai-workflow.md](docs/ai-workflow.md)
+
+## Run it locally
+
+Prerequisites: Node.js 22 or newer, pnpm 11, and Docker running (for the local Supabase stack).
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm bootstrap   # starts local Supabase, applies migrations and seed data, writes .env.local
+pnpm dev         # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`pnpm bootstrap` downloads the Supabase images on its first run, which takes a few minutes.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command            | What it does                                             |
+| ------------------ | -------------------------------------------------------- |
+| `pnpm dev`         | Development server                                       |
+| `pnpm verify`      | Format check, lint, typecheck and unit tests             |
+| `pnpm verify:full` | `verify`, then production build and end-to-end tests     |
+| `pnpm test`        | Unit and component tests (Vitest)                        |
+| `pnpm e2e`         | End-to-end and accessibility tests (Playwright with axe) |
+| `pnpm db:reset`    | Rebuild the local database from migrations and seed data |
+| `pnpm db:types`    | Regenerate TypeScript types from the database schema     |
+| `pnpm db:test`     | Row Level Security tests (pgTAP)                         |
 
-## Learn More
+## Architecture
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/app/                 Routes: thin pages, layouts, route handlers
+src/features/<feature>/  One vertical slice per folder: queries, actions, schema, components, tests
+src/components/ui/       shadcn/ui primitives
+src/lib/                 Supabase clients, authentication, environment
+supabase/migrations/     Database schema, the source of truth
+e2e/                     Playwright specs
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Server Components read data and Server Actions change it; there is no separate API layer.
+- Row Level Security in Postgres is the authorization boundary.
+- Dependencies point one way: `app → features → lib`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The reasoning is in [docs/adr/0001-architecture-baseline.md](docs/adr/0001-architecture-baseline.md).
 
-## Deploy on Vercel
+## Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Next.js 16.4 (App Router, Cache Components), React 19, TypeScript, Tailwind CSS 4, shadcn/ui, Supabase (Postgres, Auth), Zod, Vitest, Playwright.
