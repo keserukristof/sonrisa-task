@@ -12,17 +12,17 @@ concurrency:
 permissions:
   contents: read
 
-env:
-  # Placeholder values so the build can validate and inline the public env.
-  # The e2e job overrides them with the credentials of its own local Supabase stack.
-  NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-placeholder
-
 jobs:
   verify:
     name: Format, lint, typecheck, unit tests, build
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      # Placeholders so the build can validate and inline the public env.
+      # Scoped to this job: process env outranks .env.local, so setting them
+      # workflow-wide would shadow the real credentials the e2e job writes.
+      NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-placeholder
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

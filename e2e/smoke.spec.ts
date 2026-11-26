@@ -26,11 +26,12 @@ test("home page has no detectable accessibility violations", async ({
 test("health endpoint reports the database clock", async ({ request }) => {
   const response = await request.get("/api/health");
 
-  expect(response.status()).toBe(200);
+  // Body first: when the probe is degraded, the failure message shows the reason.
   expect(await response.json()).toEqual({
     status: "ok",
     databaseTime: expect.any(String),
   });
+  expect(response.status()).toBe(200);
 });
 
 test("unknown routes show the not-found page", async ({ page }) => {
