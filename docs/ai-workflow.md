@@ -15,7 +15,7 @@ One page on the solutions actually used. It is filled in as the work happens; ro
 | Fable 5.2 / Opus 5.5 / Sonnet 5.5             | Architecture and orchestration / spec and review / parallel implementers                   |
 | `mattpocock-skills` plugin (third party, MIT) | Process spine: grilling, spec, tickets, parallel implementation, TDD, two-axis code review |
 | Project skills (`.claude/skills/`)            | `design`, `contracts`, `ship`: the phases the plugin does not cover                        |
-| Project agents (`.claude/agents/`)            | `implementer`, `reviewer`, `security-auditor`, `ux-reviewer`                               |
+| Project agents (`.claude/agents/`)            | `implementer`, `reviewer`, `security-auditor`, `ux-reviewer`, `nextjs-advisor`             |
 | Project rules (`.claude/rules/`)              | Next.js 16, Supabase, UI and testing conventions, loaded per file path                     |
 | Hooks (`.claude/hooks/`)                      | Format and lint on every edit; lint, typecheck and tests before an agent may finish        |
 | MCP servers                                   | next-devtools, context7, shadcn, Playwright, Supabase                                      |

@@ -76,6 +76,8 @@ When a skill asks for a sub-agent, use the project agent instead of a generic on
 | A security or RLS review             | `security-auditor` |
 | A UI, UX or accessibility review     | `ux-reviewer`      |
 
+One agent advises instead of building or reviewing: `nextjs-advisor` answers a Next.js 16 question from the bundled docs, read-only. The main session consults it before routing, rendering or caching decisions in the Contracts ticket, and when an implementer reports a framework error it could not resolve.
+
 ## Parallel work
 
 Implementers run in separate git worktrees against **one shared local database**. Parallel work stays safe only because the Contracts ticket lands everything shared first. Inside an implementation ticket, never:

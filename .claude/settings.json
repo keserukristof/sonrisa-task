@@ -87,7 +87,8 @@
       "Bash(pnpm exec supabase link*)",
       "Bash(pnpm exec supabase db push*)",
       "Bash(vercel *)",
-      "Bash(pnpm dlx vercel *)"
+      "Bash(pnpm dlx vercel *)",
+      "Bash(pnpm dlx vercel@latest *)"
     ],
     "defaultMode": "acceptEdits"
   },

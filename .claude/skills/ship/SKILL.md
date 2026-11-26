@@ -10,6 +10,8 @@ Reviewers get a live URL and a repo they can run in one command. Nothing here is
 
 **Every command that changes a cloud resource needs the user's explicit approval in this session, each time.** That covers `supabase db push --remote`, seeding the cloud database, and `vercel deploy --prod`. Show what will change, then ask.
 
+The cloud targets: Supabase project `lrnzhnrxjwfckwwmtajn` (organisation `ai-task`, eu-west-1) and Vercel project `sonrisa-task`.
+
 ## 1. Preconditions
 
 - The integration branch is merged to `main` and `main` is pushed.
@@ -29,7 +31,7 @@ Stop and report if any of these fails.
 ## 3. Application
 
 - Confirm the Vercel project has `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` for production. They are inlined at build time, so a change needs a new build.
-- With approval, deploy: `vercel deploy --prod`.
+- With approval, deploy: `pnpm dlx vercel@latest deploy --prod --yes`. The folder is linked to the Vercel project `sonrisa-task` (production URL https://sonrisa-task.vercel.app). The GitHub repository is not connected to Vercel, so pushing to `main` does not deploy by itself.
 
 ## 4. Verify production
 

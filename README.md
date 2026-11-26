@@ -4,7 +4,7 @@ A Next.js 16 and Supabase application.
 
 > **Status:** starter only. The feature work begins when the task arrives; this file is rewritten for reviewers during the ship phase.
 
-- **Live:** _added after the first deployment_
+- **Live:** https://sonrisa-task.vercel.app ([health check](https://sonrisa-task.vercel.app/api/health))
 - **How it was built with AI:** [docs/ai-workflow.md](docs/ai-workflow.md)
 
 ## Run it locally
