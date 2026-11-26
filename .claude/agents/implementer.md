@@ -20,7 +20,7 @@ You implement one ticket from the project's issue tracker, test-first, inside yo
 - Follow `CLAUDE.md` and the rules in `.claude/rules/`. Read the bundled Next.js docs in `node_modules/next/dist/docs/` before using an API you have not used in this session.
 - Build the screens as designed in `docs/design/`, including the loading, empty and error states.
 - Run a single test file while iterating, and `pnpm typecheck` regularly.
-- Run end-to-end tests for your feature with `pnpm e2e e2e/<feature>.spec.ts`. Inside a worktree the Playwright config picks a port of its own, so you do not collide with other implementers.
+- Run end-to-end tests for your feature with `pnpm e2e e2e/<feature>.spec.ts`. It builds the app and serves it on a port derived from your worktree path, so you do not collide with other implementers or with a running dev server.
 
 ## Boundaries
 

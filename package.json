@@ -14,7 +14,7 @@
     "test:watch": "vitest",
     "e2e": "playwright test",
     "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test",
-    "verify:full": "pnpm verify && pnpm build && pnpm e2e",
+    "verify:full": "pnpm verify && pnpm e2e",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
     "db:status": "supabase status",

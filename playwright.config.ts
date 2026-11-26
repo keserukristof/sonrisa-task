@@ -1,14 +1,16 @@
 import process from "node:process";
 import { defineConfig, devices } from "@playwright/test";
 
-// Parallel agents each work in their own git worktree and may run e2e at the same
-// time. A worktree derives a stable port from its path so their dev servers never collide.
+// End-to-end tests run on their own port, never the dev server's 3000, so they
+// cannot silently test whatever else is listening there. Parallel agents each
+// work in their own git worktree and may run e2e at the same time: a worktree
+// derives a stable port from its path so their servers never collide.
 function defaultPort(): number {
   const cwd = process.cwd();
-  if (!cwd.includes("/.claude/worktrees/")) return 3000;
+  if (!cwd.includes("/.claude/worktrees/")) return 3100;
   let hash = 0;
   for (const char of cwd) hash = (hash * 31 + char.charCodeAt(0)) % 800;
-  return 3100 + hash;
+  return 3101 + hash;
 }
 
 const port = Number(process.env.PORT ?? defaultPort());
@@ -29,12 +31,15 @@ export default defineConfig({
     { name: "mobile", use: { ...devices["Pixel 7"] } },
   ],
   // When E2E_BASE_URL points at a deployment, no local server is started.
+  // Otherwise the suite runs against a production build: it is what ships, it
+  // enforces the Cache Components prerender rules, and unlike `next dev` it can
+  // run while a dev server for the same checkout is open.
   webServer: process.env.E2E_BASE_URL
     ? undefined
     : {
-        command: `pnpm exec next dev --port ${port}`,
+        command: `pnpm exec next build && pnpm exec next start --port ${port}`,
         url: baseURL,
-        reuseExistingServer: !process.env.CI,
-        timeout: 120_000,
+        reuseExistingServer: false,
+        timeout: 180_000,
       },
 });

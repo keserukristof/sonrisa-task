@@ -17,7 +17,7 @@ pnpm bootstrap   # starts local Supabase, applies migrations and seed data, writ
 pnpm dev         # http://localhost:3000
 ```
 
-`pnpm bootstrap` downloads the Supabase images on its first run, which takes a few minutes.
+`pnpm bootstrap` downloads the Supabase images on its first run, which takes a few minutes. If Docker has little memory to spare, `pnpm bootstrap --lite` starts only the services the application uses (about 300 MB) and leaves out Supabase Studio.
 
 ## Scripts
 

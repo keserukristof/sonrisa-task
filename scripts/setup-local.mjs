@@ -1,12 +1,28 @@
 #!/usr/bin/env node
 // One-command local setup: starts the local Supabase stack (Docker required),
 // applies migrations and seed data, and writes .env.local from its credentials.
-// Usage: pnpm bootstrap
+// Usage: pnpm bootstrap          full stack, including Studio on :54323
+//        pnpm bootstrap --lite   only what the app needs, for machines where
+//                                Docker has little memory (about 300 MB)
 
 import { execFileSync } from "node:child_process";
 import { existsSync, writeFileSync } from "node:fs";
 
 const ENV_FILE = ".env.local";
+
+// Services the application does not call. Database, Auth, the REST API, the
+// gateway and the local mail catcher stay.
+const LITE_EXCLUDES = [
+  "studio",
+  "edge-runtime",
+  "logflare",
+  "vector",
+  "imgproxy",
+  "realtime",
+  "storage-api",
+  "postgres-meta",
+];
+const lite = process.argv.includes("--lite");
 
 function run(args, options = {}) {
   return execFileSync("pnpm", ["exec", "supabase", ...args], {
@@ -30,7 +46,9 @@ try {
 }
 
 console.log("→ Starting local Supabase (the first run downloads images)…");
-run(["start"], { stdio: "inherit" });
+run(lite ? ["start", "-x", LITE_EXCLUDES.join(",")] : ["start"], {
+  stdio: "inherit",
+});
 
 console.log("→ Applying migrations and seed data…");
 run(["db", "reset"], { stdio: "inherit" });
