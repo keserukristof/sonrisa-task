@@ -30,7 +30,7 @@ Look up current syntax with the Supabase docs (context7 or the Supabase MCP `sea
 - Never edit a migration that is already on `main`; add a new one. The cloud database has already applied it.
 - After every migration: `pnpm db:reset`, then `pnpm db:types`, and commit the regenerated types together with the migration.
 - **Schema changes belong to the Contracts ticket.** Implementation tickets run in parallel against one shared local database and must not add migrations or reset it.
-- Agents never run `supabase db push`, `supabase link` or anything with `--linked`. The user approves cloud changes during `/ship`.
+- Agents never run `supabase link` or any database command with `--remote` or `--linked`. Those change the cloud project; the user approves them during `/ship`.
 
 ## Tables
 

@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Reviewers get a live URL and a repo they can run in one command. Nothing here is finished until it has been checked against the live deployment.
 
-**Every command that changes a cloud resource needs the user's explicit approval in this session, each time.** That covers `supabase db push`, seeding the cloud database, and `vercel deploy --prod`. Show what will change, then ask.
+**Every command that changes a cloud resource needs the user's explicit approval in this session, each time.** That covers `supabase db push --remote`, seeding the cloud database, and `vercel deploy --prod`. Show what will change, then ask.
 
 ## 1. Preconditions
 
@@ -20,9 +20,10 @@ Stop and report if any of these fails.
 
 ## 2. Database
 
-- Show the migrations the cloud project has not applied yet (`pnpm exec supabase migration list --linked`).
-- With approval, run `pnpm exec supabase db push`.
-- With approval, load the demo data reviewers need. Never run `db reset` against the linked project.
+- The repo is linked to the cloud project (`supabase link`). With CLI 3.x, database commands target the **local** stack unless you pass `--remote`.
+- Show the migrations the cloud project has not applied yet: `pnpm exec supabase db push --remote --dry-run`.
+- With approval, run `pnpm exec supabase db push --remote`, then confirm with `pnpm exec supabase migration list --remote` that local and remote match.
+- With approval, load the demo data reviewers need. Never run `db reset` with `--remote` or `--linked`.
 - Run the Supabase advisors (MCP `get_advisors`, security and performance) and fix or explain every finding.
 
 ## 3. Application
