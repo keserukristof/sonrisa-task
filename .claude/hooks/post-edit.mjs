@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // PostToolUse hook for Edit and Write.
-// Formats the file that was just changed and lints it, so style never reaches
-// review and lint errors are fixed while the change is still in context.
+// Formats the file that was just changed and reports lint errors, so style never
+// reaches review and real problems are fixed while the change is still in context.
+// Warnings (an import not used yet, mid-TDD) are left to the stop gate.
 // Exit code 2 sends stderr back to the agent as feedback.
 
 import { execFileSync } from "node:child_process";
@@ -85,7 +86,7 @@ if (FORMATTABLE.has(extension)) {
 
 if (LINTABLE.has(extension)) {
   try {
-    run(root, ["eslint", "--max-warnings", "0", filePath]);
+    run(root, ["eslint", "--quiet", filePath]);
   } catch (error) {
     const output = `${error.stdout ?? ""}${error.stderr ?? ""}`.trim();
     console.error(`ESLint reported problems in ${filePath}:\n${output}`);

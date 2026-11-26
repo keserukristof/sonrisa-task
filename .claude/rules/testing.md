@@ -35,6 +35,7 @@ Tests verify behaviour through public interfaces at the seams the spec agreed. T
 - One spec per feature covering the Must user stories on the happy path, plus the most important failure path.
 - Locate by role, label and text. No CSS selectors, no test ids unless nothing else is stable.
 - Each test sets up what it needs and does not depend on another test's leftovers.
+- **The local database is shared by every worktree running in parallel.** Create data with a unique name per test run (a timestamp or random suffix) and assert on that record. Never assert on a total count, on an empty list, or on anything another agent's test could change for the shared demo user.
 - Each user-facing page gets an axe scan (see `e2e/smoke.spec.ts`).
 - Inside a git worktree `playwright.config.ts` derives its own dev-server port from the worktree path, so parallel agents never share one.
 
