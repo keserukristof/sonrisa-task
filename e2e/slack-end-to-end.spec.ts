@@ -1,5 +1,11 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Browser, type Page } from "@playwright/test";
+import {
+  expect,
+  test,
+  type Browser,
+  type Locator,
+  type Page,
+} from "@playwright/test";
 import process from "node:process";
 import {
   setSlackAnswer,
@@ -88,6 +94,29 @@ async function simulateAndTick(
   return title;
 }
 
+/**
+ * Waits until the row shows `status`. Every test runs the tick, and the tick
+ * serves every account: a parallel test's tick may have claimed this test's
+ * notification (a 120-second lease) and still be sending it when this test
+ * looks. So the row is read again, after running the tick again, until it
+ * settles. A row that never settles still fails the test.
+ */
+async function expectSettled(
+  page: Page,
+  baseURL: string | undefined,
+  item: Locator,
+  status: string,
+): Promise<void> {
+  await expect(async () => {
+    await fetch(`${baseURL}/api/tick`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${process.env.TICK_SECRET}` },
+    });
+    await page.reload();
+    await expect(item).toContainText(status, { timeout: 2_000 });
+  }).toPass({ timeout: 30_000 });
+}
+
 test("a simulated event reaches Slack and history shows it as sent", async ({
   page,
   browser,
@@ -105,7 +134,7 @@ test("a simulated event reaches Slack and history shows it as sent", async ({
     .getByRole("listitem")
     .filter({ hasText: title })
     .filter({ hasText: `Slack · ${destination}` });
-  await expect(item).toContainText("Sent");
+  await expectSettled(page, baseURL, item, "Sent");
   await expect(item).toContainText("Simulated");
   expect(
     (await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze()).violations,
@@ -133,7 +162,7 @@ test("a gone channel fails the delivery and shows the destination as broken", as
     .getByRole("listitem")
     .filter({ hasText: `Slack · ${destination}` })
     .first();
-  await expect(item).toContainText("Failed");
+  await expectSettled(page, baseURL, item, "Failed");
   await expect(item).toContainText("The Slack channel no longer exists.");
   expect(await slackMessages(token)).toHaveLength(0);
 

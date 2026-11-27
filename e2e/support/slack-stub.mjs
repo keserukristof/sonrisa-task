@@ -33,7 +33,14 @@ function readBody(request) {
 }
 
 function send(response, status, body, headers = {}) {
-  response.writeHead(status, { "content-type": "text/plain", ...headers });
+  // No keep-alive: the app's fetch would otherwise reuse a socket the stub
+  // has just closed, and under parallel tests a send failed with a
+  // TypeError and was retried minutes later (#27).
+  response.writeHead(status, {
+    "content-type": "text/plain",
+    connection: "close",
+    ...headers,
+  });
   response.end(body);
 }
 
@@ -47,7 +54,10 @@ const server = createServer(async (request, response) => {
       return send(response, 200, "ok");
     }
     if (request.method === "GET" && kind === "__messages") {
-      response.writeHead(200, { "content-type": "application/json" });
+      response.writeHead(200, {
+        "content-type": "application/json",
+        connection: "close",
+      });
       return response.end(JSON.stringify(messages.get(token) ?? []));
     }
     if (request.method === "POST" && kind === "__answer") {
