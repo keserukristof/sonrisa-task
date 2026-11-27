@@ -4,11 +4,12 @@ Written 2026-11-27 16:45 at the end of the session that ran Refine, Design, Slic
 
 ## Before anything else
 
-**Check that the user has run `node scripts/local-env.mjs`.** Agents may not read or edit `.env.local`, so no agent can run it or look inside the file.
+**The setup script has run.** The user ran `node scripts/local-env.mjs` on 2026-11-27 at about 16:47. Checked right after: the local database's Vault holds both `tick_url` and `tick_secret`, and the scheduler's job is active with its last three runs succeeded.
 
-- **What it does:** adds `TICK_SECRET` and `APP_URL` to `.env.local`, and stores the local scheduler's URL and secret in the local database.
-- **Why first:** each implementer's worktree copies `.env.local` when it is created. A worktree made before the script ran has no tick secret, and the tick route (#9) and the end-to-end ticket (#14) fail in it.
-- **How to check without reading the file:** ask the user. Do not start implementers until they say it ran.
+- **What it did:** added `TICK_SECRET` and `APP_URL` to `.env.local`, and stored the local scheduler's URL and secret in the local database. Agents may not read or edit `.env.local`, so no agent can run it or look inside the file.
+- **Why it mattered first:** each implementer's worktree copies `.env.local` when it is created. A worktree made before the script ran would have no tick secret, and the tick route (#9) and the end-to-end ticket (#14) would fail in it.
+- **When it must run again:** after any database reset, which empties the Vault. Ask the user; do not run it.
+- **How to check without reading the file:** `select name from vault.secrets where name in ('tick_url', 'tick_secret')` in the local database returns two rows.
 
 ## Where things stand
 
@@ -45,7 +46,7 @@ Written 2026-11-27 16:45 at the end of the session that ran Refine, Design, Slic
 
 | #   | Step                            | How                                                                                                  | Model      |
 | --- | ------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------- |
-| 1   | Confirm the setup script ran    | Ask the user (see above)                                                                             |            |
+| 1   | Confirm the setup script ran    | Done: see above. Check the two Vault rows are still there                                            |            |
 | 2   | Confirm the testing arrangement | Ask the user (see the next section)                                                                  |            |
 | 3   | **Build** #7 to #13 in parallel | The user types `/mattpocock-skills:implement-spec #3`; one `implementer` per ticket, in its worktree | Sonnet 5.5 |
 | 4   | Merge the seven branches        | Into `increment-1`, with merge commits; check each report against its diff before merging            |            |
