@@ -1,22 +1,34 @@
-import { Suspense } from "react";
-import {
-  SystemStatus,
-  SystemStatusFallback,
-} from "@/features/health/system-status";
+import Link from "next/link";
+import { PageContainer } from "@/components/page-shell";
+import { Placeholder } from "@/components/placeholder";
+import { SiteHeader } from "@/components/site-header";
+import { buttonVariants } from "@/components/ui/button";
 
-export default function HomePage() {
+export default function LandingPage() {
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center gap-4 px-6 py-24">
-      <h1 className="font-heading text-3xl font-semibold tracking-tight">
-        Starter is running
-      </h1>
-      <p className="text-muted-foreground">
-        Next.js and Supabase are wired together. Replace this page with the
-        first feature.
-      </p>
-      <Suspense fallback={<SystemStatusFallback />}>
-        <SystemStatus />
-      </Suspense>
-    </main>
+    <>
+      <SiteHeader signIn signUp />
+      <PageContainer width="list" className="pt-12">
+        <h1 className="text-4xl font-bold tracking-tight">Heads-up</h1>
+        <p className="text-muted-foreground mt-4 text-base">
+          Heads-up emails you when an event in the world reaches the severity
+          you chose.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-2">
+          <Link href="/sign-up" className={buttonVariants({ size: "lg" })}>
+            Sign up
+          </Link>
+          <Link
+            href="/sign-in"
+            className={buttonVariants({ variant: "outline", size: "lg" })}
+          >
+            Sign in
+          </Link>
+        </div>
+        <div className="mt-6">
+          <Placeholder ticket={7} />
+        </div>
+      </PageContainer>
+    </>
   );
 }
