@@ -49,5 +49,62 @@ Slack incoming-webhook destinations with test and broken state, the Guardian and
 
 ## Acceptance criteria
 
-_Written in this increment's Refine phase, before Design. Implementers read them here._
+_Written in the Refine phase on 2026-11-27, from two grill rounds (14 decisions) recorded in `docs/process/decision-log.md`. Everything in #3's criteria still holds: the product is **Heads-up**, every time is in UTC and labelled "UTC", feedback is an inline notice. The implementation decisions in #2 (Slack's permanent error codes, the webhook host rule, the source mappers and thresholds, the data model) are not repeated here._
+
+### Slack destinations (stories 9–16)
+
+- **Add (9, 10, 12).** `/destinations` has "Add Slack destination": a name and a webhook URL.
+  - Name: required, 1 to 60 characters, unique among the account's destinations.
+  - URL: must be `https://hooks.slack.com/services/…`. Anything else is refused with "Paste a Slack incoming webhook URL. It starts with https://hooks.slack.com/services/."
+  - Outside production only, `http://127.0.0.1:<port>/slack/…` is also accepted, for the local and e2e stub.
+  - An account has at most 10 Slack destinations; the 11th is refused with a reason that names the limit.
+- **Hint (11).** After saving, the URL is never shown or sent to the browser again. A row shows the name, "Slack" and the hint `hooks.slack.com/…/` plus the URL's last 4 characters.
+- **Send test (13, 14).** Every destination row has "Send test", sent at once, with the result inline as for email.
+  - Slack tests have their own limit: 5 per destination per UTC day, refused over it with a reason that names the limit. They use no email budget.
+  - A permanent Slack answer marks the destination broken and shows a reason in our words, such as "Slack says this channel no longer exists." A transient failure shows "Couldn't send the test. Try again in a minute."
+  - A successful test of a broken destination returns it to active.
+- **Broken (15).** A broken destination shows "Broken" with its reason, by text and icon, not colour alone. It receives no new notifications. On `/alerts`, every alert that uses it shows that destination's name marked broken.
+- **Remove (16).** A Slack row has "Remove", which opens a confirmation naming the destination.
+  - Removal is refused when the destination is the only one some alert uses: "<name> is the only destination of N alerts. Change them first." (Story 17, listing every alert that uses it, was dropped.)
+  - Pending notifications of a removed destination fail with "The Slack destination was removed."
+- **Alert form.** Slack destinations appear as checkboxes beside "Account email", by name, with a broken mark where broken.
+
+### Slack message (story 34)
+
+- Block Kit: a header with the event title linking to the source, a section with the severity in words and the summary, and a context line with the alert's name and the source credit.
+- A simulated event gets the `[SIMULATED]` prefix and a banner line, as in email.
+- Slack has no rate limit of ours. A 429 honours `Retry-After`; transient failures retry at 1, 5 and 15 minutes, as for email.
+
+### Sources (stories 41–43, 47)
+
+- **News alerts need a keyword.** A news alert must have at least one keyword. The form says why: "News alerts need at least one keyword, or every article would notify you." The database enforces it, and existing news alerts with no keywords are paused by the migration.
+- **The Guardian (41).** As in #2: world, business and environment sections; every article is a low-severity news event; polled every 3 minutes in production only.
+- **CoinGecko (42, 43).** As in #2. An event reads:
+  - Title: "Bitcoin (BTC) up 4.2% in the past hour", or "down 3.6%".
+  - Summary: "Price $64,210. 24-hour change −1.8%." The price is in US dollars.
+  - Link: the coin's CoinGecko page.
+- **Credits (47).** One rule for every source, shown in four places: notification history rows, the admin events list, the email footer and the Slack context line. "U.S. Geological Survey" for earthquakes, "Source: The Guardian" for news, "Powered by CoinGecko" for markets.
+- **Failure reasons name their channel.** Stored failure sentences start "The email …" or "The Slack …" and end with a period. History shows those and nothing else.
+- Every source's mapper is unit-tested on recorded responses committed to the repository. No test calls a real feed.
+
+### Admin view (stories 48, 49, 51–54, 67)
+
+- **Navigation (48).** `/admin` is an overview. The admin area has tabs: Overview, Users, Events, Notifications, Simulate. A non-admin gets the not-found page for all of them, revealing nothing, as in increment 1.
+- **Overview: source health (53).** One row per source: last poll time, outcome, error and events stored, and a status.
+  - OK: the last poll succeeded.
+  - Late: the last successful poll is older than three of its intervals (USGS 3 minutes, the Guardian 9, CoinGecko 15).
+  - Failing: the last poll failed, shown with its error.
+  - Each status has text and an icon. When real polling is off, the section says "Not polled in this environment".
+- **Overview: email budget (54).** "N of 80 emails sent today (UTC)", with "M of 20 test sends" under it.
+- **Lists (49, 51, 52).** 25 per page with the shared pager, newest first, times in UTC, emails unmasked, no search or sorting controls.
+  - Users: email, role, sign-up date, number of alerts.
+  - Events: title, source, category, severity, time, the Simulated badge, the source credit.
+  - Notifications: event, owner's email, destination type, status, attempts, failure or skip reason. A status filter (All, Pending, Sent, Failed, Skipped) is kept in `?status=`; an unknown value shows All.
+- **Reviewer login (67).** Nothing to build. The README says reviewers get an admin login privately. Admin is granted by SQL, and the SQL is written down for the user.
+
+### Every screen (stories 68, 69)
+
+- Works at 360px and at desktop width, by keyboard alone and with a screen reader, with no axe violations.
+- Every data view handles loading, empty, error and success.
+- Each new user-facing flow has a Playwright spec on both projects. The Slack paths, broken state included, are tested end to end against the stub.
 
