@@ -1,14 +1,13 @@
 import "server-only";
+import { emailChannel } from "./channels/email";
+import { usgsSource } from "./sources/usgs";
 import type { Channel, Source } from "./types";
 
-/**
- * The real sources and channels the tick route runs with. Empty until the
- * end-to-end ticket registers the USGS source and the email channel.
- */
+/** The real sources and channels the tick route runs with. */
 export function buildSources(): Source[] {
-  return [];
+  return [usgsSource];
 }
 
 export function buildChannels(): Channel[] {
-  return [];
+  return [emailChannel];
 }
