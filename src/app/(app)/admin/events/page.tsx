@@ -3,25 +3,33 @@ import {
   AdminFrame,
   AdminFrameFallback,
 } from "@/features/admin/frame/admin-frame";
+import { EventListSkeleton } from "@/features/admin/events/event-list";
+import { EventsView } from "@/features/admin/events/events-view";
 import { requireAdmin } from "@/lib/auth/session";
 
 /**
- * Placeholder from the Contracts ticket (#17); #26 builds it.
- * Nothing of it is in the static shell: see AdminFrame.
+ * Nothing of it is in the static shell: see AdminFrame. The admin check comes
+ * first, so a non-admin gets the not-found page and sees no frame.
  */
-export default function Page() {
+export default function Page({ searchParams }: PageProps<"/admin/events">) {
   return (
     <Suspense fallback={<AdminFrameFallback />}>
-      <Content />
+      <Content searchParams={searchParams} />
     </Suspense>
   );
 }
 
-async function Content() {
+async function Content({
+  searchParams,
+}: {
+  searchParams: PageProps<"/admin/events">["searchParams"];
+}) {
   await requireAdmin();
   return (
     <AdminFrame current="events">
-      <p className="text-muted-foreground">Not built yet.</p>
+      <Suspense fallback={<EventListSkeleton />}>
+        <EventsView searchParams={searchParams} />
+      </Suspense>
     </AdminFrame>
   );
 }
