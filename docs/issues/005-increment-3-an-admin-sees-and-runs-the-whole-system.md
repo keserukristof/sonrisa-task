@@ -1,6 +1,6 @@
 # #5: Increment 3: an admin sees and runs the whole system
 
-- **State:** open
+- **State:** closed, closed 2026-11-27 17:10 UTC
 - **Opened:** 2026-11-27 11:21 UTC by keserukristof
 - **Labels:** none
 - **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/5
@@ -32,4 +32,10 @@ The read-only admin lists of users, alerts, events and notifications, source hea
 ## Acceptance criteria
 
 _Written in this increment's Refine phase, before Design. Implementers read them here._
+
+## Comments
+
+### keserukristof, 2026-11-27 17:10 UTC
+
+Merged into #4 on 2026-11-27: increment 1 ran past the 17:30 checkpoint, so increments 2 and 3 became one smaller increment (plan of attack). Stories 48, 49, 51–54, 67, 68 and 69 moved to #4. Stories 50 and 55–57 were dropped and are recorded in #2's Out of Scope.
 

@@ -283,7 +283,9 @@ Each table enables Row Level Security in the migration that creates it.
 - Email to addresses other than the user's own account address.
 - Password reset, account deletion, changing the account email address.
 - Teams, organisations and shared alerts.
-- Admin operations beyond promotion and simulation: retrying notifications, pausing other users' alerts, disabling users, editing anything of another user's.
+- Admin operations beyond simulation: retrying notifications, pausing other users' alerts, disabling users, editing anything of another user's. Promoting and demoting admins (stories 55–57) was cut on 2026-11-27 when increments 2 and 3 merged: admin is granted by SQL, as for the reviewer login.
+- An admin list of all users' alerts (story 50), cut when increments 2 and 3 merged: the users list shows each user's number of alerts.
+- Telling the user which alerts use a destination before it is removed (story 17), cut when increments 2 and 3 merged: the remove confirmation names the destination, and alerts keep their other destinations.
 - Masking email addresses in the admin lists.
 - Equities, forex or any market data beyond the top 20 crypto coins.
 - Natural disasters other than earthquakes (no cyclones, floods, volcanoes).

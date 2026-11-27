@@ -57,11 +57,11 @@ The brief was understood once (phases 1 and 2), then built in increments: phases
 
 ## Increments
 
-| #   | What a user can do after it                                  | Issue                                                        | Pull request | Shipped |
-| --- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------ | ------- |
-| 1   | Get an email when an earthquake that matters to them happens | [#3](https://github.com/keserukristof/sonrisa-task/issues/3) |              |         |
-| 2   | Get alerts in Slack, and about news and market movements too | [#4](https://github.com/keserukristof/sonrisa-task/issues/4) |              |         |
-| 3   | An admin sees and runs the whole system                      | [#5](https://github.com/keserukristof/sonrisa-task/issues/5) |              |         |
+| #   | What a user can do after it                                                                              | Issue                                                        | Pull request | Shipped |
+| --- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ------------ | ------- |
+| 1   | Get an email when an earthquake that matters to them happens                                             | [#3](https://github.com/keserukristof/sonrisa-task/issues/3) |              |         |
+| 2   | Get alerts in Slack and about news and markets, and an admin sees the system (increments 2 and 3 merged) | [#4](https://github.com/keserukristof/sonrisa-task/issues/4) |              |         |
+| 3   | _Merged into increment 2 at the 17:30 checkpoint_                                                        | [#5](https://github.com/keserukristof/sonrisa-task/issues/5) |              |         |
 
 ## Ideas that shaped the setup
 
