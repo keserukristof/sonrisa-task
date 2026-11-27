@@ -1,9 +1,9 @@
 # #18: Slack channel: Block Kit messages and delivery outcomes
 
-- **State:** open
+- **State:** closed, closed 2026-11-27 19:46 UTC
 - **Opened:** 2026-11-27 18:14 UTC by keserukristof
 - **Labels:** `ready-for-agent`
-- **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/18
+- **On GitHub:** https://github.com/keserukristof/ai-task/issues/18
 
 ## Body
 
@@ -37,4 +37,10 @@ The Slack channel implements the Channel interface: it posts the alert, simulate
 ## Owned paths
 
 - `src/lib/alerting/channels/slack/**`, except `settings.ts`, `settings.test.ts` and `reasons.ts`
+
+## Comments
+
+### keserukristof, 2026-11-27 19:46 UTC
+
+Merged into increment-2; report checked against its diff (owned paths only).
 

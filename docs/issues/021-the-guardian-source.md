@@ -1,9 +1,9 @@
 # #21: The Guardian source
 
-- **State:** open
+- **State:** closed, closed 2026-11-27 19:44 UTC
 - **Opened:** 2026-11-27 18:14 UTC by keserukristof
 - **Labels:** `ready-for-agent`
-- **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/21
+- **On GitHub:** https://github.com/keserukristof/ai-task/issues/21
 
 ## Body
 
@@ -34,4 +34,10 @@ Articles from the Guardian's world, business and environment sections become low
 ## Owned paths
 
 - `src/lib/alerting/sources/guardian/**`
+
+## Comments
+
+### keserukristof, 2026-11-27 19:44 UTC
+
+Merged into increment-2 in 1dbb74a; key moved to the documented query parameter in 544d95b. Fixtures are built from the documented shape and must be re-recorded with a real key before ship.
 

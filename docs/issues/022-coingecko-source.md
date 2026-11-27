@@ -1,9 +1,9 @@
 # #22: CoinGecko source
 
-- **State:** open
+- **State:** closed, closed 2026-11-27 19:44 UTC
 - **Opened:** 2026-11-27 18:14 UTC by keserukristof
 - **Labels:** `ready-for-agent`
-- **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/22
+- **On GitHub:** https://github.com/keserukristof/ai-task/issues/22
 
 ## Body
 
@@ -36,4 +36,10 @@ Crypto moves of the top 20 coins by market cap become market events when a coin'
 ## Owned paths
 
 - `src/lib/alerting/sources/coingecko/**`
+
+## Comments
+
+### keserukristof, 2026-11-27 19:44 UTC
+
+Merged into increment-2 in cee9444. Host and demo header checked against CoinGecko's docs. Fixtures are built from the documented shape and must be re-recorded with a real key before ship.
 

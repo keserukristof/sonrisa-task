@@ -14,7 +14,7 @@ Written 2026-11-27 10:28 at the end of the first task session, for the session t
 
 1. Assessed the kit against the brief. The brief grades the process, not the product, and the kit captured almost none of it. See the decision log.
 2. Built evidence capture: [decision-log.md](decision-log.md), [docs/prompts/](../prompts/README.md) (from 09:30 on; preparation prompts left out by choice), [docs/issues/](../issues/README.md), [docs/reviews/](../reviews/README.md), [docs/screenshots/](../screenshots/README.md), [00-preparation.md](00-preparation.md). `pnpm evidence:export` regenerates prompts and issues.
-3. Branch rules: product work on branches, `main` only through pull requests with merge commits. `.claude/hooks/guard-main.mjs` refuses agent commits and pushes to `main` ([keserukristof/sonrisa-task#1](https://github.com/keserukristof/sonrisa-task/pull/1)).
+3. Branch rules: product work on branches, `main` only through pull requests with merge commits. `.claude/hooks/guard-main.mjs` refuses agent commits and pushes to `main` ([keserukristof/sonrisa-task#1](https://github.com/keserukristof/ai-task/pull/1)).
 4. Checked the stack against the brief and compared it with adding a NestJS backend. The recommendation is to keep Next.js plus Supabase; the decision is the grill's to confirm (below).
 
 ## Next step

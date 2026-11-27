@@ -3,7 +3,7 @@
 - **State:** closed, closed 2026-11-27 18:30 UTC
 - **Opened:** 2026-11-27 18:14 UTC by keserukristof
 - **Labels:** `ready-for-agent`
-- **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/17
+- **On GitHub:** https://github.com/keserukristof/ai-task/issues/17
 
 ## Body
 
@@ -38,4 +38,8 @@ Everything the other tickets of increment 2 share, landed once and serially, so 
 ### keserukristof, 2026-11-27 18:30 UTC
 
 Contracts landed on `increment-2` (d90c55c to f531b07): four migrations with pgTAP (109 passing), shared schemas, the source catalog, Slack settings and reasons, BrokenMark, FilterLinks, Meter, AdminFrame, route placeholders, a local Slack stub for e2e, and owned paths on #18 to #27. `pnpm verify`, `pnpm build` and `pnpm e2e` (56) green.
+
+### keserukristof, 2026-11-27 19:34 UTC
+
+Security audit done after closing: F1 to F4 fixed in ddefbdb and the ticket bodies of #18, #19 and #27; see docs/reviews/2-security-auditor-contracts.md. pnpm db:test 120 passing, pnpm verify green.
 

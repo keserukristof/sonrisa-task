@@ -1,9 +1,9 @@
 # #20: Alerts: Slack destinations and the news keyword rule
 
-- **State:** open
+- **State:** closed, closed 2026-11-27 19:46 UTC
 - **Opened:** 2026-11-27 18:14 UTC by keserukristof
 - **Labels:** `ready-for-agent`
-- **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/20
+- **On GitHub:** https://github.com/keserukristof/ai-task/issues/20
 
 ## Body
 
@@ -43,4 +43,10 @@ Screens: `docs/design/` (README, "Increment 2"); the design decisions recorded o
 **For every ticket:** forms use `Field`, `FieldGroup`, `describedBy` and `SubmitButton` from `src/components/`, and return `ActionResult` (`src/lib/action-result.ts`). Feedback is a `Notice`; a notice after a redirect uses `withNotice()` and `<FlashNotice>` (`src/lib/notices.ts`). Times go through `src/lib/format.ts`. Links that look like buttons use `buttonVariants()` on a `Link`; page buttons are `size="lg"` (36px), row buttons the default size. Pending buttons keep focus (`aria-disabled`, not `disabled`; increment 1 UX review, item 5). End-to-end tests create their own account with `createUser()` from `e2e/support/users.ts`, delete it with `deleteUser()`, and never write through the demo accounts. The local database is shared: assert only on your own rows. Remove your page's "Not built yet." placeholder. Do not add migrations, dependencies, shadcn components, or edit `src/components/ui/` or `globals.css`: report a missing contract instead.
 
 **Accessibility scans:** wait for the page title (`await expect(page).toHaveTitle(…)`) before running axe after a navigation; the title streams in.
+
+## Comments
+
+### keserukristof, 2026-11-27 19:46 UTC
+
+Merged into increment-2; report checked against its diff (owned paths only).
 
