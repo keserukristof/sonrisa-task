@@ -173,7 +173,7 @@ describe("renderTestMessage", () => {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: "You sent this test from your destinations page on 27 Nov 2026, 18:12 UTC. Notifications from your alerts arrive in this channel.",
+          text: "You sent this test from your destinations page on 27 Nov 2026 at 18:12 UTC. Notifications from your alerts arrive in this channel.",
         },
       },
       {
