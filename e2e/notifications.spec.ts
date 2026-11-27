@@ -22,6 +22,7 @@ test.describe("notification history", () => {
     await expect(sent).toContainText("Sent");
     await expect(sent).toContainText("13:43 UTC");
     await expect(sent).toContainText("High");
+    await expect(sent).toContainText("U.S. Geological Survey");
 
     const skipped = page.getByRole("listitem").filter({
       hasText: "M 5.6 - 87 km E of Miyako, Japan",
@@ -42,6 +43,8 @@ test.describe("notification history", () => {
       hasText: "Test quake near Tokyo",
     });
     await expect(simulated).toContainText("Simulated");
+    await expect(simulated).not.toContainText("U.S. Geological Survey");
+    await expect(page.getByText("Earthquake data:")).toHaveCount(0);
 
     const results = await new AxeBuilder({ page }).withTags(AXE_TAGS).analyze();
     expect(results.violations).toEqual([]);

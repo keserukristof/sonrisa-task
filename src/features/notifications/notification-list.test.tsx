@@ -12,6 +12,7 @@ function row(
     simulated: false,
     eventTime: "27 Nov 2026, 13:42 UTC",
     alertName: "Quakes",
+    credit: "U.S. Geological Survey",
     destinationName: "Account email",
     severity: "high",
     status: "sent",
@@ -49,5 +50,21 @@ describe("NotificationList", () => {
   it("does not mark a real event as simulated", () => {
     render(<NotificationList rows={[row()]} />);
     expect(screen.queryByText("Simulated")).not.toBeInTheDocument();
+  });
+
+  it("shows the source's credit under the event time", () => {
+    render(
+      <NotificationList rows={[row({ credit: "Powered by CoinGecko" })]} />,
+    );
+    expect(screen.getByText("Powered by CoinGecko")).toBeInTheDocument();
+  });
+
+  it("shows no credit line for a simulated event", () => {
+    render(
+      <NotificationList rows={[row({ simulated: true, credit: null })]} />,
+    );
+    expect(
+      screen.queryByText("U.S. Geological Survey"),
+    ).not.toBeInTheDocument();
   });
 });
