@@ -63,5 +63,7 @@ export function serverEnv(): ServerEnv {
  * build locally, against the stub.
  */
 export function allowsLocalSlackStub(env: ServerEnv = serverEnv()): boolean {
-  return env.VERCEL_ENV !== "production";
+  // Two signals, so a missing VERCEL_ENV alone cannot open it: production is
+  // also the only place real polling is on.
+  return env.VERCEL_ENV !== "production" && !env.REAL_POLLING;
 }

@@ -54,5 +54,10 @@ describe("allowsLocalSlackStub", () => {
         parseServerEnv({ ...required, VERCEL_ENV: "production" }),
       ),
     ).toBe(false);
+    expect(
+      allowsLocalSlackStub(
+        parseServerEnv({ ...required, REAL_POLLING: "true" }),
+      ),
+    ).toBe(false);
   });
 });

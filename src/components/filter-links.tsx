@@ -22,7 +22,7 @@ export function FilterLinks({
       </span>
       <nav
         aria-labelledby="filter-label"
-        className="border-border bg-card inline-flex flex-wrap gap-1 rounded-md border p-[3px]"
+        className="border-border bg-card inline-flex flex-wrap gap-1 rounded-md border p-0.5"
       >
         {options.map((option) => (
           <Link
