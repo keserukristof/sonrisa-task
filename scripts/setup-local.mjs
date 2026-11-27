@@ -79,4 +79,7 @@ if (existsSync(ENV_FILE)) {
   console.log(`→ Wrote ${ENV_FILE}.`);
 }
 
+// Server-only variables and the local scheduler's settings.
+execFileSync("node", ["scripts/local-env.mjs"], { stdio: "inherit" });
+
 console.log("\n✔ Ready. Run `pnpm dev` and open http://localhost:3000");

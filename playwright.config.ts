@@ -1,5 +1,10 @@
+import { existsSync } from "node:fs";
 import process from "node:process";
 import { defineConfig, devices } from "@playwright/test";
+
+// The specs create their own users through the local Supabase admin API and
+// read the local mail catcher, so they need the same variables as the app.
+if (existsSync(".env.local")) process.loadEnvFile(".env.local");
 
 // End-to-end tests run on their own port, never the dev server's 3000, so they
 // cannot silently test whatever else is listening there. Parallel agents each
