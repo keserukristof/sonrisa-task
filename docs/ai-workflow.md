@@ -26,18 +26,18 @@ The map of the process. This page summarises; the evidence it points to is the s
 
 ## Tools
 
-| Tool                                          | Used for                                                                                          |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Claude Code (desktop app)                     | Main session: planning, architecture, orchestration                                               |
-| Fable 5.2 / Opus 5.5 / Sonnet 5.5             | Architecture and orchestration / spec and review / parallel implementers                          |
-| `mattpocock-skills` plugin (third party, MIT) | Process spine: grilling, spec, tickets, parallel implementation, TDD, two-axis code review        |
-| Project skills (`.claude/skills/`)            | `design`, `contracts`, `ship`: the phases the plugin does not cover                               |
-| Project agents (`.claude/agents/`)            | `implementer`, `reviewer`, `security-auditor`, `ux-reviewer`, `nextjs-advisor`                    |
-| Project rules (`.claude/rules/`)              | Next.js 16, Supabase, UI and testing conventions, loaded per file path                            |
-| Hooks (`.claude/hooks/`)                      | Format and lint on every edit; lint, typecheck and tests before an agent may finish               |
-| Evidence scripts                              | `pnpm evidence:export`: prompts from the session transcripts and issues from GitHub, into `docs/` |
-| MCP servers                                   | next-devtools, context7, shadcn, Playwright, Supabase                                             |
-| Claude Design artifacts                       | Design system and screens, approved before implementation                                         |
+| Tool                                          | Used for                                                                                                         |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Claude Code (desktop app)                     | Main session: planning, architecture, orchestration                                                              |
+| Fable 5.2 / Opus 5.5 / Sonnet 5.5             | Architecture and orchestration / spec and review / parallel implementers                                         |
+| `mattpocock-skills` plugin (third party, MIT) | Process spine: grilling, spec, tickets, parallel implementation, TDD, two-axis code review                       |
+| Project skills (`.claude/skills/`)            | `design`, `contracts`, `ship`: the phases the plugin does not cover                                              |
+| Project agents (`.claude/agents/`)            | `implementer`, `reviewer`, `security-auditor`, `ux-reviewer`, `nextjs-advisor`                                   |
+| Project rules (`.claude/rules/`)              | Next.js 16, Supabase, UI and testing conventions, loaded per file path                                           |
+| Hooks (`.claude/hooks/`)                      | Format and lint on every edit; lint, typecheck and tests before an agent may finish; no commit or push to `main` |
+| Evidence scripts                              | `pnpm evidence:export`: prompts from the session transcripts and issues from GitHub, into `docs/`                |
+| MCP servers                                   | next-devtools, context7, shadcn, Playwright, Supabase                                                            |
+| Claude Design artifacts                       | Design system and screens, approved before implementation                                                        |
 
 ## Phases
 
