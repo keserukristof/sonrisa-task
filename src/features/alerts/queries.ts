@@ -1,14 +1,22 @@
 import "server-only";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth/session";
-import type { Category, Severity } from "@/lib/alerting/types";
+import {
+  CHANNEL_TYPES,
+  type Category,
+  type ChannelType,
+  type Severity,
+} from "@/lib/alerting/types";
 import { createClient } from "@/lib/supabase/server";
+
+const channelTypeSchema = z.enum(CHANNEL_TYPES);
+const statusSchema = z.enum(["active", "broken"]);
 
 export type DestinationOption = {
   id: string;
   name: string;
-  channelType: string;
-  status: string;
+  channelType: ChannelType;
+  status: z.infer<typeof statusSchema>;
 };
 
 export type AlertSummary = {
@@ -42,24 +50,19 @@ export async function getDestinationOptions(): Promise<{
     .from("destinations")
     .select("id, name, channel_type, status")
     .eq("user_id", user.id)
+    // "email" sorts before "slack": the account email first, then oldest first.
+    .order("channel_type", { ascending: true })
     .order("created_at", { ascending: true });
   if (error) throw new Error("Could not load destinations.");
   return {
-    destinations: data
-      .toSorted((a, b) => emailFirst(a.channel_type, b.channel_type))
-      .map((row) => ({
-        id: row.id,
-        name: row.name,
-        channelType: row.channel_type,
-        status: row.status,
-      })),
+    destinations: data.map((row) => ({
+      id: row.id,
+      name: row.name,
+      channelType: channelTypeSchema.parse(row.channel_type),
+      status: statusSchema.parse(row.status),
+    })),
     accountEmail: user.email,
   };
-}
-
-/** Sort order: the account email first, then Slack (the caller keeps oldest first). */
-function emailFirst(a: string, b: string): number {
-  return Number(b === "email") - Number(a === "email");
 }
 
 const destinationLink = z.object({
@@ -67,9 +70,7 @@ const destinationLink = z.object({
   destinations: z
     .object({
       name: z.string(),
-      status: z.string(),
-      channel_type: z.string(),
-      created_at: z.string(),
+      status: statusSchema,
     })
     .nullable(),
 });
@@ -85,7 +86,14 @@ export async function getAlerts(): Promise<AlertSummary[]> {
       "id, name, category, min_severity, keywords, active, created_at, alert_destinations(destination_id, destinations(name, status, channel_type, created_at))",
     )
     .eq("user_id", user.id)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    // The account email first, then Slack, oldest first.
+    .order("destinations(channel_type)", {
+      referencedTable: "alert_destinations",
+    })
+    .order("destinations(created_at)", {
+      referencedTable: "alert_destinations",
+    });
   if (error) throw new Error("Could not load alerts.");
 
   return data.map((row) => ({
@@ -99,11 +107,6 @@ export async function getAlerts(): Promise<AlertSummary[]> {
       .array(destinationLink)
       .parse(row.alert_destinations)
       .flatMap((link) => (link.destinations ? [link.destinations] : []))
-      .toSorted(
-        (a, b) =>
-          emailFirst(a.channel_type, b.channel_type) ||
-          a.created_at.localeCompare(b.created_at),
-      )
       .map((d) => ({ name: d.name, broken: d.status === "broken" })),
   }));
 }

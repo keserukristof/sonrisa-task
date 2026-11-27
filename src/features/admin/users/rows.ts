@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-export const PAGE_SIZE = 25;
-
 /** The admin_users() rows, as the database returns them. */
 const rawSchema = z.object({
   user_id: z.string(),
@@ -18,12 +16,6 @@ export type RawAdminUser = z.infer<typeof rawSchema>;
 export function parseAdminUsers(data: unknown): RawAdminUser[] | null {
   const parsed = z.array(rawSchema).safeParse(data);
   return parsed.success ? parsed.data : null;
-}
-
-/** `?page=` as a positive whole number; anything else is the first page. */
-export function parsePage(value: string | string[] | undefined): number {
-  if (typeof value !== "string" || !/^[1-9]\d{0,6}$/.test(value)) return 1;
-  return Number(value);
 }
 
 export function alertsLabel(count: number): string {

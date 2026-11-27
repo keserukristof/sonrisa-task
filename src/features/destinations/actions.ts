@@ -28,15 +28,19 @@ const COULDNT_SEND = "Couldn't send the test. Try again in a minute.";
 async function finishTest(
   supabase: Supabase,
   testSendId: string,
-  delivered: boolean,
-  error?: string,
-  brokenReason?: string,
+  result: {
+    delivered: boolean;
+    error?: string;
+    brokenReason?: string;
+  },
 ) {
   const { error: finishError } = await supabase.rpc("finish_test_send", {
     p_test_send_id: testSendId,
-    p_delivered: delivered,
-    ...(error === undefined ? {} : { p_error: error }),
-    ...(brokenReason === undefined ? {} : { p_broken_reason: brokenReason }),
+    p_delivered: result.delivered,
+    ...(result.error === undefined ? {} : { p_error: result.error }),
+    ...(result.brokenReason === undefined
+      ? {}
+      : { p_broken_reason: result.brokenReason }),
   });
   if (finishError) {
     console.error(
@@ -64,12 +68,12 @@ export async function sendTest(
   if (!parsed.success) return FAILED;
 
   const supabase = await createClient();
-  const { data: destination } = await supabase
+  const { data: destination, error: lookupError } = await supabase
     .from("destinations")
     .select("channel_type")
     .eq("id", parsed.data.destinationId)
     .maybeSingle();
-  if (!destination) return FAILED;
+  if (lookupError || !destination) return FAILED;
 
   const { data: claims, error } = await supabase.rpc("claim_test_send", {
     p_destination_id: parsed.data.destinationId,
@@ -83,7 +87,10 @@ export async function sendTest(
   if (destination.channel_type === "slack") {
     const slack = await slackTestOutcome(supabase, claim.test_send_id, now);
     if (slack === null) {
-      await finishTest(supabase, claim.test_send_id, false, COULDNT_SEND);
+      await finishTest(supabase, claim.test_send_id, {
+        delivered: false,
+        error: COULDNT_SEND,
+      });
       return FAILED;
     }
     outcome = slack;
@@ -95,13 +102,12 @@ export async function sendTest(
   }
 
   const delivered = outcome.kind === "sent";
-  await finishTest(
-    supabase,
-    claim.test_send_id,
+  await finishTest(supabase, claim.test_send_id, {
     delivered,
-    outcome.kind === "sent" ? undefined : outcome.error,
-    outcome.kind === "broken" ? outcome.destinationReason : undefined,
-  );
+    error: outcome.kind === "sent" ? undefined : outcome.error,
+    brokenReason:
+      outcome.kind === "broken" ? outcome.destinationReason : undefined,
+  });
   // The row's Broken line follows the destination's status.
   refresh();
 
@@ -187,7 +193,10 @@ export async function removeDestination(
     message: "Couldn't remove the destination. Try again in a minute.",
   } as const;
   const user = await getCurrentUser();
-  const parsed = removeDestinationSchema.safeParse({ destinationId });
+  const parsed = removeDestinationSchema.safeParse({
+    destinationId,
+    name,
+  });
   if (!user || !parsed.success) return failure;
 
   const supabase = await createClient();
@@ -201,7 +210,7 @@ export async function removeDestination(
     return {
       ok: false,
       code: "only_destination",
-      message: removeRefusal(name, result.alert_count),
+      message: removeRefusal(parsed.data.name, result.alert_count),
     };
   }
   if (result.outcome !== "ok") return failure;

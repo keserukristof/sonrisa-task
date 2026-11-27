@@ -8,8 +8,6 @@ import {
 } from "@/lib/alerting/types";
 import { formatUtcDateTime } from "@/lib/format";
 
-export const PAGE_SIZE = 25;
-
 const rawEventSchema = z.object({
   id: z.string(),
   source: z.string(),
@@ -51,10 +49,4 @@ export function toEventRow(raw: RawEvent): EventRowData {
     credit: sourceCredit(raw.source),
     severity: raw.severity,
   };
-}
-
-/** `?page=` as a positive whole number; anything else is the first page. */
-export function parsePage(value: string | string[] | undefined): number {
-  if (typeof value !== "string" || !/^[1-9]\d{0,6}$/.test(value)) return 1;
-  return Number(value);
 }

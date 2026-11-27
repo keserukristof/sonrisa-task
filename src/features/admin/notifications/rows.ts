@@ -1,3 +1,4 @@
+import type { Route } from "next";
 import { z } from "zod";
 import { formatUtcDateTime, formatUtcTime } from "@/lib/format";
 import {
@@ -5,8 +6,6 @@ import {
   NOTIFICATION_STATUSES,
   type NotificationStatus,
 } from "@/lib/alerting/types";
-
-export const PAGE_SIZE = 25;
 
 /** The admin_notifications() rows, as the database returns them. */
 const rawSchema = z.object({
@@ -44,10 +43,7 @@ export function parseStatusFilter(
 }
 
 /** The list's own URL for a filter and page. All drops `status`. */
-export function statusHref(
-  status: NotificationStatus | null,
-  page = 1,
-): string {
+export function statusHref(status: NotificationStatus | null, page = 1): Route {
   const params = new URLSearchParams();
   if (status) params.set("status", status);
   if (page > 1) params.set("page", String(page));

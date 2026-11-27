@@ -1,12 +1,12 @@
 import { Mail } from "lucide-react";
-import type { Route } from "next";
 import Link from "next/link";
 import { EmptyState } from "@/components/empty-state";
 import { FilterLinks } from "@/components/filter-links";
 import { Notice } from "@/components/notice";
 import { buttonVariants } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { NOTIFICATION_STATUSES } from "@/lib/alerting/types";
-import { parsePage } from "../users/rows";
+import { parsePage } from "../paging";
 import { AdminNotificationList } from "./notification-list";
 import { getAdminNotificationPage } from "./queries";
 import { parseStatusFilter, statusHref } from "./rows";
@@ -28,11 +28,6 @@ const NOTHING_SENTENCE = {
   skipped: "Nothing has been skipped.",
 } as const;
 
-function toRoute(href: string): Route {
-  // Only our own constant path and an encoded query reach here.
-  return href as Route;
-}
-
 /** Previous and Next that keep `?status=`, which the shared Pager would drop. */
 function FilteredPager({
   status,
@@ -53,17 +48,32 @@ function FilteredPager({
       <span className="text-muted-foreground text-sm">Page {page}</span>
       <div className="flex items-center gap-2">
         {page > 1 ? (
-          <Link href={toRoute(statusHref(status, page - 1))} className={link}>
+          <Link href={statusHref(status, page - 1)} className={link}>
             Previous
           </Link>
         ) : null}
         {hasNext ? (
-          <Link href={toRoute(statusHref(status, page + 1))} className={link}>
+          <Link href={statusHref(status, page + 1)} className={link}>
             Next
           </Link>
         ) : null}
       </div>
     </nav>
+  );
+}
+
+/** Where the status filter will be, while the search params resolve. */
+export function StatusFilterSkeleton() {
+  return (
+    <div
+      role="status"
+      aria-busy="true"
+      aria-label="Loading the status filter"
+      className="mb-4 flex items-center gap-3"
+    >
+      <Skeleton className="h-5 w-12" />
+      <Skeleton className="h-8 w-72 max-w-full" />
+    </div>
   );
 }
 
@@ -84,7 +94,7 @@ async function FilterFromParams({
       label="Status"
       options={FILTERS.map((f) => ({
         label: f.label,
-        href: toRoute(statusHref(f.status)),
+        href: statusHref(f.status),
         current: f.status === current,
       }))}
     />
@@ -108,7 +118,7 @@ export async function AdminNotificationsView({
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span>Couldn&apos;t load the notifications.</span>
           <Link
-            href={toRoute(statusHref(status, requested))}
+            href={statusHref(status, requested)}
             className={buttonVariants({ variant: "outline" })}
           >
             Try again
@@ -128,7 +138,7 @@ export async function AdminNotificationsView({
             title={`No ${status} notifications`}
             action={
               <Link
-                href={toRoute(statusHref(null))}
+                href={statusHref(null)}
                 className={buttonVariants({ variant: "outline" })}
               >
                 Show all

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addSlackDestinationSchema } from "./schema";
+import { addSlackDestinationSchema, removeDestinationSchema } from "./schema";
 
 const production = addSlackDestinationSchema({ allowLocalStub: false });
 const local = addSlackDestinationSchema({ allowLocalStub: true });
@@ -49,6 +49,29 @@ describe("addSlackDestinationSchema", () => {
     const stub = "http://127.0.0.1:4100/slack/e2e-abc";
     expect(local.safeParse({ name: "Stub", url: stub }).success).toBe(true);
     expect(production.safeParse({ name: "Stub", url: stub }).success).toBe(
+      false,
+    );
+  });
+});
+
+describe("removeDestinationSchema", () => {
+  const destinationId = "6f9619ff-8b86-4011-b42d-00c04fc964ff";
+
+  it("accepts an id and a name, trimmed", () => {
+    expect(
+      removeDestinationSchema.parse({ destinationId, name: " Ops " }),
+    ).toEqual({ destinationId, name: "Ops" });
+  });
+
+  it("refuses an empty or over-long name and a missing one", () => {
+    expect(
+      removeDestinationSchema.safeParse({ destinationId, name: "  " }).success,
+    ).toBe(false);
+    expect(
+      removeDestinationSchema.safeParse({ destinationId, name: "n".repeat(61) })
+        .success,
+    ).toBe(false);
+    expect(removeDestinationSchema.safeParse({ destinationId }).success).toBe(
       false,
     );
   });
