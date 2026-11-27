@@ -48,6 +48,10 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Start Supabase and write .env.local
         run: pnpm bootstrap
+      - name: Row Level Security tests
+        run: pnpm db:test
+      - name: Integration tests against the local database
+        run: pnpm test:db
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm e2e
       - uses: actions/upload-artifact@v4

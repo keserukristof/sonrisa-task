@@ -27,3 +27,15 @@ Checked on 2026-11-27 in the local database (the lite stack) before deciding: a 
 - **The job needs the deployed URL and the secret inside the database**, so each environment sets them when the job is created. Local development points the job at the developer's machine.
 - Notifications arrive up to a minute after an event is ingested, plus the source's own polling interval.
 - The schedule is defined in a migration, so it is versioned with the schema and visible in review.
+
+## Addendum, 2026-11-27: what the Contracts ticket found
+
+Two things turned out differently when the scheduler was built (ticket #15).
+
+- **The `net` schema cannot be restricted from a migration.** `pg_net`'s install grants `PUBLIC` usage on the schema and every privilege on `net.http_request_queue`. Those grants are made by `supabase_admin`. Migrations run as `postgres`, which is not a member of that role and not a superuser, so `REVOKE` does nothing ("no privileges could be revoked", checked in the local database). The spec asked the migration to restrict the schema; it cannot. What protects the header instead:
+  - The API does not expose the `net` schema: PostgREST answers 406 for it, and `e2e/smoke.spec.ts` checks that on every run.
+  - The header carries only the tick secret, as decided above.
+  - No function in an exposed schema reads from `net`.
+- **The URL and the secret live in Supabase Vault, not in database settings.** The job calls `private.trigger_tick()`, which reads `tick_url` and `tick_secret` from `vault.decrypted_secrets` and does nothing until both exist. Vault is Supabase's documented place for the values a `pg_cron` job sends with `pg_net`, and it is present in the local stack. Each environment sets its own two secrets: `scripts/local-env.mjs` does it locally, and the user does it in the hosted project during `/ship`.
+
+Still not checked: the job in the hosted project calling the deployed route.

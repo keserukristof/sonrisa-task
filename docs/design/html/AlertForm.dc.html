@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Create alert</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 1040px">
+<header class="hu-header">
+<a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<nav class="hu-nav" aria-label="Main">
+<a href="Main.dc.html" aria-current="page">Alerts</a>
+<a href="Notifications.dc.html">Notifications</a>
+<a href="Destinations.dc.html">Destinations</a>
+<a href="Simulate.dc.html">Admin</a>
+</nav>
+<div class="hu-header__end"><span class="hu-muted">you@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div>
+</header>
+<main class="hu-page hu-page--form">
+<p style="margin-bottom: 8px"><a href="Main.dc.html">Back to alerts</a></p>
+<h1 class="hu-title" style="margin-bottom: 24px">Create alert</h1>
+<form class="hu-card hu-card--pad hu-stack" style="gap: 24px">
+<div class="hu-field">
+<label class="hu-label" for="name">Name</label>
+<input class="hu-input" id="name" value="Pacific rim quakes">
+</div>
+<fieldset class="hu-field" style="border: 0; padding: 0; margin: 0">
+<legend class="hu-label" style="padding: 0; margin-bottom: 6px">Category</legend>
+<div class="hu-radio-group">
+<label class="hu-radio"><input type="radio" name="category">News</label>
+<label class="hu-radio"><input type="radio" name="category">Markets</label>
+<label class="hu-radio hu-radio--on"><input type="radio" name="category" checked="checked">Natural disasters</label>
+</div>
+</fieldset>
+<div class="hu-field">
+<label class="hu-label" for="severity">Minimum severity</label>
+<select class="hu-select" id="severity" aria-describedby="severity-hint">
+<option>Low and above</option>
+<option selected="selected">Moderate and above</option>
+<option>High and above</option>
+<option>Critical only</option>
+</select>
+<p class="hu-hint" id="severity-hint">You hear about events at this level or higher.</p>
+</div>
+<div class="hu-field">
+<label class="hu-label" for="keywords">Keywords <span class="hu-muted">(optional)</span></label>
+<input class="hu-input" id="keywords" value="japan, tsunami" aria-describedby="keywords-hint">
+<p class="hu-hint" id="keywords-hint">Separate with commas. Every keyword must appear in the event as a whole word. Up to 10.</p>
+</div>
+<fieldset class="hu-field" style="border: 0; padding: 0; margin: 0">
+<legend class="hu-label" style="padding: 0; margin-bottom: 6px">Destinations</legend>
+<label class="hu-check"><input type="checkbox" checked="checked">Account email <span class="hu-muted">you@example.com</span></label>
+</fieldset>
+<div class="hu-inline">
+<a class="hu-btn hu-btn--primary" href="Main.dc.html">Create alert</a>
+<a class="hu-btn hu-btn--outline" href="Main.dc.html">Cancel</a>
+</div>
+</form>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1040}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

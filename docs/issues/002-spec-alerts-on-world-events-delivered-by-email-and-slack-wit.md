@@ -123,8 +123,8 @@ Channels are built behind one interface so a third channel is a new adapter and 
 
 - Next.js 16 and Supabase only (ADR-0001, ADR-0002). There is no separate backend service.
 - **The alerting core** is a module that imports nothing from the Next.js framework. Its public entry point is a single `runTick` function that runs one cycle. It receives its collaborators: the database client, the registered sources, the registered channels, the clock, and the configuration (limits, intervals). The route the scheduler calls only checks the tick secret, builds those collaborators and calls `runTick`.
-- **Scheduler** (ADR-0003). `pg_cron` runs every minute and calls the tick route through `pg_net`. The route authenticates with its own tick secret, compared in constant time. The tick secret is never the Supabase secret key. The job and its target URL are created in a migration that reads the URL and secret from database settings, so each environment sets its own. The migration that enables `pg_net` restricts the `net` schema, because locally `anon` and `authenticated` can read its request queue, which stores headers.
-- **A tick is safe to repeat and to overlap.** Each step claims its work with row locks that skip already-locked rows, and every write is idempotent through unique constraints. A tick that runs out of time leaves unfinished work for the next one.
+- **Scheduler** (ADR-0003). `pg_cron` runs every minute and calls the tick route through `pg_net`. The route authenticates with its own tick secret, compared in constant time. The tick secret is never the Supabase secret key. The job is created in a migration and reads the URL and secret from Supabase Vault, so each environment sets its own. The `net` schema, whose request queue stores headers, cannot be restricted from a migration: its grants belong to a role migrations cannot act as. It is protected by not being exposed through the API, which a test checks, and by the narrow tick secret (ADR-0003 addendum).
+- **A tick is safe to repeat and to overlap.** Each step claims its work with row locks that skip already-locked rows, and every write is idempotent through unique constraints. The API client cannot lock rows, so the two steps that need it, matching with limits and claiming notifications for delivery, are database functions that only the tick may call. A tick that runs out of time leaves unfinished work for the next one.
 
 ### Tick steps
 
@@ -283,7 +283,9 @@ Each table enables Row Level Security in the migration that creates it.
 - Email to addresses other than the user's own account address.
 - Password reset, account deletion, changing the account email address.
 - Teams, organisations and shared alerts.
-- Admin operations beyond promotion and simulation: retrying notifications, pausing other users' alerts, disabling users, editing anything of another user's.
+- Admin operations beyond simulation: retrying notifications, pausing other users' alerts, disabling users, editing anything of another user's. Promoting and demoting admins (stories 55–57) was cut on 2026-11-27 when increments 2 and 3 merged: admin is granted by SQL, as for the reviewer login.
+- An admin list of all users' alerts (story 50), cut when increments 2 and 3 merged: the users list shows each user's number of alerts.
+- Telling the user which alerts use a destination before it is removed (story 17), cut when increments 2 and 3 merged: the remove confirmation names the destination, and alerts keep their other destinations.
 - Masking email addresses in the admin lists.
 - Equities, forex or any market data beyond the top 20 crypto coins.
 - Natural disasters other than earthquakes (no cyclones, floods, volcanoes).

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Link expired</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 440px">
+<header class="hu-header">
+<a class="hu-brand" href="Landing.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<div class="hu-header__end"><a class="hu-btn hu-btn--ghost hu-btn--sm" href="SignIn.dc.html">Sign in</a></div>
+</header>
+<main class="hu-page hu-page--narrow" style="padding-top: 48px">
+<div class="hu-card hu-card--pad hu-stack" style="gap: 12px">
+<h1 class="hu-title">This link has expired or was already used</h1>
+<p class="hu-muted">If you already confirmed your address, sign in.</p>
+<div class="hu-inline" style="margin-top: 8px">
+<a class="hu-btn hu-btn--primary" href="SignIn.dc.html">Go to sign in</a>
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":720,"height":440}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

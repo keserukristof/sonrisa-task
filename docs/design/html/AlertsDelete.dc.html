@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Delete alert dialog</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="width: 1280px; height: 720px; position: relative; overflow: hidden">
+<header class="hu-header">
+<a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<nav class="hu-nav" aria-label="Main">
+<a href="Main.dc.html" aria-current="page">Alerts</a>
+<a href="Notifications.dc.html">Notifications</a>
+<a href="Destinations.dc.html">Destinations</a>
+</nav>
+<div class="hu-header__end"><span class="hu-muted">you@example.com</span><span class="hu-btn hu-btn--ghost hu-btn--sm">Sign out</span></div>
+</header>
+<main class="hu-page">
+<div class="hu-pagehead">
+<h1 class="hu-title">Alerts</h1>
+<span class="hu-btn hu-btn--primary">Create alert</span>
+</div>
+<ul class="hu-card" style="list-style: none; margin: 0; padding: 0">
+<li class="hu-row">
+<div class="hu-row__main">
+<p class="hu-row__title">Pacific rim quakes</p>
+<p class="hu-muted">Natural disasters, to Account email</p>
+</div>
+<span class="hu-sev hu-sev--moderate" style="width: 170px"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Moderate and above</span>
+<span class="hu-switch" aria-hidden="true" style="color: var(--foreground)"><i style="background: var(--primary)"></i>Active</span>
+<span class="hu-btn hu-btn--outline hu-btn--sm">Edit</span>
+<span class="hu-btn hu-btn--danger hu-btn--sm">Delete</span>
+</li>
+<li class="hu-row">
+<div class="hu-row__main">
+<p class="hu-row__title">Big ones anywhere</p>
+<p class="hu-muted">Natural disasters, to Account email</p>
+</div>
+<span class="hu-sev hu-sev--critical" style="width: 170px"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Critical only</span>
+<span class="hu-switch" aria-hidden="true"><i></i>Paused</span>
+<span class="hu-btn hu-btn--outline hu-btn--sm">Edit</span>
+<span class="hu-btn hu-btn--danger hu-btn--sm">Delete</span>
+</li>
+</ul>
+</main>
+<div class="hu-overlay" style="position: absolute; inset: 0">
+<div class="hu-dialog" role="alertdialog" aria-modal="true" aria-labelledby="delete-title" aria-describedby="delete-body">
+<h2 class="hu-heading" id="delete-title">Delete "Pacific rim quakes"?</h2>
+<p class="hu-muted" id="delete-body" style="margin-top: 8px">It stops matching events. Past notifications stay in your history.</p>
+<div class="hu-dialog__actions">
+<a class="hu-btn hu-btn--outline" href="Main.dc.html">Cancel</a>
+<a class="hu-btn hu-btn--destructive" href="Main.dc.html">Delete alert</a>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":720}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

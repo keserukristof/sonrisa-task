@@ -1,22 +1,52 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
-import {
-  SystemStatus,
-  SystemStatusFallback,
-} from "@/features/health/system-status";
+import { PageContainer } from "@/components/page-shell";
+import { SiteHeader } from "@/components/site-header";
+import { buttonVariants } from "@/components/ui/button";
+import { SeverityScale } from "@/features/landing/severity-scale";
+import { DEFAULT_SIGNED_IN_PATH } from "@/lib/auth/next-path";
+import { getCurrentUser } from "@/lib/auth/session";
 
-export default function HomePage() {
+export default function LandingPage() {
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center gap-4 px-6 py-24">
-      <h1 className="font-heading text-3xl font-semibold tracking-tight">
-        Starter is running
-      </h1>
-      <p className="text-muted-foreground">
-        Next.js and Supabase are wired together. Replace this page with the
-        first feature.
-      </p>
-      <Suspense fallback={<SystemStatusFallback />}>
-        <SystemStatus />
+    <>
+      <SiteHeader signIn signUp />
+      <Suspense fallback={null}>
+        <RedirectWhenSignedIn />
       </Suspense>
-    </main>
+      <PageContainer
+        width="list"
+        className="grid content-start items-center gap-12 pt-12 md:grid-cols-2 md:pt-18"
+      >
+        <div>
+          <h1 className="text-4xl font-bold tracking-tight">
+            Hear about the earthquake, not the whole news cycle.
+          </h1>
+          <p className="text-muted-foreground mt-4 max-w-prose text-base">
+            Heads-up watches for events in the world. You choose the category
+            and how severe an event has to be, and it emails you when one
+            arrives.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-2">
+            <Link href="/sign-up" className={buttonVariants({ size: "lg" })}>
+              Sign up
+            </Link>
+            <Link
+              href="/sign-in"
+              className={buttonVariants({ variant: "outline", size: "lg" })}
+            >
+              Sign in
+            </Link>
+          </div>
+        </div>
+        <SeverityScale />
+      </PageContainer>
+    </>
   );
+}
+
+async function RedirectWhenSignedIn() {
+  if (await getCurrentUser()) redirect(DEFAULT_SIGNED_IN_PATH);
+  return null;
 }

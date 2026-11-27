@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Check your inbox</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 520px">
+<header class="hu-header">
+<a class="hu-brand" href="Landing.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<div class="hu-header__end"><a class="hu-btn hu-btn--ghost hu-btn--sm" href="SignIn.dc.html">Sign in</a></div>
+</header>
+<main class="hu-page hu-page--narrow" style="padding-top: 48px">
+<div class="hu-card hu-card--pad hu-stack" style="gap: 12px">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 24px; height: 24px; color: var(--primary)"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path></svg>
+<h1 class="hu-title">Check your inbox</h1>
+<p>We sent a link to <strong style="font-weight: 600">you@example.com</strong>. Open it to confirm your account.</p>
+<p class="hu-muted">If it isn't there in a few minutes, look in your spam folder.</p>
+<p style="margin-top: 8px"><a href="SignIn.dc.html">Back to sign in</a></p>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":720,"height":520}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

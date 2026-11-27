@@ -12,3 +12,5 @@ src/lib/supabase/database.types.ts
 # Generated verbatim records: prompts and issues are kept exactly as written.
 docs/prompts
 docs/issues
+# Exported verbatim from the design canvas.
+docs/design/html

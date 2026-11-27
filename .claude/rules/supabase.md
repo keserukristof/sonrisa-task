@@ -22,7 +22,7 @@ Look up current syntax with the Supabase docs (context7 or the Supabase MCP `sea
 
 - Create a server client per request. Never store one in a module-level variable.
 - Identity comes from `getCurrentUser()`, which verifies the JWT with `auth.getClaims()`. Never authorize from `auth.getSession()`: its user object is read from a cookie and is not verified.
-- The secret key bypasses RLS. It is not used by this app today. If a trusted server job ever needs it, it lives in exactly one `server-only` file, `src/lib/supabase/admin.ts`, and is never the fix for a failing policy.
+- The secret key bypasses RLS. Only the alerting tick uses it, through `createAdminClient()` in the one `server-only` file `src/lib/supabase/admin.ts`: the tick route and the code under `src/lib/alerting/` that it calls. No page, Server Action or query imports it, and it is never the fix for a failing policy.
 
 ## Migrations
 

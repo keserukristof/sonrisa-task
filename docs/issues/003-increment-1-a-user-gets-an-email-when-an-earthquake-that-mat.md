@@ -69,5 +69,138 @@ The whole alerting engine with its first source and first channel: the scheduler
 
 ## Acceptance criteria
 
-_Written in this increment's Refine phase, before Design. Implementers read them here._
+_Written in the Refine phase on 2026-11-27, from three grill rounds recorded in `docs/process/decision-log.md`. The product is called **Heads-up**. Every time shown anywhere is in UTC and labelled "UTC"._
+
+### Account (stories 1–7)
+
+- **Sign-up (1).** `/sign-up` takes an email and a password of at least 8 characters. Field errors show under their field. On success it redirects to `/sign-up/confirm`.
+- **Confirmation (2).** Confirmation is on in every environment, including local (`supabase/config.jsonc` today has `enable_confirmations: false`; Contracts turns it on). The link confirms the address, signs the visitor in, and opens `/alerts` with the notice "Email confirmed". An expired or already used link shows "This link has expired or was already used" with a link to sign in.
+- **Waiting (3).** `/sign-up/confirm` names the address and says to open the link, and to look in spam. There is no resend button. Signing up with an address that already has an account shows the same page, so the response never reveals whether an account exists.
+- **Sign-in (4, 5).** `/sign-in` with a correct email and password lands on the `next` path, or on `/alerts`. Wrong credentials show "Email or password is incorrect." without saying which. An unconfirmed account shows "Your email address isn't confirmed yet" with a link to `/sign-up/confirm`.
+- **Sign-out (6).** "Sign out" in the header ends the session and lands on `/`. Using the browser's back button afterwards does not show account data.
+- **Guards (7).** Every page under `/alerts`, `/notifications` and `/destinations` sends a signed-out visitor to `/sign-in?next=<path>`. `next` is accepted only as a path on this site starting with a single `/`; anything else falls back to `/alerts`. A signed-in user who opens `/`, `/sign-in` or `/sign-up` goes to `/alerts`.
+- **Landing.** A signed-out visitor on `/` sees a short page saying what Heads-up does, with "Sign up" and "Sign in".
+- **Header.** Signed in, the header links Alerts, Notifications, Destinations, Admin (admins only) and Sign out.
+
+### Destinations (stories 8, 13, 14)
+
+- **Email destination (8).** Every new account has exactly one email destination, created with the account. It shows on `/destinations` as "Account email" with the account's address and "can't be removed". There is no remove control, and no Slack placeholder in this increment.
+- **Send test (13, 14).** "Send test" sends at once, without waiting for a tick, and shows the result inline: "Delivered at HH:MM UTC", or the reason it failed. A test counts toward the 10-an-hour and 80-a-day email limits through its own log, which notification history does not show. Over either limit it is refused, and the reason names the limit. An account gets 3 test sends per UTC day, and all test sends together use at most 20 of the system's 80 a day (added after the security audit). The test email's subject begins "Test from Heads-up".
+
+### Alerts (stories 18, 19, 20 brought forward, 21–31)
+
+- **Form fields (18, 19, 24).**
+  - Name: required, 1 to 80 characters, need not be unique.
+  - Category: news, markets or natural disasters, with no default.
+  - Minimum severity: low, moderate, high or critical, defaulting to moderate.
+  - Destinations: one checkbox per destination, with the email destination preselected.
+  - New alerts start active.
+- **News (20, brought forward).** With news chosen, the severity field is disabled and explains "News has no severity levels; every article matches". The alert is saved with no minimum severity.
+- **Keywords (21).** One optional comma-separated field. Keywords are trimmed, lowercased and de-duplicated, and empty entries are dropped. At most 10, each up to 40 characters; going over is a field error. They are shown back as chips, and kept when the category changes.
+- **Destinations required (22, 23).** Saving with no destination checked is refused with a field error on the destinations group. A destination of another user is refused by the database, not only by the form.
+- **Errors (31).** Every validation error shows next to its field, from the same Zod schema the Server Action uses. A server error shows inline under the form, and the values entered are kept.
+- **List (25).** `/alerts` shows one row per alert: name, category, "≥ severity" (none for news), keyword chips, destination names, an Active switch, Edit and Delete. On a mobile width each row stacks as a card.
+- **Empty state (26).** With no alerts, `/alerts` shows "Create your first alert". It explains that an alert tells you when an event in a category you choose reaches a severity you choose, says the account email is ready as a destination, and has a "Create alert" button.
+- **Edit (27).** `/alerts/<id>/edit` opens the form filled in. Saving keeps the alert's creation time. Opening another user's alert gives the 404 page.
+- **Pause (28).** The Active switch pauses and resumes in one click and shows Active or Paused. Events that arrive while an alert is paused are never matched to it, even after it resumes.
+- **Delete (29).** Delete opens a dialog: "Delete "<name>"? It stops matching events. Past notifications stay in your history." After confirming, the alert is gone from the list. Its notifications stay in history as "Deleted alert" and keep counting toward the limits.
+- **Limits in the database.** The keyword rules are enforced by the database as well as by the form, and an account can have 50 alerts at most (added after the security audit).
+- **Only new events (30).** An alert matches only events ingested after it was created.
+- **Matching rules.** An event matches an active alert when:
+  - the category is equal;
+  - the severity is at or above the minimum (any severity for news);
+  - every keyword appears in the title or summary as a whole word, case-insensitive (`art` does not match "Martinique").
+
+### Notifications (stories 32, 33, 35–40)
+
+- **One per destination (32).** One notification per event and destination, even when several alerts of the same user match.
+- **Email content (33).**
+  - Subject: `[<Severity>] <event title> · <alert name>`.
+  - Body, in plain HTML with a text fallback:
+    - the title;
+    - category, severity, time (UTC) and the alert name;
+    - a "View at source" link;
+    - "Data: U.S. Geological Survey" for USGS events.
+  - The recipient is the account's address, read when sending.
+- **Timing (35).** A matching earthquake is emailed within 3 minutes of the next USGS poll that returns it.
+- **Retries (36).** A transient failure is retried at 1, 5 and 15 minutes, then marked failed with the last error.
+  - A notification already created is delivered even if its alert is later paused or deleted.
+- **History (37).** `/notifications` lists the user's notifications, newest first, 25 a page, with Previous and Next links on `?page=`.
+  - Each row has the event with its time, the alert (or "Deleted alert"), the destination and the status.
+  - A pending row shows its next attempt. A failed or skipped row shows its reason.
+  - A user sees only their own notifications.
+- **Limits (38, 39).**
+  - The 11th alert email for a user within any 60 minutes is recorded as skipped, "Hourly limit (10) reached".
+  - The 81st alert email system-wide in a UTC day is skipped, "Daily system limit (80) reached".
+- **Empty state (40).** With no notifications, `/notifications` says they will appear here once an alert matches an event, and links to `/alerts`.
+
+### Events and the USGS source (stories 44–46)
+
+- **USGS (44).**
+  - The source polls the USGS past-day GeoJSON feed of magnitude 4.5 and above, once a minute, in production only.
+  - The external id is the USGS event id.
+  - The summary includes the place, the magnitude and the depth.
+- **Severity (45).** Magnitude 4.5–5.4 is low, 5.5–6.4 moderate, 6.5–7.4 high, and 7.5 and above critical. A PAGER alert of orange or red raises it to at least high. Severity shows with the same four labels everywhere.
+- **No duplicates (46).** The same USGS id stored twice produces one event. A later revision of an event (a new magnitude) is ignored; the first version stays. This is an accepted limitation.
+- **Malformed input.** A malformed feed item is skipped, the rest of the poll is kept, and the poll records its outcome.
+
+### Admin slice (stories 58–60)
+
+- **Access.** `/admin` redirects to `/admin/simulate`, the only admin page in this increment. A signed-in non-admin or a signed-out visitor gets the 404 page.
+- **Simulate form (58).**
+  - Fields: category (all three), severity (forced to low and disabled for news), title (required, up to 200 characters), and optional summary and link (a valid http or https URL).
+  - On success the page says "Event created. The next tick, within a minute, matches and delivers it." and links to `/notifications`.
+- **Simulated marking (59).**
+  - The event is stored with the reserved `simulated` source and flagged simulated.
+  - Its email subject starts `[SIMULATED]`, and the body opens with "This is a simulated event created by an admin. Nothing happened."
+  - History marks it "Simulated".
+- **Same path (60).** A simulated event is matched, limited and delivered by the scheduled tick exactly like a real one. Nothing in the simulate action sends anything or runs a tick.
+
+### Operations (stories 61–66)
+
+- **Scheduler (61).** `pg_cron` calls the tick route every minute through `pg_net`. Alerts fire with nobody visiting the site. This is checked in production at ship, with a screenshot of a simulated event's email arriving.
+- **Email budget (62).** As in Limits above. The daily count resets at 00:00 UTC.
+- **Real polling (63).** Real polling runs only when the production flag is set. Locally and in tests, no request reaches USGS.
+- **Tick secret (64).** The tick route accepts only its own tick secret, compared in constant time. Anything else gets 401 and no tick. The tick secret is not the Supabase secret key.
+  - The `net` schema cannot be restricted from a migration (ADR-0003 addendum). The API does not expose it, and an end-to-end test proves that on every run.
+  - The scheduler reads the tick URL and the tick secret from Supabase Vault and does nothing until both are set.
+- **Local development (65).** Local development runs with no keys, using recorded USGS responses committed to the repository, and simulated events.
+- **Local email (66).** Locally, alert, test and confirmation emails land in the local mail catcher (web UI on port 54324).
+
+### Every page (stories 68, 69)
+
+- **Accessibility (68).**
+  - Every page works at 375 px wide.
+  - Every control can be reached and used with the keyboard, with a visible focus.
+  - Form errors are tied to their fields for screen readers.
+  - The Playwright axe scan has no violations.
+- **States (69).** Every data view shows a skeleton in its shape while loading, its empty state, and on failure a card ("Couldn't load your …") with "Try again", which re-renders that section.
+
+### Tests this increment adds (from the spec's testing decisions)
+
+- **`runTick` integration**, over the local database with fake sources, fake channels and a fake clock. It covers:
+  - matching on category, severity and whole-word keywords;
+  - events ingested before an alert was created not matching it;
+  - paused alerts not matching;
+  - one notification per event and destination;
+  - the two email limits;
+  - the retry schedule and final failure;
+  - a source failure not stopping other sources;
+  - back-to-back and concurrent ticks sending once;
+  - simulated events taking the same path;
+  - polling only when the interval has passed and the flag is on.
+- **USGS mapper unit tests** on recorded responses: the severity boundaries, the PAGER raise, external ids, and malformed items being skipped.
+- **Email channel unit tests:** rendering, including the simulated marking, and outcome classification.
+- **Zod schema tests:** a destination is required; news has no severity; the keyword limits.
+- **pgTAP**, covering:
+  - a user cannot read or change another user's alerts, destinations or notifications;
+  - nobody signed in reads destination settings;
+  - an alert cannot link another user's destination;
+  - only admins simulate;
+  - keyword limits, the test-send limits and the alert limit hold in the database;
+  - the tick's matching and claiming functions, which only the tick may call.
+- **Playwright with axe:**
+  - sign up, confirm through the mail catcher, and sign in;
+  - create, edit, pause and delete an alert;
+  - an admin simulating an event and seeing the notification as sent.
 

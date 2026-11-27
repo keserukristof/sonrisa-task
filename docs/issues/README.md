@@ -6,5 +6,14 @@ A mirror of the GitHub issues: the spec, its increments and their tickets, with 
 | --- | --- | --- | --- |
 | 2 | Spec | [Spec: alerts on world events, delivered by email and Slack, with an admin view](002-spec-alerts-on-world-events-delivered-by-email-and-slack-wit.md) | open |
 | 3 | Increment | [Increment 1: a user gets an email when an earthquake that matters to them happens](003-increment-1-a-user-gets-an-email-when-an-earthquake-that-mat.md) | open |
-| 4 | Increment | [Increment 2: a user gets alerts in Slack, and about news and market movements too](004-increment-2-a-user-gets-alerts-in-slack-and-about-news-and-m.md) | open |
-| 5 | Increment | [Increment 3: an admin sees and runs the whole system](005-increment-3-an-admin-sees-and-runs-the-whole-system.md) | open |
+| 4 | Increment | [Increment 2: a user gets alerts in Slack and about news and markets, and an admin sees the system](004-increment-2-a-user-gets-alerts-in-slack-and-about-news-and-m.md) | open |
+| 5 | Increment | [Increment 3: an admin sees and runs the whole system](005-increment-3-an-admin-sees-and-runs-the-whole-system.md) | closed |
+| 7 | Ticket | [Sign up, confirm and sign in](007-sign-up-confirm-and-sign-in.md) | open |
+| 8 | Ticket | [Manage alerts](008-manage-alerts.md) | open |
+| 9 | Ticket | [Alerting tick: poll, match, limit, deliver](009-alerting-tick-poll-match-limit-deliver.md) | open |
+| 10 | Ticket | [USGS earthquake source](010-usgs-earthquake-source.md) | open |
+| 11 | Ticket | [Email channel and send test](011-email-channel-and-send-test.md) | open |
+| 12 | Ticket | [Notification history](012-notification-history.md) | open |
+| 13 | Ticket | [Simulate an event](013-simulate-an-event.md) | open |
+| 14 | Ticket | [End to end: a simulated event arrives by email](014-end-to-end-a-simulated-event-arrives-by-email.md) | open |
+| 15 | Ticket | [Contracts: schema, interfaces, routes and design tokens for increment 1](015-contracts-schema-interfaces-routes-and-design-tokens-for-inc.md) | closed |

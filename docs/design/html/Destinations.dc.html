@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Destinations</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 520px">
+<header class="hu-header">
+<a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<nav class="hu-nav" aria-label="Main">
+<a href="Main.dc.html">Alerts</a>
+<a href="Notifications.dc.html">Notifications</a>
+<a href="Destinations.dc.html" aria-current="page">Destinations</a>
+<a href="Simulate.dc.html">Admin</a>
+</nav>
+<div class="hu-header__end"><span class="hu-muted">you@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div>
+</header>
+<main class="hu-page">
+<div class="hu-pagehead" style="margin-bottom: 8px">
+<h1 class="hu-title">Destinations</h1>
+</div>
+<p class="hu-muted" style="margin-bottom: 24px">The places your alerts can send notifications to.</p>
+<ul class="hu-card" style="list-style: none; margin: 0; padding: 0">
+<li class="hu-row" style="align-items: flex-start">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 20px; height: 20px; margin-top: 2px; color: var(--muted-foreground)"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path></svg>
+<div class="hu-row__main">
+<p class="hu-row__title">Account email</p>
+<p>you@example.com</p>
+<p class="hu-muted">Created with your account. It can't be removed.</p>
+<p class="hu-status hu-status--sent" role="status" style="margin-top: 10px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Delivered at 13:55 UTC</p>
+</div>
+<button class="hu-btn hu-btn--outline hu-btn--sm">Send test</button>
+</li>
+</ul>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":520}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

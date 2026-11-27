@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Menu open at 360px</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="width: 360px; height: 640px; position: relative; overflow: hidden">
+<header class="hu-header" style="padding: 0 16px">
+<span class="hu-brand"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</span>
+</header>
+<main class="hu-page" style="padding: 16px">
+<h1 class="hu-title">Alerts</h1>
+</main>
+<div class="hu-overlay" style="position: absolute; inset: 0; padding: 0; justify-content: flex-end; align-items: stretch">
+<nav class="hu-menu" aria-label="Main" style="width: 280px">
+<div class="hu-inline" style="justify-content: space-between; margin-bottom: 8px; padding-left: 12px">
+<span class="hu-heading">Menu</span>
+<a class="hu-btn hu-btn--ghost hu-btn--sm" href="MobileAlerts.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>Close</a>
+</div>
+<a href="MobileAlerts.dc.html" aria-current="page">Alerts</a>
+<a href="MobileNotifications.dc.html">Notifications</a>
+<a href="MobileAlerts.dc.html">Destinations</a>
+<a href="MobileAlerts.dc.html">Admin</a>
+<div style="border-top: 1px solid var(--border); margin: 8px 0"></div>
+<p class="hu-muted" style="padding: 0 12px">you@example.com</p>
+<a href="MobileAlerts.dc.html">Sign out</a>
+</nav>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":360,"height":640}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

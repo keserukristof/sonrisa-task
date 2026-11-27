@@ -1,6 +1,7 @@
 import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { connection } from "next/server";
 import { publicEnv } from "@/lib/env";
 import type { Database } from "./database.types";
 
@@ -14,6 +15,12 @@ import type { Database } from "./database.types";
  */
 export async function createClient() {
   const cookieStore = await cookies();
+  // The auth client reads the clock as soon as it is created. In a runtime
+  // prefetch render cookies are available but the clock is not allowed, and
+  // Next.js logs "encountered the unstable value Date.now() while
+  // prerendering". Waiting for the real request keeps every session read out
+  // of any prerender (docs: 03-api-reference/04-functions/connection.md).
+  await connection();
 
   return createServerClient<Database>(
     publicEnv.NEXT_PUBLIC_SUPABASE_URL,

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { PageContainer } from "@/components/page-shell";
 import { Button } from "@/components/ui/button";
 
 export default function ErrorBoundary({
@@ -15,16 +16,20 @@ export default function ErrorBoundary({
   }, [error]);
 
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center gap-4 px-6 py-24">
-      <h1 className="font-heading text-2xl font-semibold tracking-tight">
-        Something went wrong
-      </h1>
-      <p className="text-muted-foreground">
-        The page could not be loaded. You can try again.
-      </p>
-      <div>
-        <Button onClick={() => retry()}>Try again</Button>
+    <PageContainer width="narrow" className="pt-12 md:pt-12">
+      <div className="border-border bg-card flex flex-col gap-3 rounded-lg border p-6">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Something went wrong
+        </h1>
+        <p className="text-muted-foreground text-sm">
+          The page couldn&apos;t be shown. Your alerts are not affected.
+        </p>
+        <div className="mt-2">
+          <Button size="lg" onClick={() => retry()}>
+            Try again
+          </Button>
+        </div>
       </div>
-    </main>
+    </PageContainer>
   );
 }

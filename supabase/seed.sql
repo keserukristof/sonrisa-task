@@ -1,2 +1,8 @@
--- Demo data for local development and reviewers. Applied by `pnpm db:reset`.
--- Keep it idempotent and realistic: reviewers see the app through this data.
+-- Seed for every environment, production included: `supabase db reset` loads
+-- it locally, and a hosted project gets it when it is seeded.
+-- It must never create an account or contain a password. The demo accounts
+-- for local development live in supabase/local/demo-data.sql, which only
+-- scripts/seed-local.mjs loads, into the local database.
+--
+-- Nothing is seeded everywhere yet: production's demo events are created by
+-- an admin with "Simulate an event".

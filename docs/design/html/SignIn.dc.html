@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sign in</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 640px">
+<header class="hu-header">
+<a class="hu-brand" href="Landing.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<div class="hu-header__end"><a class="hu-btn hu-btn--outline hu-btn--sm" href="SignUp.dc.html">Sign up</a></div>
+</header>
+<main class="hu-page hu-page--narrow" style="padding-top: 48px">
+<h1 class="hu-title" style="margin-bottom: 24px">Sign in</h1>
+<form class="hu-card hu-card--pad hu-stack" style="gap: 20px">
+<div class="hu-notice hu-notice--error" role="alert">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>
+<p>Email or password is incorrect.</p>
+</div>
+<div class="hu-field">
+<label class="hu-label" for="email">Email</label>
+<input class="hu-input" id="email" type="email" value="you@example.com" autocomplete="email">
+</div>
+<div class="hu-field">
+<label class="hu-label" for="password">Password</label>
+<input class="hu-input" id="password" type="password" value="" autocomplete="current-password">
+</div>
+<a class="hu-btn hu-btn--primary" href="Main.dc.html">Sign in</a>
+</form>
+<p style="margin-top: 16px">New here? <a href="SignUp.dc.html">Sign up</a></p>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":720,"height":640}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

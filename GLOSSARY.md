@@ -1,4 +1,4 @@
-# World Alerts
+# Heads-up
 
 Lets a person be notified, through the channels they choose, when something they consider important happens in the world.
 

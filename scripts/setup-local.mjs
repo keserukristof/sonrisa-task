@@ -79,4 +79,11 @@ if (existsSync(ENV_FILE)) {
   console.log(`→ Wrote ${ENV_FILE}.`);
 }
 
+// Demo accounts for local use. They are not in the Supabase seed, so they
+// can never be loaded into a hosted project.
+execFileSync("node", ["scripts/seed-local.mjs"], { stdio: "inherit" });
+
+// Server-only variables and the local scheduler's settings.
+execFileSync("node", ["scripts/local-env.mjs"], { stdio: "inherit" });
+
 console.log("\n✔ Ready. Run `pnpm dev` and open http://localhost:3000");
