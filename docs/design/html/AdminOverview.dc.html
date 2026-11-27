@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Admin overview</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 900px">
+<header class="hu-header"><a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a><nav class="hu-nav" aria-label="Main"><a href="Main.dc.html">Alerts</a><a href="Notifications.dc.html">Notifications</a><a href="Destinations2.dc.html">Destinations</a><a href="AdminOverview.dc.html" aria-current="page">Admin</a></nav><div class="hu-header__end"><span class="hu-muted">admin@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div></header>
+<main class="hu-page">
+<h1 class="hu-title" style="margin-bottom: 16px">Admin</h1>
+<nav class="hu-tabs" aria-label="Admin"><a href="AdminOverview.dc.html" aria-current="page">Overview</a><a href="AdminUsers.dc.html">Users</a><a href="AdminEvents.dc.html">Events</a><a href="AdminNotifications.dc.html">Notifications</a><a href="Simulate2.dc.html">Simulate</a></nav>
+<section aria-labelledby="src-h"><h2 class="hu-heading" id="src-h" style="margin-bottom: 12px">Sources</h2><div class="hu-card"><div class="hu-row hu-muted" style="display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr) 110px 110px; padding-top: 8px; padding-bottom: 8px; font-weight: 500"><span>Source</span><span>Last poll</span><span>Events stored</span><span>Status</span></div><ul style="list-style: none; margin: 0; padding: 0"><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr) 110px 110px; align-items: start"><div><p class="hu-row__title">U.S. Geological Survey</p><p class="hu-muted">Earthquakes, every minute</p></div><div><p>18:47 UTC</p><p class="hu-muted">Succeeded</p></div><p>2</p><span class="hu-status hu-status--sent"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>OK</span></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr) 110px 110px; align-items: start"><div><p class="hu-row__title">The Guardian</p><p class="hu-muted">News, every 3 minutes</p></div><div><p>18:46 UTC</p><p class="hu-muted">Failed: The Guardian answered 503 Service Unavailable.</p></div><p>0</p><span class="hu-status hu-status--failed"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>Failing</span></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr) 110px 110px; align-items: start"><div><p class="hu-row__title">CoinGecko</p><p class="hu-muted">Markets, every 5 minutes</p></div><div><p>18:20 UTC</p><p class="hu-muted">Succeeded</p></div><p>1</p><span class="hu-status hu-status--skipped"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>Late</span></li></ul></div></section><section style="margin-top: 32px" aria-labelledby="budget-h">
+<h2 class="hu-heading" id="budget-h" style="margin-bottom: 12px">Email budget</h2>
+<div class="hu-card hu-card--pad hu-stack" style="gap: 8px">
+<p class="hu-lg"><b>37 of 80</b> emails sent today (UTC)</p>
+<div class="hu-meter" role="img" aria-label="37 of 80 emails sent today"><i style="width: 46%"></i></div>
+<p class="hu-muted">4 of 20 test sends</p>
+<p class="hu-caption hu-muted">Resets at 00:00 UTC. Over the budget, emails are skipped with the reason "Daily system limit (80) reached".</p>
+</div>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

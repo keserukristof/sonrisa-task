@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edit alert: news needs a keyword</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 1140px">
+<header class="hu-header"><a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a><nav class="hu-nav" aria-label="Main"><a href="Main.dc.html" aria-current="page">Alerts</a><a href="Notifications.dc.html">Notifications</a><a href="Destinations2.dc.html">Destinations</a></nav><div class="hu-header__end"><span class="hu-muted">you@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div></header>
+<main class="hu-page hu-page--form">
+<p style="margin-bottom: 8px"><a href="AlertsBroken.dc.html">Back to alerts</a></p>
+<h1 class="hu-title" style="margin-bottom: 24px">Edit alert</h1>
+<form class="hu-card hu-card--pad hu-stack" style="gap: 24px">
+<div class="hu-field"><label class="hu-label" for="name">Name</label><input class="hu-input" id="name" value="World headlines"></div>
+<fieldset class="hu-field" style="border: 0; padding: 0; margin: 0">
+<legend class="hu-label" style="padding: 0; margin-bottom: 6px">Category</legend>
+<div class="hu-radio-group">
+<label class="hu-radio hu-radio--on"><input type="radio" name="category" checked="checked">News</label>
+<label class="hu-radio"><input type="radio" name="category">Markets</label>
+<label class="hu-radio"><input type="radio" name="category">Natural disasters</label>
+</div>
+</fieldset>
+<div class="hu-field">
+<label class="hu-label hu-muted" for="severity">Minimum severity</label>
+<select class="hu-select" id="severity" disabled="disabled" aria-describedby="severity-hint"><option>Not used for news</option></select>
+<p class="hu-hint" id="severity-hint">News has no severity levels; every article matches. Use keywords to narrow it.</p>
+</div>
+<div class="hu-field">
+<label class="hu-label" for="keywords">Keywords</label>
+<input class="hu-input" id="keywords" value="" aria-invalid="true" aria-describedby="keywords-hint keywords-error">
+<p class="hu-hint" id="keywords-hint">Required for news. Separate with commas. Every keyword must appear in the event as a whole word. Up to 10.</p><p class="hu-error" id="keywords-error"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>News alerts need at least one keyword, or every article would notify you.</p>
+</div>
+<fieldset class="hu-field" style="border: 0; padding: 0; margin: 0">
+<legend class="hu-label" style="padding: 0; margin-bottom: 6px">Destinations</legend>
+<label class="hu-check"><input type="checkbox" checked="checked">Account email <span class="hu-muted">you@example.com</span></label>
+<label class="hu-check"><input type="checkbox" checked="checked">Ops channel <span class="hu-muted">Slack</span></label>
+<label class="hu-check"><input type="checkbox">Incident room <span class="hu-muted">Slack</span> <span class="hu-status hu-status--failed" style="font-weight: 600"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px"><path d="m19 5 3-3"></path><path d="m2 22 3-3"></path><path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z"></path><path d="M7.5 13.5 10 11"></path><path d="M10.5 16.5 13 14"></path><path d="m12 6 6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z"></path></svg>Broken</span></label>
+<label class="hu-check"><input type="checkbox">Markets desk <span class="hu-muted">Slack</span></label>
+</fieldset>
+<div class="hu-inline">
+<a class="hu-btn hu-btn--primary" href="AlertsBroken.dc.html">Save changes</a>
+<a class="hu-btn hu-btn--outline" href="AlertsBroken.dc.html">Cancel</a>
+</div>
+</form>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1140}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

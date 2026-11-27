@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Admin users</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 640px">
+<header class="hu-header"><a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a><nav class="hu-nav" aria-label="Main"><a href="Main.dc.html">Alerts</a><a href="Notifications.dc.html">Notifications</a><a href="Destinations2.dc.html">Destinations</a><a href="AdminOverview.dc.html" aria-current="page">Admin</a></nav><div class="hu-header__end"><span class="hu-muted">admin@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div></header>
+<main class="hu-page">
+<h1 class="hu-title" style="margin-bottom: 16px">Admin</h1>
+<nav class="hu-tabs" aria-label="Admin"><a href="AdminOverview.dc.html">Overview</a><a href="AdminUsers.dc.html" aria-current="page">Users</a><a href="AdminEvents.dc.html">Events</a><a href="AdminNotifications.dc.html">Notifications</a><a href="Simulate2.dc.html">Simulate</a></nav>
+<div class="hu-card"><div class="hu-row hu-muted" style="display: grid; grid-template-columns: minmax(0, 2fr) 100px 160px 100px; align-items: center; padding-top: 8px; padding-bottom: 8px; font-weight: 500"><span>Email</span><span>Role</span><span>Signed up</span><span>Alerts</span></div><ul style="list-style: none; margin: 0; padding: 0"><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2fr) 100px 160px 100px; align-items: center"><p class="hu-row__title">admin@example.com</p><span class="hu-chip">Admin</span><p>27 Nov 2026</p><p>0 alerts</p></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2fr) 100px 160px 100px; align-items: center"><p class="hu-row__title">demo@heads-up.test</p><span class="hu-chip">User</span><p>27 Nov 2026</p><p>4 alerts</p></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2fr) 100px 160px 100px; align-items: center"><p class="hu-row__title">ann.lee@example.org</p><span class="hu-chip">User</span><p>26 Nov 2026</p><p>1 alert</p></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2fr) 100px 160px 100px; align-items: center"><p class="hu-row__title">ops@example.net</p><span class="hu-chip">User</span><p>25 Nov 2026</p><p>12 alerts</p></li></ul></div><nav class="hu-pager" aria-label="Pagination"><span class="hu-muted">Page 1</span><a class="hu-btn hu-btn--outline hu-btn--sm" href="AdminUsers.dc.html">Next</a></nav>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":640}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

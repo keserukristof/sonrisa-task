@@ -139,3 +139,39 @@ Previous and Next links under a list that has more than one page.
 - 25 rows a page. "Page 2" between them in `muted-foreground`.
 - On the first page "Previous" is not rendered; on the last page "Next" is not rendered. With one page there is no pager.
 - Inside a `nav` with `aria-label="Pagination"`.
+
+## Increment 2 additions
+
+Shared components added for increment 2. Their exact look is at the end of [html/ds/headsup/components/bundle.css](html/ds/headsup/components/bundle.css) (`hu-tabs`, `hu-filter`, `hu-meter`). They were added to the canvas's stylesheet; the design system artifact is unchanged, and the next design run adds them there.
+
+### Tabs
+
+Section navigation inside the admin area.
+
+- A `nav` (`aria-label="Admin"`) of links, one per route; the current one has `aria-current="page"`. Not an ARIA tablist: each tab is a page.
+- Height 40px, padding 0 12px, weight 500 in `muted-foreground`; current: `foreground`, weight 600, 2px `primary` underline over a 1px `border` baseline.
+- Scrolls sideways inside its own container when it does not fit; the page does not.
+- No shadcn `tabs` primitive (that one is client-side panels). A small shared `AdminTabs` component in `src/components/` or the admin feature.
+
+### Filter
+
+A choice among a few values of one query parameter, as links.
+
+- A label ("Status") then a group of links in a 1px `border` box, radius `radius-md`, 3px inner padding. Each link: height 28px, padding 0 10px, radius `radius-sm`; current: `accent` fill, `foreground`, weight 600, `aria-current="page"`.
+- Works without JavaScript. Used once: the admin notifications status filter.
+- A feature component in the admin feature folder.
+
+### Meter
+
+How much of a fixed amount is used.
+
+- 8px tall, radius 4px, track `muted`, fill `foreground`. No colour change: the numbers next to it say the state.
+- `role="img"` with a label that repeats the numbers. Used once: the email budget.
+
+### Broken mark
+
+Marks a broken Slack destination wherever it is named: the unplug icon (lucide `unplug`) and the word ("Broken" or "<name> (broken)") in `destructive`, weight 600. Part of the destinations feature; the alerts feature needs it too, so it moves to `src/components/` (`BrokenMark`).
+
+### Source credit
+
+The credit line for an event's source: "U.S. Geological Survey", "Source: The Guardian", "Powered by CoinGecko", nothing for simulated events. Caption size, `muted-foreground`. One function maps a source to its credit, used by history rows, the admin events list, the email footer and the Slack context line (`src/lib`, since email and Slack rendering need it outside React).

@@ -52,3 +52,8 @@ Landing, sign-up, sign-in and the two message pages use a simpler header: the wo
 ## Components
 
 Header, Button, and `sheet` for the menu panel.
+
+## Increment 2
+
+- The Admin link (admins only) goes to `/admin`, the overview, and is current on every admin route.
+- The mobile menu lists the same links.

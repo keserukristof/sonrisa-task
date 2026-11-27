@@ -77,3 +77,27 @@ Below 640px the page padding and the card padding are 16px. The three category o
 ## Components
 
 Header, Field (input, radio group, select, checkbox group), Button, Notice, Skeleton.
+
+## Increment 2: Slack destinations and the news keyword rule
+
+Artboards: [html/AlertForm2.dc.html](../html/AlertForm2.dc.html) (create, News, with Slack destinations), [html/AlertFormNewsError.dc.html](../html/AlertFormNewsError.dc.html) (edit, News with no keyword). Screenshots `2-alert-form2.png`, `2-alert-form-news-error.png`. Everything above still holds unless this section changes it.
+
+### Destinations
+
+- One checkbox per destination, in the order of `/destinations`: "Account email" first, then each Slack destination by name.
+- Each label is the name, then the kind in `muted-foreground`: "Account email you@example.com", "Ops channel Slack".
+- A broken destination keeps its checkbox, enabled, followed by the unplug icon and "Broken" in `destructive`. It can still be chosen (the user may be about to fix it), but nothing reaches it while broken.
+- "Choose at least one destination." still applies.
+
+### Keywords for news
+
+- When the category is **News**, the Keywords label loses "(optional)" and the hint begins "Required for news.": "Required for news. Separate with commas. Every keyword must appear in the event as a whole word. Up to 10." For Markets and Natural disasters the label and hint stay as in increment 1.
+- Submitting a news alert with no keyword shows, under the hint: "News alerts need at least one keyword, or every article would notify you." The input gets `aria-invalid`, and focus moves to it.
+- The database enforces the same rule; if it refuses anyway, the form shows the same sentence.
+- The label change is client-side when JavaScript runs; without it the field reads "Keywords" with the increment 1 hint, and the server's error still explains.
+
+### Copy, added
+
+- Keywords hint, News: Required for news. Separate with commas. Every keyword must appear in the event as a whole word. Up to 10.
+- Keywords error, News: News alerts need at least one keyword, or every article would notify you.
+- Broken mark: Broken

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Admin overview, not polled</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 720px">
+<header class="hu-header"><a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a><nav class="hu-nav" aria-label="Main"><a href="Main.dc.html">Alerts</a><a href="Notifications.dc.html">Notifications</a><a href="Destinations2.dc.html">Destinations</a><a href="AdminOverview.dc.html" aria-current="page">Admin</a></nav><div class="hu-header__end"><span class="hu-muted">admin@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div></header>
+<main class="hu-page">
+<h1 class="hu-title" style="margin-bottom: 16px">Admin</h1>
+<nav class="hu-tabs" aria-label="Admin"><a href="AdminOverview.dc.html" aria-current="page">Overview</a><a href="AdminUsers.dc.html">Users</a><a href="AdminEvents.dc.html">Events</a><a href="AdminNotifications.dc.html">Notifications</a><a href="Simulate2.dc.html">Simulate</a></nav>
+<section aria-labelledby="src-h"><h2 class="hu-heading" id="src-h" style="margin-bottom: 12px">Sources</h2><div class="hu-card hu-card--pad"><p class="hu-row__title">Not polled in this environment</p><p class="hu-muted" style="margin-top: 4px">Real polling is switched on only in production. Here, events come from simulation and recorded responses.</p></div></section><section style="margin-top: 32px" aria-labelledby="budget-h">
+<h2 class="hu-heading" id="budget-h" style="margin-bottom: 12px">Email budget</h2>
+<div class="hu-card hu-card--pad hu-stack" style="gap: 8px">
+<p class="hu-lg"><b>37 of 80</b> emails sent today (UTC)</p>
+<div class="hu-meter" role="img" aria-label="37 of 80 emails sent today"><i style="width: 46%"></i></div>
+<p class="hu-muted">4 of 20 test sends</p>
+<p class="hu-caption hu-muted">Resets at 00:00 UTC. Over the budget, emails are skipped with the reason "Daily system limit (80) reached".</p>
+</div>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":720}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
