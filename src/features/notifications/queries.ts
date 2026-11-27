@@ -21,13 +21,14 @@ export type NotificationPage =
 const COLUMNS =
   "id, status, attempts, next_attempt_at, last_error, skip_reason, sent_at, events(title, severity, occurred_at, simulated), alerts(name), destinations(name)";
 
-async function fetchPage(page: number) {
+async function fetchPage(userId: string, page: number) {
   const supabase = await createClient();
   const from = (page - 1) * PAGE_SIZE;
   // One extra row tells whether there is a next page.
   return supabase
     .from("notifications")
     .select(COLUMNS)
+    .eq("user_id", userId)
     .order("created_at", { ascending: false })
     .order("id", { ascending: false })
     .range(from, from + PAGE_SIZE)
@@ -35,8 +36,9 @@ async function fetchPage(page: number) {
 }
 
 /**
- * The signed-in user's notifications, newest first. Row Level Security limits
- * the rows to their own. A page past the end shows the first page.
+ * The signed-in user's notifications, newest first. Filtered by user: Row
+ * Level Security lets admins read every row. A page past the end shows the
+ * first page.
  */
 export async function getNotificationPage(
   requested: number,
@@ -45,10 +47,10 @@ export async function getNotificationPage(
   if (!user) return { ok: false };
 
   let page = requested;
-  let result = await fetchPage(page);
+  let result = await fetchPage(user.id, page);
   if (!result.error && result.data.length === 0 && page > 1) {
     page = 1;
-    result = await fetchPage(page);
+    result = await fetchPage(user.id, page);
   }
   if (result.error) return { ok: false };
 

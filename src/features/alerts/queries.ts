@@ -40,6 +40,7 @@ export async function getDestinationOptions(): Promise<{
   const { data, error } = await supabase
     .from("destinations")
     .select("id, name, channel_type")
+    .eq("user_id", user.id)
     .order("created_at", { ascending: true });
   if (error) throw new Error("Could not load destinations.");
   return {
@@ -67,6 +68,7 @@ export async function getAlerts(): Promise<AlertSummary[]> {
     .select(
       "id, name, category, min_severity, keywords, active, created_at, alert_destinations(destination_id, destinations(name))",
     )
+    .eq("user_id", user.id)
     .order("created_at", { ascending: false });
   if (error) throw new Error("Could not load alerts.");
 
@@ -96,6 +98,7 @@ export async function getAlert(id: string): Promise<AlertDetail | null> {
       "id, name, category, min_severity, keywords, alert_destinations(destination_id)",
     )
     .eq("id", id)
+    .eq("user_id", user.id)
     .maybeSingle();
   if (error) throw new Error("Could not load the alert.");
   if (!data) return null;

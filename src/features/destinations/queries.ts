@@ -24,6 +24,7 @@ export async function listDestinations(): Promise<DestinationsView> {
   const { data, error } = await supabase
     .from("destinations")
     .select("id, name, channel_type, status")
+    .eq("user_id", user.id)
     .order("created_at", { ascending: true });
   if (error) throw new Error("Could not read the destinations.");
 
