@@ -25,3 +25,22 @@ Screens: `docs/design/` (README, "Increment 2"); the design decisions recorded o
 - [ ] Resuming a keyword-less news alert is refused and the switch reverts with the designed message
 - [ ] Playwright specs on both projects
 
+
+
+## Contracts already in place
+
+- **The news rule:** `alertSchema` in `src/features/alerts/schema.ts` already refuses a news alert with no keyword, with `NEWS_NEEDS_KEYWORDS` on the `keywords` field. The database check `alerts_news_needs_keywords` (error `23514`) also refuses resuming a paused news alert that has none: the switch reverts with `NEWS_NEEDS_KEYWORDS + " Edit the alert to add one."`. `save_alert` raises `23514` for both "no destination" and this rule: tell them apart by the constraint name in the error message.
+- **Destinations on the form and list:** read `id, name, channel_type, status` from `destinations` in this feature's own `queries.ts` (features do not import each other). Order: email first, then Slack oldest first. A broken one shows `BrokenMark` (`src/components/broken-mark.tsx`): "Broken" on the form, "<name> (broken)" on the list.
+- The migration paused existing keyword-less news alerts; nothing to do for them here.
+- The demo user has two Slack destinations ("Ops channel", "Incident room" broken) and an alert, "Crypto swings", that uses one. Read them, never change them.
+
+## Owned paths
+
+- `src/features/alerts/**`, except `schema.ts` and `schema.test.ts`
+- `src/app/(app)/alerts/**`
+- `e2e/alerts.spec.ts`
+
+**For every ticket:** forms use `Field`, `FieldGroup`, `describedBy` and `SubmitButton` from `src/components/`, and return `ActionResult` (`src/lib/action-result.ts`). Feedback is a `Notice`; a notice after a redirect uses `withNotice()` and `<FlashNotice>` (`src/lib/notices.ts`). Times go through `src/lib/format.ts`. Links that look like buttons use `buttonVariants()` on a `Link`; page buttons are `size="lg"` (36px), row buttons the default size. Pending buttons keep focus (`aria-disabled`, not `disabled`; increment 1 UX review, item 5). End-to-end tests create their own account with `createUser()` from `e2e/support/users.ts`, delete it with `deleteUser()`, and never write through the demo accounts. The local database is shared: assert only on your own rows. Remove your page's "Not built yet." placeholder. Do not add migrations, dependencies, shadcn components, or edit `src/components/ui/` or `globals.css`: report a missing contract instead.
+
+**Accessibility scans:** wait for the page title (`await expect(page).toHaveTitle(…)`) before running axe after a navigation; the title streams in.
+

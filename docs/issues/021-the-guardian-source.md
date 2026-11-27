@@ -22,3 +22,16 @@ Articles from the Guardian's world, business and environment sections become low
 - [ ] Registered with the tick; real polling only when the production flag and the key are present
 - [ ] No test calls the Guardian
 
+
+
+## Contracts already in place
+
+- A placeholder `guardianSource` in `src/lib/alerting/sources/guardian/index.ts` is already registered with the tick. Replace its `fetch`; keep `id: "guardian"`, `category: "news"` and the interval from `sourceEntry("guardian")` in `src/lib/alerting/sources/catalog.ts` (3 minutes; the credit "Source: The Guardian" is there too).
+- The key is `serverEnv().GUARDIAN_API_KEY` (optional: without it, `fetch` throws a clear error, which the tick records as a failed poll). Real polling is the tick's decision (`REAL_POLLING`), not the source's.
+- Write the mapper as a pure function, unit-tested on recorded responses committed next to it, like `sources/usgs`. There is no key in this environment, so build the fixtures from the Content API's documented response shape and say so in the fixture file's name or a comment; the user re-records them with a real key before ship.
+- External id: the content `id`. Severity `low`. Title, summary (the standfirst, as plain text), URL, `webPublicationDate`.
+
+## Owned paths
+
+- `src/lib/alerting/sources/guardian/**`
+
