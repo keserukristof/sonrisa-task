@@ -3,7 +3,7 @@
 - **State:** closed, closed 2026-11-27 18:30 UTC
 - **Opened:** 2026-11-27 18:14 UTC by keserukristof
 - **Labels:** `ready-for-agent`
-- **On GitHub:** https://github.com/keserukristof/ai-task/issues/17
+- **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/17
 
 ## Body
 

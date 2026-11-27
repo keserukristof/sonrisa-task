@@ -6,7 +6,7 @@ A mirror of the GitHub issues: the spec, its increments and their tickets, with 
 | --- | --- | --- | --- |
 | 2 | Spec | [Spec: alerts on world events, delivered by email and Slack, with an admin view](002-spec-alerts-on-world-events-delivered-by-email-and-slack-wit.md) | open |
 | 3 | Increment | [Increment 1: a user gets an email when an earthquake that matters to them happens](003-increment-1-a-user-gets-an-email-when-an-earthquake-that-mat.md) | closed |
-| 4 | Increment | [Increment 2: a user gets alerts in Slack and about news and markets, and an admin sees the system](004-increment-2-a-user-gets-alerts-in-slack-and-about-news-and-m.md) | open |
+| 4 | Increment | [Increment 2: a user gets alerts in Slack and about news and markets, and an admin sees the system](004-increment-2-a-user-gets-alerts-in-slack-and-about-news-and-m.md) | closed |
 | 5 | Increment | [Increment 3: an admin sees and runs the whole system](005-increment-3-an-admin-sees-and-runs-the-whole-system.md) | closed |
 | 7 | Ticket | [Sign up, confirm and sign in](007-sign-up-confirm-and-sign-in.md) | closed |
 | 8 | Ticket | [Manage alerts](008-manage-alerts.md) | closed |

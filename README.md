@@ -36,7 +36,7 @@ pnpm dev         # http://localhost:3000
 
 Users also see their notification history with each notification's status and reason, and every event credits its source.
 
-**Deliberately left out** (the full list and the reasons are in the spec's Out of Scope, [#2](https://github.com/keserukristof/ai-task/issues/2)): Slack OAuth ("Add to Slack"), password reset, teams, other channels, equities, natural disasters other than earthquakes, promoting admins from the interface, a public API.
+**Deliberately left out** (the full list and the reasons are in the spec's Out of Scope, [#2](https://github.com/keserukristof/sonrisa-task/issues/2)): Slack OAuth ("Add to Slack"), password reset, teams, other channels, equities, natural disasters other than earthquakes, promoting admins from the interface, a public API.
 
 **Increments:** both have shipped. Increment 3 (the admin view) was merged into increment 2 at the planned checkpoint ([plan of attack](docs/process/plan-of-attack.md)).
 

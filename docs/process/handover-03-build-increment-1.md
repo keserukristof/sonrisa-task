@@ -1,6 +1,6 @@
 # Handover: build of increment 1
 
-Written 2026-11-27 16:45 at the end of the session that ran Refine, Design, Slice and Contracts for increment 1, for the session that runs Build, Review and Ship. Read this, then `CLAUDE.md`, then the increment issue [#3](https://github.com/keserukristof/ai-task/issues/3) and the tickets under it.
+Written 2026-11-27 16:45 at the end of the session that ran Refine, Design, Slice and Contracts for increment 1, for the session that runs Build, Review and Ship. Read this, then `CLAUDE.md`, then the increment issue [#3](https://github.com/keserukristof/sonrisa-task/issues/3) and the tickets under it.
 
 ## Before anything else
 
@@ -16,19 +16,19 @@ Written 2026-11-27 16:45 at the end of the session that ran Refine, Design, Slic
 - **Branch:** `increment-1`, pushed, clean, at `cd67f18` when this was written. It reaches `main` through one pull request in `/ship`.
 - **Live:** https://sonrisa-task.vercel.app still runs the starter.
 - **Done for increment 1:** Refine, Design, Slice, Contracts. Each has a line in [docs/ai-workflow.md](../ai-workflow.md).
-- **Closed:** [#15](https://github.com/keserukristof/ai-task/issues/15) Contracts.
+- **Closed:** [#15](https://github.com/keserukristof/sonrisa-task/issues/15) Contracts.
 - **Open tickets**, all sub-issues of #3:
 
-  | Ticket                                                    | Title                                          | Blocked by        |
-  | --------------------------------------------------------- | ---------------------------------------------- | ----------------- |
-  | [#7](https://github.com/keserukristof/ai-task/issues/7)   | Sign up, confirm and sign in                   | nothing           |
-  | [#8](https://github.com/keserukristof/ai-task/issues/8)   | Manage alerts                                  | nothing           |
-  | [#9](https://github.com/keserukristof/ai-task/issues/9)   | Alerting tick: poll, match, limit, deliver     | nothing           |
-  | [#10](https://github.com/keserukristof/ai-task/issues/10) | USGS earthquake source                         | nothing           |
-  | [#11](https://github.com/keserukristof/ai-task/issues/11) | Email channel and send test                    | nothing           |
-  | [#12](https://github.com/keserukristof/ai-task/issues/12) | Notification history                           | nothing           |
-  | [#13](https://github.com/keserukristof/ai-task/issues/13) | Simulate an event                              | nothing           |
-  | [#14](https://github.com/keserukristof/ai-task/issues/14) | End to end: a simulated event arrives by email | #9, #10, #11, #13 |
+  | Ticket                                                         | Title                                          | Blocked by        |
+  | -------------------------------------------------------------- | ---------------------------------------------- | ----------------- |
+  | [#7](https://github.com/keserukristof/sonrisa-task/issues/7)   | Sign up, confirm and sign in                   | nothing           |
+  | [#8](https://github.com/keserukristof/sonrisa-task/issues/8)   | Manage alerts                                  | nothing           |
+  | [#9](https://github.com/keserukristof/sonrisa-task/issues/9)   | Alerting tick: poll, match, limit, deliver     | nothing           |
+  | [#10](https://github.com/keserukristof/sonrisa-task/issues/10) | USGS earthquake source                         | nothing           |
+  | [#11](https://github.com/keserukristof/sonrisa-task/issues/11) | Email channel and send test                    | nothing           |
+  | [#12](https://github.com/keserukristof/sonrisa-task/issues/12) | Notification history                           | nothing           |
+  | [#13](https://github.com/keserukristof/sonrisa-task/issues/13) | Simulate an event                              | nothing           |
+  | [#14](https://github.com/keserukristof/sonrisa-task/issues/14) | End to end: a simulated event arrives by email | #9, #10, #11, #13 |
 
   Each ticket body ends with "Contracts already in place" and "Owned paths". An implementer edits nothing outside its owned paths.
 

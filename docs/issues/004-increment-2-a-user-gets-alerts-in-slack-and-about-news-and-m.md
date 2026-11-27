@@ -1,9 +1,9 @@
 # #4: Increment 2: a user gets alerts in Slack and about news and markets, and an admin sees the system
 
-- **State:** open
+- **State:** closed, closed 2026-11-27 20:45 UTC
 - **Opened:** 2026-11-27 11:21 UTC by keserukristof
 - **Labels:** none
-- **On GitHub:** https://github.com/keserukristof/ai-task/issues/4
+- **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/4
 
 ## Body
 

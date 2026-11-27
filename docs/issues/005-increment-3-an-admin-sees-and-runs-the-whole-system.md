@@ -3,7 +3,7 @@
 - **State:** closed, closed 2026-11-27 17:10 UTC
 - **Opened:** 2026-11-27 11:21 UTC by keserukristof
 - **Labels:** none
-- **On GitHub:** https://github.com/keserukristof/ai-task/issues/5
+- **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/5
 
 ## Body
 

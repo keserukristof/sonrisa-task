@@ -47,7 +47,7 @@ Brief ──► Grill (questions with options, decided by me) ──► Spec #2 
 ### 1. Understanding the brief (09:30–11:30)
 
 - **What was done:** a structured grill of the brief in four rounds, two research agents for facts the decisions depended on, then one spec.
-- **What it produced:** [spec #2](https://github.com/keserukristof/ai-task/issues/2) (69 user stories, implementation and testing decisions, out of scope), [GLOSSARY.md](../GLOSSARY.md), three ADRs ([docs/adr/](adr/)), [research-01](process/research-01-slack-oauth-vercel-cron.md), [research-02](process/research-02-event-feeds.md).
+- **What it produced:** [spec #2](https://github.com/keserukristof/sonrisa-task/issues/2) (69 user stories, implementation and testing decisions, out of scope), [GLOSSARY.md](../GLOSSARY.md), three ADRs ([docs/adr/](adr/)), [research-01](process/research-01-slack-oauth-vercel-cron.md), [research-02](process/research-02-event-feeds.md).
 - **Decisions that shaped everything:**
   - "Something important" = an event a user's alert matches, with severity mapped to one four-level scale per source.
   - Real feeds for all three example categories, polled only in production; simulation for everywhere else.
@@ -58,23 +58,23 @@ Brief ──► Grill (questions with options, decided by me) ──► Spec #2 
 ### 2. Planning the increments (11:30–12:30)
 
 - **What was done:** the spec cut into increments ordered by value and risk, with a time checkpoint and a fallback decided in advance.
-- **What it produced:** [plan-of-attack.md](process/plan-of-attack.md), increments [#3](https://github.com/keserukristof/ai-task/issues/3), [#4](https://github.com/keserukristof/ai-task/issues/4), [#5](https://github.com/keserukristof/ai-task/issues/5).
+- **What it produced:** [plan-of-attack.md](process/plan-of-attack.md), increments [#3](https://github.com/keserukristof/sonrisa-task/issues/3), [#4](https://github.com/keserukristof/sonrisa-task/issues/4), [#5](https://github.com/keserukristof/sonrisa-task/issues/5).
 - **Key decisions:** the riskiest path (scheduler → tick → outbox → email, with RLS) ships first; simulation rides with increment 1 so the product can be demonstrated on demand; increment 2 _tests_ the extensibility claim by adding a channel and two sources without touching the alerting core.
 - **What changed later:** increment 1 ran past the 17:30 checkpoint, so increments 2 and 3 merged as planned (decision log 18:12), with a cut order agreed in advance (CoinGecko, then the admin events list, then source health) for a late Build. Build started at 20:40, well before the 01:00 cut-off, so nothing was cut.
 
 ### 3. Increment 1: an email when an earthquake that matters happens
 
-- **Delivers:** sign-up with email confirmation, alerts (create, edit, pause, delete), the account email destination with "Send test", the USGS source, the alerting tick with limits and retries, notification history, admin simulation. Issue [#3](https://github.com/keserukristof/ai-task/issues/3), PR [#16](https://github.com/keserukristof/ai-task/pull/16).
+- **Delivers:** sign-up with email confirmation, alerts (create, edit, pause, delete), the account email destination with "Send test", the USGS source, the alerting tick with limits and retries, notification history, admin simulation. Issue [#3](https://github.com/keserukristof/sonrisa-task/issues/3), PR [#16](https://github.com/keserukristof/sonrisa-task/pull/16).
 - **Design:** the look ("Instrument room": quiet, nearly colourless, so severity is the loudest thing on a screen) was chosen by me from three directions; 23 artboards approved before any ticket was cut ([docs/design/](design/README.md)).
-- **Build:** a Contracts ticket landed the schema, RLS, pgTAP, shared types and route skeletons first ([#15](https://github.com/keserukristof/ai-task/issues/15)); seven implementers then built #7–#13 in parallel, and one built the end-to-end spec #14.
+- **Build:** a Contracts ticket landed the schema, RLS, pgTAP, shared types and route skeletons first ([#15](https://github.com/keserukristof/sonrisa-task/issues/15)); seven implementers then built #7–#13 in parallel, and one built the end-to-end spec #14.
 - **Review:** [code review](reviews/1-code-review.md), [security audit of the contracts](reviews/1-security-auditor-contracts.md) (three high findings fixed before any implementer started), [security audit](reviews/1-security-auditor.md), [UX review](reviews/1-ux-reviewer.md) (seven majors fixed, one reviewer diagnosis rejected as wrong).
 
 ### 4. Increment 2: Slack, news and markets, and the admin view
 
-- **Delivers:** Slack destinations (add by webhook URL, masked hint, test, broken state, removal with a refusal when an alert would lose its only destination), a Block Kit message, the Guardian and CoinGecko sources, source credits everywhere events are shown, failure reasons that name their channel, the news keyword rule, and the admin area (overview with source health and email budget; users, events and notifications lists with a status filter). Issue [#4](https://github.com/keserukristof/ai-task/issues/4), tickets [#17](https://github.com/keserukristof/ai-task/issues/17)–[#27](https://github.com/keserukristof/ai-task/issues/27).
+- **Delivers:** Slack destinations (add by webhook URL, masked hint, test, broken state, removal with a refusal when an alert would lose its only destination), a Block Kit message, the Guardian and CoinGecko sources, source credits everywhere events are shown, failure reasons that name their channel, the news keyword rule, and the admin area (overview with source health and email budget; users, events and notifications lists with a status filter). Issue [#4](https://github.com/keserukristof/sonrisa-task/issues/4), tickets [#17](https://github.com/keserukristof/sonrisa-task/issues/17)–[#27](https://github.com/keserukristof/sonrisa-task/issues/27).
 - **The extensibility claim, checked:** Slack, the Guardian and CoinGecko plug into the `Channel` and `Source` interfaces from increment 1; the alerting core (`src/lib/alerting/run-tick.ts` and `tick/`) changed only to name the channel in two failure sentences and to carry a destination's own broken reason.
-- **Design:** 23 new artboards on the existing system; six choices put to me with mockups, the rest delegated to the agent and logged ([README, "Increment 2"](design/README.md#increment-2)). Four rules the design added beyond #4 were confirmed by me and recorded on [#4](https://github.com/keserukristof/ai-task/issues/4#issuecomment-7224886815).
-- **Contracts ([#17](https://github.com/keserukristof/ai-task/issues/17)):** five migrations; every write to Slack destinations goes through narrow database functions so the webhook URL is never readable through the API; CoinGecko's "one event per coin per 6 hours" is a database trigger, because a source never touches the database; a local Slack stub for end-to-end tests.
+- **Design:** 23 new artboards on the existing system; six choices put to me with mockups, the rest delegated to the agent and logged ([README, "Increment 2"](design/README.md#increment-2)). Four rules the design added beyond #4 were confirmed by me and recorded on [#4](https://github.com/keserukristof/sonrisa-task/issues/4#issuecomment-7224886815).
+- **Contracts ([#17](https://github.com/keserukristof/sonrisa-task/issues/17)):** five migrations; every write to Slack destinations goes through narrow database functions so the webhook URL is never readable through the API; CoinGecko's "one event per coin per 6 hours" is a database trigger, because a source never touches the database; a local Slack stub for end-to-end tests.
 - **Build:** ten implementers in three waves (eight in parallel). Every report was read against its diff before a merge commit; five were corrected by the main session (see below).
 - **Review:** [code review](reviews/2-code-review.md) (two axes, 17 findings, 11 fixed), [security audit of the contracts](reviews/2-security-auditor-contracts.md) (one major fixed by design change), [security audit before ship](reviews/2-security-auditor.md) (notes only), UX review _(in progress)_.
 - **Ship:** _after ship._
@@ -137,7 +137,7 @@ e2e/                        Playwright, one spec per feature, axe scan on every 
 
 - **The extensibility claim (15 min):** read `src/lib/alerting/types.ts`, then `channels/slack/` and `sources/coingecko/`, then `git diff origin/main...increment-2 -- src/lib/alerting/run-tick.ts src/lib/alerting/tick/`: the core barely changed.
 - **Security (20 min):** `supabase/migrations/` from `20261127181812` on (every function says why it is `security definer`), `supabase/tests/increment_2*.test.sql`, and `src/features/destinations/actions.ts` (how "Send test" reaches the webhook URL without the browser ever holding it).
-- **Process (20 min):** pick any ticket, for example [#19](https://github.com/keserukristof/ai-task/issues/19): its body holds the contract and owned paths; follow it to its merge commit, then to the review findings that touched it.
+- **Process (20 min):** pick any ticket, for example [#19](https://github.com/keserukristof/sonrisa-task/issues/19): its body holds the contract and owned paths; follow it to its merge commit, then to the review findings that touched it.
 - **Behaviour (15 min):** `e2e/slack-end-to-end.spec.ts` and `e2e/end-to-end.spec.ts` are the two whole-path tests: an admin simulates an event, the tick runs, the user's channel receives it.
 
 ### Gates every change passed
