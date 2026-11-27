@@ -16,6 +16,7 @@ export const usgsSource: Source = {
     const response = await fetch(USGS_FEED_URL, {
       headers: { accept: "application/geo+json, application/json" },
       cache: "no-store",
+      signal: AbortSignal.timeout(10_000),
     });
     if (!response.ok) {
       throw new Error(`USGS feed answered ${response.status}`);

@@ -60,7 +60,7 @@ export function mapUsgsFeed(body: unknown): EventCandidate[] {
       externalId: id,
       title: p.title ?? `M ${p.mag} - ${place}`,
       summary: `Magnitude ${p.mag} earthquake, ${place}${depthText}.`,
-      url: p.url ?? null,
+      url: p.url && /^https?:\/\//i.test(p.url) ? p.url : null,
       occurredAt: new Date(p.time),
       severity: severityOf(p.mag, p.alert),
       raw,
