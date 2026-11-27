@@ -4,6 +4,7 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { fieldErrorsFrom, type ActionResult } from "@/lib/action-result";
 import { safeNextPath } from "@/lib/auth/next-path";
+import { serverEnv } from "@/lib/env.server";
 import { createClient } from "@/lib/supabase/server";
 import { originFrom } from "./origin";
 import { SIGN_UP_EMAIL_COOKIE } from "./sign-up-cookie";
@@ -29,7 +30,10 @@ export async function signUp(
     };
   }
 
-  const origin = originFrom(await headers());
+  const origin = originFrom(await headers(), {
+    production: process.env.NODE_ENV === "production",
+    appUrl: serverEnv().APP_URL,
+  });
   if (!origin) {
     return { ok: false, message: "Couldn't create your account. Try again." };
   }
