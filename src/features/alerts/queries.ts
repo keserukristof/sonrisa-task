@@ -83,7 +83,7 @@ export async function getAlerts(): Promise<AlertSummary[]> {
   const { data, error } = await supabase
     .from("alerts")
     .select(
-      "id, name, category, min_severity, keywords, active, created_at, alert_destinations(destination_id, destinations(name, status))",
+      "id, name, category, min_severity, keywords, active, created_at, alert_destinations(destination_id, destinations(name, status, channel_type, created_at))",
     )
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
