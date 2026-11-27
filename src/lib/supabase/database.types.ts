@@ -204,6 +204,19 @@ isOneToOne: false
                            },
 "simulate_event":
 { Args: { "p_category": Database["public"]['Enums']["event_category"],"p_severity": Database["public"]['Enums']["severity"],"p_summary"?: string,"p_title": string,"p_url"?: string }; Returns: string
+                           },
+"text_has_word":
+{ Args: { "p_text": string,"p_word": string }; Returns: boolean
+                           },
+"tick_claim_notifications":
+{ Args: { "p_batch"?: number,"p_lease_seconds"?: number,"p_now": string }; Returns: {
+              "alert_name": string,"attempts": number,"channel_type": string,"destination_id": string,"destination_settings": Json,"event_category": Database["public"]['Enums']["event_category"],"event_occurred_at": string,"event_severity": Database["public"]['Enums']["severity"],"event_simulated": boolean,"event_source": string,"event_summary": string,"event_title": string,"event_url": string,"notification_id": string,"user_id": string
+            }[]
+                           },
+"tick_match_events":
+{ Args: { "p_batch"?: number,"p_emails_per_system_per_day": number,"p_emails_per_user_per_hour": number,"p_now": string }; Returns: {
+              "events_matched": number,"notifications_created": number,"notifications_skipped": number
+            }[]
                            }
           }
           Enums: {
