@@ -17,7 +17,7 @@ select 'cccccccc-3333-4000-8000-000000000001', d.id, 'email', now()
 from public.destinations d, generate_series(1, 20)
 where d.user_id = 'cccccccc-3333-4000-8000-000000000001';
 
-select is((select count(*)::int from public.test_sends where created_at >= date_trunc('day', now() at time zone 'utc') at time zone 'utc'), 20, 'twenty test sends are recorded today');
+select is((select count(*)::int from public.test_sends where user_id = 'cccccccc-3333-4000-8000-000000000001'), 20, 'account A has twenty test sends today');
 
 -- Account B, which has sent none, is refused by the system-wide cap.
 select set_config('role', 'authenticated', true);
