@@ -16,9 +16,9 @@ function messageFor(
 
 describe("addSlackDestinationSchema", () => {
   it("accepts a name and a Slack incoming webhook URL, trimmed", () => {
-    expect(production.parse({ name: " Ops channel ", url: ` ${url} ` })).toEqual(
-      { name: "Ops channel", url },
-    );
+    expect(
+      production.parse({ name: " Ops channel ", url: ` ${url} ` }),
+    ).toEqual({ name: "Ops channel", url });
   });
 
   it("needs a name of at most 60 characters", () => {

@@ -45,7 +45,9 @@ describe("allowsLocalSlackStub", () => {
   it("allows the local Slack stub everywhere but Vercel's production", () => {
     expect(allowsLocalSlackStub(parseServerEnv(required))).toBe(true);
     expect(
-      allowsLocalSlackStub(parseServerEnv({ ...required, VERCEL_ENV: "preview" })),
+      allowsLocalSlackStub(
+        parseServerEnv({ ...required, VERCEL_ENV: "preview" }),
+      ),
     ).toBe(true);
     expect(
       allowsLocalSlackStub(

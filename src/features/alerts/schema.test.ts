@@ -54,7 +54,9 @@ describe("alertSchema", () => {
   });
 
   it("lets other categories have no keyword", () => {
-    expect(alertSchema.safeParse({ ...valid, keywords: "" }).success).toBe(true);
+    expect(alertSchema.safeParse({ ...valid, keywords: "" }).success).toBe(
+      true,
+    );
   });
 
   it("drops the severity of a news alert", () => {

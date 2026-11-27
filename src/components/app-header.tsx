@@ -10,7 +10,7 @@ const userItems: NavItem[] = [
 ];
 
 const adminItem: NavItem = {
-  href: "/admin/simulate",
+  href: "/admin",
   label: "Admin",
   section: "/admin",
 };

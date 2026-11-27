@@ -19,6 +19,20 @@ pnpm dev         # http://localhost:3000
 
 `pnpm bootstrap` downloads the Supabase images on its first run, which takes a few minutes. If Docker has little memory to spare, `pnpm bootstrap --lite` starts only the services the application uses (about 300 MB) and leaves out Supabase Studio.
 
+## Admin access
+
+Reviewers get an admin login for the live site privately, not in this repository. Locally, `pnpm bootstrap` creates a demo user and a demo admin (see `supabase/local/demo-data.sql`).
+
+There is no way to promote a user from the interface. To make an existing account an admin, run this in the Supabase SQL editor of the project, replacing the email:
+
+```sql
+update public.profiles
+set role = 'admin'
+where email = 'reviewer@example.com';
+```
+
+The admin area is at `/admin`: source health and today's email budget, the lists of users, events and notifications, and "Simulate an event".
+
 ## Scripts
 
 | Command            | What it does                                             |

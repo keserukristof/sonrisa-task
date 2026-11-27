@@ -18,7 +18,9 @@ export const SLACK_NAME_MAX = 60;
  * are the database's (`add_slack_destination`), which the action maps to
  * the messages in docs/design/screens/add-slack-destination.md.
  */
-export function addSlackDestinationSchema(options: { allowLocalStub: boolean }) {
+export function addSlackDestinationSchema(options: {
+  allowLocalStub: boolean;
+}) {
   return z.object({
     name: z
       .string()

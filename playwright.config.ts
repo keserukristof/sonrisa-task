@@ -21,6 +21,12 @@ function defaultPort(): number {
 const port = Number(process.env.PORT ?? defaultPort());
 const baseURL = process.env.E2E_BASE_URL ?? `http://localhost:${port}`;
 
+// The local Slack stub (e2e/support/slack-stub.mjs) listens 1000 above the
+// app, so parallel worktrees get their own. Set here, so test workers, which
+// load this file too, read the same value in e2e/support/slack.ts.
+const slackStubPort = port + 1000;
+process.env.SLACK_STUB_PORT = String(slackStubPort);
+
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
@@ -44,10 +50,19 @@ export default defineConfig({
   // run while a dev server for the same checkout is open.
   webServer: process.env.E2E_BASE_URL
     ? undefined
-    : {
-        command: `pnpm exec next build && pnpm exec next start --port ${port}`,
-        url: baseURL,
-        reuseExistingServer: false,
-        timeout: 180_000,
-      },
+    : [
+        {
+          command: "node e2e/support/slack-stub.mjs",
+          url: `http://127.0.0.1:${slackStubPort}/__health`,
+          env: { SLACK_STUB_PORT: String(slackStubPort) },
+          reuseExistingServer: false,
+          timeout: 10_000,
+        },
+        {
+          command: `pnpm exec next build && pnpm exec next start --port ${port}`,
+          url: baseURL,
+          reuseExistingServer: false,
+          timeout: 180_000,
+        },
+      ],
 });
