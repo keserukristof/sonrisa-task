@@ -21,8 +21,8 @@ export type AdminNotificationPage =
 async function fetchPage(status: NotificationStatus | null, page: number) {
   const supabase = await createClient();
   return supabase.rpc("admin_notifications", {
-    // Null means every status; the generated type does not know it can be null.
-    p_status: status as string,
+    // No status means every status (the parameter defaults to null).
+    p_status: status ?? undefined,
     p_limit: PAGE_SIZE,
     p_offset: (page - 1) * PAGE_SIZE,
   });

@@ -186,7 +186,7 @@ isOneToOne: false
             }[]
                            },
 "admin_notifications":
-{ Args: { "p_limit": number,"p_offset": number,"p_status": string }; Returns: {
+{ Args: { "p_limit"?: number,"p_offset"?: number,"p_status"?: string }; Returns: {
               "attempts": number,"channel_type": string,"created_at": string,"event_occurred_at": string,"event_simulated": boolean,"event_title": string,"id": string,"last_error": string,"next_attempt_at": string,"owner_email": string,"sent_at": string,"skip_reason": string,"status": string,"total_count": number
             }[]
                            },
