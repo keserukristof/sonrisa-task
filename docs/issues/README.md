@@ -17,3 +17,14 @@ A mirror of the GitHub issues: the spec, its increments and their tickets, with 
 | 13 | Ticket | [Simulate an event](013-simulate-an-event.md) | closed |
 | 14 | Ticket | [End to end: a simulated event arrives by email](014-end-to-end-a-simulated-event-arrives-by-email.md) | closed |
 | 15 | Ticket | [Contracts: schema, interfaces, routes and design tokens for increment 1](015-contracts-schema-interfaces-routes-and-design-tokens-for-inc.md) | closed |
+| 17 | Ticket | [Contracts: schema, interfaces, routes and shared components for increment 2](017-contracts-schema-interfaces-routes-and-shared-components-for.md) | open |
+| 18 | Ticket | [Slack channel: Block Kit messages and delivery outcomes](018-slack-channel-block-kit-messages-and-delivery-outcomes.md) | open |
+| 19 | Ticket | [Slack destinations: add, test, broken and remove](019-slack-destinations-add-test-broken-and-remove.md) | open |
+| 20 | Ticket | [Alerts: Slack destinations and the news keyword rule](020-alerts-slack-destinations-and-the-news-keyword-rule.md) | open |
+| 21 | Ticket | [The Guardian source](021-the-guardian-source.md) | open |
+| 22 | Ticket | [CoinGecko source](022-coingecko-source.md) | open |
+| 23 | Ticket | [Credits and channel-named failure reasons](023-credits-and-channel-named-failure-reasons.md) | open |
+| 24 | Ticket | [Admin overview: source health and email budget](024-admin-overview-source-health-and-email-budget.md) | open |
+| 25 | Ticket | [Admin lists: users and notifications](025-admin-lists-users-and-notifications.md) | open |
+| 26 | Ticket | [Admin events list](026-admin-events-list.md) | open |
+| 27 | Ticket | [End to end: a simulated event reaches Slack, and a gone channel turns broken](027-end-to-end-a-simulated-event-reaches-slack-and-a-gone-channe.md) | open |
