@@ -113,13 +113,15 @@ export type DeliveryTarget<Settings> = {
  * - sent: done.
  * - retry: a transient failure (network, 5xx, 429). `retryAfterSeconds` is the
  *   provider's own wait, when it gave one.
- * - broken: a permanent failure. The notification fails at once and the
- *   destination is marked broken with this reason.
+ * - broken: a permanent failure. The notification fails at once with
+ *   `error`, and the destination is marked broken with `destinationReason`
+ *   (or `error` when there is none). Failure sentences name their channel:
+ *   "The email …", "The Slack …".
  */
 export type SendOutcome =
   | { kind: "sent" }
   | { kind: "retry"; error: string; retryAfterSeconds?: number }
-  | { kind: "broken"; error: string };
+  | { kind: "broken"; error: string; destinationReason?: string };
 
 /**
  * A way a notification reaches a user. Adding a channel means a new adapter

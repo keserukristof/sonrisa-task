@@ -67,7 +67,10 @@ export async function deliverNotifications(
       if (row.destination_id && row.channel_type !== "email") {
         const { error: brokenError } = await db
           .from("destinations")
-          .update({ status: "broken", broken_reason: outcome.error })
+          .update({
+            status: "broken",
+            broken_reason: outcome.destinationReason ?? outcome.error,
+          })
           .eq("id", row.destination_id);
         written("mark destination broken", brokenError);
       }
@@ -113,7 +116,13 @@ async function sendOne(
 ): Promise<SendOutcome> {
   try {
     if (!row.destination_id) {
-      return { kind: "broken", error: "The email destination was deleted." };
+      return {
+        kind: "broken",
+        error:
+          row.channel_type === "email"
+            ? "The email destination was deleted."
+            : "The Slack destination was removed.",
+      };
     }
     const channel = channels.find((c) => c.type === row.channel_type);
     if (!channel) {

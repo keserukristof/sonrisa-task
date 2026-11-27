@@ -11,6 +11,9 @@ export const NOTICES = {
   "alert-created": "Alert created.",
   "changes-saved": "Changes saved.",
   "alert-deleted": "Alert deleted.",
+  "slack-destination-added":
+    "Slack destination added. Send a test to check it works.",
+  "slack-destination-removed": "Slack destination removed.",
 } as const;
 
 export type NoticeKey = keyof typeof NOTICES;
