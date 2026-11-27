@@ -2,7 +2,7 @@
 
 Heads-up tells you when something in the world reaches the importance you chose: an earthquake, a major news story, a sharp crypto move. You set up alerts, and they reach your email or a Slack channel; an admin sees the whole system and can simulate an event to prove the path end to end.
 
-- **Live:** https://sonrisa-task.vercel.app ([health check](https://sonrisa-task.vercel.app/api/health)). Sign up with any email address you can read; reviewers get an admin login privately (see [Admin access](#admin-access)).
+- **Live:** https://sonrisa-task.vercel.app ([health check](https://sonrisa-task.vercel.app/api/health)). Reviewers get a user login and an admin login privately (see [Admin access](#admin-access)).
 - **Reviewers, start here:** [docs/review-guide.md](docs/review-guide.md): what was done, the key decisions, and what the AI got wrong and how it was caught, task by task.
 - **How it was built with AI:** [docs/ai-workflow.md](docs/ai-workflow.md).
 
@@ -80,6 +80,7 @@ The reasoning: [ADR-0001](docs/adr/0001-architecture-baseline.md) (baseline), [A
 
 ## Known limitations and what would come next
 
+- **Production email uses Resend's test sender**, so it reaches only the project owner's address. Reviewers sign in with accounts created for them (handed over privately); alerts to Slack work for anyone. A verified sending domain lifts this.
 - The Guardian and CoinGecko mappers are unit-tested on responses built from the providers' documentation; they should be re-recorded from the live APIs.
 - Admins are granted by SQL; promotion from the interface was cut.
 - A removed Slack destination shows as "Removed destination" in history, because its name is not kept.
