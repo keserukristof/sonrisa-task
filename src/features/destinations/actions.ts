@@ -42,11 +42,17 @@ export async function sendTest(
   );
   const delivered = outcome.kind === "sent";
 
-  await supabase.rpc("finish_test_send", {
+  const { error: finishError } = await supabase.rpc("finish_test_send", {
     p_test_send_id: claim.test_send_id,
     p_delivered: delivered,
     ...(delivered ? {} : { p_error: outcome.error }),
   });
+  if (finishError) {
+    console.error(
+      "[destinations] finish_test_send failed",
+      finishError.message,
+    );
+  }
 
   return delivered
     ? { ok: true, message: `Delivered at ${formatUtcTime(now)}` }

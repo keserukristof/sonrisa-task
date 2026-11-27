@@ -7,6 +7,8 @@ const REFUSALS: Record<string, string> = {
   hourly_limit: "Not sent. You've reached 10 emails this hour.",
   daily_limit: "Not sent. Heads-up has reached its 80 emails for today.",
   test_limit: "Not sent. You've sent 3 tests today.",
+  system_test_limit:
+    "Not sent. Heads-up has reached its 20 test emails for today.",
 };
 
 /** What the destination row shows for the state of the "Send test" form. */
