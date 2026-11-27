@@ -55,9 +55,12 @@ On the first increment, rewrite `README.md` for a reviewer who has ten minutes. 
 
 ## 6. AI workflow write-up
 
-Add the increment's row to the increments table in `docs/ai-workflow.md`, linking its issue and pull request.
+- Add the increment's row to the increments table in `docs/ai-workflow.md`, linking its issue, pull request, review files and screenshots.
+- Save the production walk-through screenshots to `docs/screenshots/<increment>-production-<desktop|mobile>.png`.
+- Check that every review of the increment is in `docs/reviews/` with a disposition per finding, and that the decision log has the increment's decisions and rejections.
+- Run `pnpm evidence:export`, read the new prompts in `docs/prompts/` for personal data the redaction missed, and commit the result with `docs(process): evidence for increment <n>`.
 
-After the last increment, finish the page. Keep it to one compact page of what was **actually used** in this project: fill the phase table from the real issues, pull requests and commits, link them, and delete any row that did not happen. Then close the spec issue.
+After the last increment, finish the page: it stays one page, as the map to the evidence, not a replacement for it. Fill the phase table from the real issues, pull requests and commits and link them. A phase that did not happen is marked as skipped with the reason, not deleted. Then close the spec issue and run `pnpm evidence:export` once more.
 
 ## 7. Report
 

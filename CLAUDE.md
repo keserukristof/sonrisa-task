@@ -80,6 +80,16 @@ Phases 1, 2, 3 and 5 run in the main session, so the user switches the session m
 - `/design`, `/contracts` and `/ship` are project skills in `.claude/skills/`. Every other command in the tables comes from the `mattpocock-skills` plugin and is namespaced: `/mattpocock-skills:to-spec`, and `mattpocock-skills:tdd` when calling the Skill tool. Use the plugin's `code-review`, not the built-in one of the same name.
 - After each phase, add one line to `docs/ai-workflow.md` saying what was used and what it produced.
 
+## Process evidence
+
+The reviewers judge how the result was reached, not the result. The brief is in `docs/process/brief.md`. Record the process while it happens, in the repository, never from memory at the end:
+
+- **Decision log** (`docs/process/decision-log.md`): append a row whenever the user chooses, overrules, rejects or redirects, and whenever agent output is rejected or corrected after a check. Say who decided and link the evidence: a test run, a doc, a review file, a screenshot. A rejection with its reason is worth more than an acceptance.
+- **Reviews** (`docs/reviews/`): save every report from `/code-review`, `security-auditor` and `ux-reviewer` verbatim, with a disposition for each finding, in the format of `docs/reviews/README.md`. The review agents are read-only, so the main session writes the file. An implementer report that was not accepted as it stood gets a file too.
+- **Screenshots** (`docs/screenshots/`): what was checked by looking, named as that folder's README says.
+- **Prompts and issues**: run `pnpm evidence:export` after any phase that creates or changes issues, and before each push. It regenerates `docs/prompts/` and `docs/issues/`; never edit those by hand.
+- Before a push that includes `docs/prompts/`, read the new prompts for personal data the redaction missed.
+
 ## Agent routing
 
 When a skill asks for a sub-agent, use the project agent instead of a generic one:

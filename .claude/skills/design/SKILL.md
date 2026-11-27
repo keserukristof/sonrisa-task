@@ -52,6 +52,8 @@ On the first increment, create a Claude **Design** artifact that builds on that 
 
 Share both artifacts. Walk through the primary flow in one or two sentences per screen. Revise until the user approves. Their approval ends this step, not yours.
 
+Every direction the user rejects and every change they ask for goes into `docs/process/decision-log.md` as it happens, with the reason they gave.
+
 ## 6. Export into the repo
 
 Write the approved design to `docs/design/`, adding to what earlier increments exported:

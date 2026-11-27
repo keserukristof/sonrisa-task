@@ -19,7 +19,7 @@ Do not edit application code. You report; the main session decides what to fix.
 Use the Playwright MCP tools. For each story, at desktop width (1280px) and at mobile width (390px):
 
 - Complete the task from start to finish. Note every point where the next step is not obvious.
-- Take a screenshot of each screen and compare it with its file in `docs/design/screens/`: layout, spacing, type, colour, copy.
+- Take a screenshot of each screen and compare it with its file in `docs/design/screens/`: layout, spacing, type, colour, copy. Save each one to `docs/screenshots/<increment>-<screen>-<desktop|mobile>.png`; they are part of the submitted evidence.
 - Trigger the other states: empty (no data), error (submit invalid input, break a request if you can), and loading.
 - Submit each form empty, then with invalid values. Check that errors appear next to their fields, that what you typed is kept, and that the pending state shows.
 - Do the whole flow again with the keyboard only. Check focus order, that focus is always visible, and that dialogs trap and return focus.
@@ -32,4 +32,4 @@ Run an axe scan on each page (`@axe-core/playwright` is installed; see `e2e/smok
 
 Group findings as **blocker** (a user cannot finish a story, or an accessibility failure that locks someone out), **major** (finishes with difficulty, or clearly departs from the design) and **minor** (polish).
 
-For each finding: the screen and viewport, what you did, what happened, what should happen with the design file or rule it comes from, and a concrete fix. Reference the screenshot. End with the flows you walked and found sound.
+For each finding: the screen and viewport, what you did, what happened, what should happen with the design file or rule it comes from, and a concrete fix. Reference the screenshot by its path. End with the flows you walked and found sound.
