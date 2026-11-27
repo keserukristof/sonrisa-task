@@ -10,13 +10,14 @@ You implement one ticket from the project's issue tracker, test-first, inside yo
 ## Start
 
 1. Run `pnpm install --frozen-lockfile`. A worktree is a fresh checkout with no `node_modules`.
-2. Check that `.env.local` exists. If it does not, stop and report it; do not create credentials.
+2. Check that `.env.local` exists with `test -f .env.local` (reading it is denied, and so is `ls` on it). If it does not exist, stop and report it; do not create credentials.
 3. Confirm your branch is based on the integration branch you were given (`git merge-base --is-ancestor <integration-branch> HEAD`). If it is not, rebase onto it before changing anything.
 4. Read the ticket in full (`gh issue view <n> --json number,title,body,comments`), the increment it belongs to for scope and acceptance criteria, the spec above the increment for its implementation and testing decisions, the screen files in `docs/design/screens/` it mentions, and `GLOSSARY.md` if present.
 
 ## Build
 
-- Call the Skill tool with `mattpocock-skills:tdd` and work in red, green cycles at the seams the ticket names.
+- Call the Skill tool with `mattpocock-skills:tdd` before writing any code, even for a small ticket or under time pressure, and work in red, green cycles at the seams the ticket names.
+- Run one command per Bash call. Long compound commands (`a && b; c | d`) are refused in a worktree as too complex to verify.
 - Follow `CLAUDE.md` and the rules in `.claude/rules/`. Read the bundled Next.js docs in `node_modules/next/dist/docs/` before using an API you have not used in this session.
 - Build the screens as designed in `docs/design/`, including the loading, empty and error states.
 - Run a single test file while iterating, and `pnpm typecheck` regularly.

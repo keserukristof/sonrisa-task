@@ -20,7 +20,7 @@
     "db:status": "supabase status",
     "db:reset": "supabase db reset",
     "db:new": "supabase migration new",
-    "db:types": "supabase gen types typescript --local > src/lib/supabase/database.types.ts && prettier --write src/lib/supabase/database.types.ts",
+    "db:types": "supabase gen types typescript >src/lib/supabase/database.types.ts && prettier --write src/lib/supabase/database.types.ts",
     "db:test": "supabase test db",
     "bootstrap": "node scripts/setup-local.mjs"
   },
