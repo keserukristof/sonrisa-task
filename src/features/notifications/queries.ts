@@ -3,9 +3,9 @@ import { getCurrentUser } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import {
   PAGE_SIZE,
+  parseRawNotifications,
   toNotificationRow,
   type NotificationRowData,
-  type RawNotification,
 } from "./notification-row";
 
 export type NotificationPage =
@@ -31,8 +31,7 @@ async function fetchPage(userId: string, page: number) {
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
     .order("id", { ascending: false })
-    .range(from, from + PAGE_SIZE)
-    .overrideTypes<RawNotification[], { merge: false }>();
+    .range(from, from + PAGE_SIZE);
 }
 
 /**
@@ -54,6 +53,9 @@ export async function getNotificationPage(
   }
   if (result.error) return { ok: false };
 
-  const rows = result.data.slice(0, PAGE_SIZE).map(toNotificationRow);
-  return { ok: true, rows, page, hasNext: result.data.length > PAGE_SIZE };
+  const raw = parseRawNotifications(result.data);
+  if (!raw) return { ok: false };
+
+  const rows = raw.slice(0, PAGE_SIZE).map(toNotificationRow);
+  return { ok: true, rows, page, hasNext: raw.length > PAGE_SIZE };
 }
