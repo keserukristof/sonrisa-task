@@ -1,25 +1,43 @@
 # How this project was built with AI
 
-One page on the solutions actually used. It is filled in as the work happens; rows that did not happen are removed before submission.
+The map of the process. This page summarises; the evidence it points to is the submission. It is filled in as the work happens.
+
+## Where the evidence is
+
+| What                                                                    | Where                                                              |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| The brief, verbatim                                                     | [docs/process/brief.md](process/brief.md)                          |
+| What was prepared before the task, and what went wrong then             | [docs/process/00-preparation.md](process/00-preparation.md)        |
+| The plan of attack: deliverables, order, why                            | [docs/process/plan-of-attack.md](process/plan-of-attack.md)        |
+| Every decision, rejection and course correction                         | [docs/process/decision-log.md](process/decision-log.md)            |
+| Every prompt since the task arrived, and every brief sent to a subagent | [docs/prompts/](prompts/README.md)                                 |
+| The spec, increments and tickets, with comments                         | [docs/issues/](issues/README.md)                                   |
+| Glossary and architecture decisions from the grill                      | [GLOSSARY.md](../GLOSSARY.md), [docs/adr/](adr/)                   |
+| The approved design                                                     | [docs/design/](design/README.md)                                   |
+| Every review, and what was done about each finding                      | [docs/reviews/](reviews/README.md)                                 |
+| Screenshots                                                             | [docs/screenshots/](screenshots/README.md)                         |
+| The agent kit itself: rules, agents, skills, hooks                      | [.claude/](../.claude/), [CLAUDE.md](../CLAUDE.md)                 |
+| Milestones                                                              | the commit history; tag `task-received` marks where the task began |
 
 ## Starting point
 
-- **Prepared before the task arrived (2026-11-26):** this starter (Next.js 16, Supabase, quality gates, CI, deploy pipeline) and the agent setup described below. No task-specific code.
-- **Built during the 24 hours:** everything under `src/features/`, the database schema, the design and the tests for them.
+- **Prepared before the task arrived (2026-11-26 16:31 to 2026-11-27 09:18):** this starter (Next.js 16, Supabase, quality gates, CI, deploy pipeline) and the agent setup described below. No task-specific code. Details in [00-preparation.md](process/00-preparation.md).
+- **Built during the 24 hours:** everything after the tag `task-received`: `git diff task-received..main`.
 
 ## Tools
 
-| Tool                                          | Used for                                                                                   |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Claude Code (desktop app)                     | Main session: planning, architecture, orchestration                                        |
-| Fable 5.2 / Opus 5.5 / Sonnet 5.5             | Architecture and orchestration / spec and review / parallel implementers                   |
-| `mattpocock-skills` plugin (third party, MIT) | Process spine: grilling, spec, tickets, parallel implementation, TDD, two-axis code review |
-| Project skills (`.claude/skills/`)            | `design`, `contracts`, `ship`: the phases the plugin does not cover                        |
-| Project agents (`.claude/agents/`)            | `implementer`, `reviewer`, `security-auditor`, `ux-reviewer`, `nextjs-advisor`             |
-| Project rules (`.claude/rules/`)              | Next.js 16, Supabase, UI and testing conventions, loaded per file path                     |
-| Hooks (`.claude/hooks/`)                      | Format and lint on every edit; lint, typecheck and tests before an agent may finish        |
-| MCP servers                                   | next-devtools, context7, shadcn, Playwright, Supabase                                      |
-| Claude Design artifacts                       | Design system and screens, approved before implementation                                  |
+| Tool                                          | Used for                                                                                          |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Claude Code (desktop app)                     | Main session: planning, architecture, orchestration                                               |
+| Fable 5.2 / Opus 5.5 / Sonnet 5.5             | Architecture and orchestration / spec and review / parallel implementers                          |
+| `mattpocock-skills` plugin (third party, MIT) | Process spine: grilling, spec, tickets, parallel implementation, TDD, two-axis code review        |
+| Project skills (`.claude/skills/`)            | `design`, `contracts`, `ship`: the phases the plugin does not cover                               |
+| Project agents (`.claude/agents/`)            | `implementer`, `reviewer`, `security-auditor`, `ux-reviewer`, `nextjs-advisor`                    |
+| Project rules (`.claude/rules/`)              | Next.js 16, Supabase, UI and testing conventions, loaded per file path                            |
+| Hooks (`.claude/hooks/`)                      | Format and lint on every edit; lint, typecheck and tests before an agent may finish               |
+| Evidence scripts                              | `pnpm evidence:export`: prompts from the session transcripts and issues from GitHub, into `docs/` |
+| MCP servers                                   | next-devtools, context7, shadcn, Playwright, Supabase                                             |
+| Claude Design artifacts                       | Design system and screens, approved before implementation                                         |
 
 ## Phases
 
@@ -54,8 +72,8 @@ The brief was understood once (phases 1 and 2), then built in increments: phases
 
 ## What I decided myself
 
-_Filled in during the task: scope cuts, trade-offs, places where I overruled the agents._
+_The most important entries of the [decision log](process/decision-log.md), summarised at the end: scope cuts, trade-offs, places where I overruled the agents._
 
 ## What did not work
 
-_Filled in during the task._
+_The AI mistakes and shortcuts that were caught, and how: from the decision log and [docs/reviews/](reviews/README.md). The ones from preparation are in [00-preparation.md](process/00-preparation.md#what-went-wrong-and-how-it-was-caught)._
