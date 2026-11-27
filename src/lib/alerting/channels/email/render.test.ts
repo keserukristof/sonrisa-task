@@ -69,8 +69,18 @@ describe("renderAlertEmail", () => {
     expect(email.html).toContain('href="https://earthquake.usgs.gov/event/1"');
     expect(email.html).toContain("View at source");
     expect(email.html).toContain('href="https://heads-up.example/alerts"');
-    expect(email.text).toContain("https://earthquake.usgs.gov/event/1");
+    expect(email.text).toContain(
+      "View at source: https://earthquake.usgs.gov/event/1",
+    );
     expect(email.text).toContain("https://heads-up.example/alerts");
+  });
+
+  it("keeps a line break in the title out of the subject", () => {
+    const email = renderAlertEmail(
+      notification({ title: "M 6.8\r\nBcc: x@evil.example" }),
+      APP_URL,
+    );
+    expect(email.subject).not.toMatch(/[\r\n]/);
   });
 
   it("leaves out the button when the event has no url", () => {

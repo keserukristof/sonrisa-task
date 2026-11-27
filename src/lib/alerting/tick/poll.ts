@@ -1,12 +1,8 @@
 import type { AdminClient } from "@/lib/supabase/admin";
 import type { Clock, Source } from "../types";
+import { errorText } from "./error-text";
 
 export type PollResult = { polled: number; stored: number; failed: number };
-
-function message(error: unknown): string {
-  const text = error instanceof Error ? error.message : String(error);
-  return text.slice(0, 500);
-}
 
 /** Polls every source whose interval has passed. One source failing never stops the others. */
 export async function pollSources(
@@ -63,16 +59,19 @@ export async function pollSources(
         stored = data.length;
       }
     } catch (caught) {
-      error = message(caught);
+      error = errorText(caught);
     }
 
-    await db.from("source_polls").insert({
+    const { error: logError } = await db.from("source_polls").insert({
       source: source.id,
       polled_at: now.toISOString(),
       outcome: error === null ? "ok" : "error",
       error,
       events_stored: stored,
     });
+    if (logError) {
+      console.error(`[tick] source_polls insert: ${errorText(logError)}`);
+    }
 
     if (error === null) result.stored += stored;
     else result.failed += 1;
