@@ -15,11 +15,13 @@ function raw(overrides: Partial<RawNotification> = {}): RawNotification {
     last_error: null,
     skip_reason: null,
     sent_at: "2026-11-27T13:43:00+00:00",
+    channel_type: "email",
     events: {
       title: "M 6.8 - Hualien",
       severity: "high",
       occurred_at: "2026-11-27T13:42:00+00:00",
       simulated: false,
+      source: "usgs",
     },
     alerts: { name: "Quakes" },
     destinations: { name: "Account email" },
@@ -119,5 +121,88 @@ describe("toNotificationRow", () => {
       raw({ status: "pending", attempts: 1, sent_at: null }),
     );
     expect(row.detail).toBe("Next attempt at 13:56 UTC");
+  });
+});
+
+describe("credits", () => {
+  it.each([
+    ["usgs", "U.S. Geological Survey"],
+    ["guardian", "Source: The Guardian"],
+    ["coingecko", "Powered by CoinGecko"],
+  ])("credits %s events", (source, credit) => {
+    const events = raw().events;
+    if (!events) throw new Error("fixture");
+    expect(
+      toNotificationRow(raw({ events: { ...events, source } })).credit,
+    ).toBe(credit);
+  });
+
+  it("gives a simulated event no credit", () => {
+    const events = raw().events;
+    if (!events) throw new Error("fixture");
+    const row = toNotificationRow(
+      raw({ events: { ...events, source: "simulated", simulated: true } }),
+    );
+    expect(row.credit).toBeNull();
+  });
+});
+
+describe("destination label", () => {
+  it("shows an email destination by its name", () => {
+    expect(toNotificationRow(raw()).destinationName).toBe("Account email");
+  });
+
+  it("shows a Slack destination as Slack · name", () => {
+    const row = toNotificationRow(
+      raw({ channel_type: "slack", destinations: { name: "#ops" } }),
+    );
+    expect(row.destinationName).toBe("Slack \u00b7 #ops");
+  });
+
+  it("keeps the Slack prefix once the destination is removed", () => {
+    const row = toNotificationRow(
+      raw({ channel_type: "slack", destinations: null }),
+    );
+    expect(row.destinationName).toBe("Slack \u00b7 Removed destination");
+  });
+});
+
+describe("failure sentences by channel", () => {
+  it.each([
+    "The Slack channel no longer exists.",
+    "The Slack destination was removed.",
+    "The Slack webhook didn't respond after 4 attempts.",
+  ])("shows %s", (sentence) => {
+    const row = toNotificationRow(
+      raw({ status: "failed", channel_type: "slack", last_error: sentence }),
+    );
+    expect(row.detail).toBe(sentence);
+  });
+
+  it("names Slack in the fallback for a Slack notification", () => {
+    const row = toNotificationRow(
+      raw({
+        status: "failed",
+        attempts: 4,
+        channel_type: "slack",
+        last_error: "HTTP 500 from hooks.slack.com/T0/B0/secret",
+      }),
+    );
+    expect(row.detail).toBe(
+      "The Slack message couldn't be sent after 4 attempts.",
+    );
+  });
+
+  it("rejects a sentence that does not start with a channel or end with a full stop", () => {
+    for (const bad of [
+      "Slack is down.",
+      "The Slack channel is gone",
+      "The Teams hook failed.",
+    ]) {
+      const row = toNotificationRow(
+        raw({ status: "failed", attempts: 2, last_error: bad }),
+      );
+      expect(row.detail).toBe("The email couldn't be sent after 2 attempts.");
+    }
   });
 });
