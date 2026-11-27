@@ -22,7 +22,7 @@ The files under `html/` are the canvas's own `.dc.html` sources. Serve the folde
 Both are private to the author; reviewers read the export above.
 
 - Design system: https://claude.ai/artifact/MUPxTygEj9oC6qAnR1pHV8
-- Increment 1 screens: https://claude.ai/artifact/ECNw5zuTQq3tNbr7ynQCiX
+- Screens: https://claude.ai/artifact/ECNw5zuTQq3tNbr7ynQCiX. One canvas, two pages: "Increment 1" and "Increment 2". Its title still reads "increment 1 screens".
 
 ## The direction: Instrument room
 
@@ -47,21 +47,33 @@ Chosen by the user over two other directions, "Signal flags" (navy and signal ye
 
 ## Screens
 
-| Screen                   | File                                                     | Route                              | Artboards in `html/`                                                                                |
-| ------------------------ | -------------------------------------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------- |
-| Landing                  | [screens/landing.md](screens/landing.md)                 | `/`                                | `Landing`                                                                                           |
-| Sign up                  | [screens/sign-up.md](screens/sign-up.md)                 | `/sign-up`                         | `SignUp`                                                                                            |
-| Waiting for confirmation | [screens/sign-up-confirm.md](screens/sign-up-confirm.md) | `/sign-up/confirm`                 | `SignUpConfirm`                                                                                     |
-| Sign in                  | [screens/sign-in.md](screens/sign-in.md)                 | `/sign-in`                         | `SignIn`                                                                                            |
-| Expired or used link     | [screens/link-expired.md](screens/link-expired.md)       | the confirmation route's error     | `LinkExpired`                                                                                       |
-| App header               | [screens/app-header.md](screens/app-header.md)           | every signed-in page               | `Main`, `MobileAlerts`, `MobileMenu`                                                                |
-| Alerts list              | [screens/alerts-list.md](screens/alerts-list.md)         | `/alerts`                          | `Main`, `AlertsEmpty`, `AlertsLoading`, `AlertsError`, `AlertsDelete`, `MobileAlerts`, `DarkAlerts` |
-| Alert form               | [screens/alert-form.md](screens/alert-form.md)           | `/alerts/new`, `/alerts/<id>/edit` | `AlertForm`, `AlertFormErrors`, `MobileAlertForm`                                                   |
-| Notification history     | [screens/notifications.md](screens/notifications.md)     | `/notifications`                   | `Notifications`, `NotificationsEmpty`, `MobileNotifications`                                        |
-| Destinations             | [screens/destinations.md](screens/destinations.md)       | `/destinations`                    | `Destinations`                                                                                      |
-| Simulate an event        | [screens/admin-simulate.md](screens/admin-simulate.md)   | `/admin/simulate`                  | `Simulate`                                                                                          |
-| Not found                | [screens/not-found.md](screens/not-found.md)             | any unknown or forbidden path      | `NotFound`                                                                                          |
-| Emails                   | [screens/emails.md](screens/emails.md)                   | sent by the email channel          | `Emails`                                                                                            |
+| Screen                         | File                                                                 | Route                                                   | Artboards in `html/`                                                                                                                           |
+| ------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Landing                        | [screens/landing.md](screens/landing.md)                             | `/`                                                     | `Landing`                                                                                                                                      |
+| Sign up                        | [screens/sign-up.md](screens/sign-up.md)                             | `/sign-up`                                              | `SignUp`                                                                                                                                       |
+| Waiting for confirmation       | [screens/sign-up-confirm.md](screens/sign-up-confirm.md)             | `/sign-up/confirm`                                      | `SignUpConfirm`                                                                                                                                |
+| Sign in                        | [screens/sign-in.md](screens/sign-in.md)                             | `/sign-in`                                              | `SignIn`                                                                                                                                       |
+| Expired or used link           | [screens/link-expired.md](screens/link-expired.md)                   | the confirmation route's error                          | `LinkExpired`                                                                                                                                  |
+| App header                     | [screens/app-header.md](screens/app-header.md)                       | every signed-in page                                    | `Main`, `MobileAlerts`, `MobileMenu`                                                                                                           |
+| Alerts list                    | [screens/alerts-list.md](screens/alerts-list.md)                     | `/alerts`                                               | `Main`, `AlertsEmpty`, `AlertsLoading`, `AlertsError`, `AlertsDelete`, `MobileAlerts`, `DarkAlerts`                                            |
+| Alert form                     | [screens/alert-form.md](screens/alert-form.md)                       | `/alerts/new`, `/alerts/<id>/edit`                      | `AlertForm`, `AlertFormErrors`, `MobileAlertForm`                                                                                              |
+| Notification history           | [screens/notifications.md](screens/notifications.md)                 | `/notifications`                                        | `Notifications`, `NotificationsEmpty`, `MobileNotifications`                                                                                   |
+| Destinations                   | [screens/destinations.md](screens/destinations.md)                   | `/destinations`                                         | `Destinations`                                                                                                                                 |
+| Simulate an event              | [screens/admin-simulate.md](screens/admin-simulate.md)               | `/admin/simulate`                                       | `Simulate`                                                                                                                                     |
+| Not found                      | [screens/not-found.md](screens/not-found.md)                         | any unknown or forbidden path                           | `NotFound`                                                                                                                                     |
+| Emails                         | [screens/emails.md](screens/emails.md)                               | sent by the email channel                               | `Emails`                                                                                                                                       |
+| Destinations (increment 2)     | [screens/destinations.md](screens/destinations.md)                   | `/destinations`                                         | `Destinations2`, `RemoveSlack`, `RemoveSlackRefused`, `MobileDestinations2`                                                                    |
+| Add Slack destination          | [screens/add-slack-destination.md](screens/add-slack-destination.md) | `/destinations/slack/new`                               | `AddSlack`, `AddSlackErrors`                                                                                                                   |
+| Alerts list (increment 2)      | [screens/alerts-list.md](screens/alerts-list.md)                     | `/alerts`                                               | `AlertsBroken`                                                                                                                                 |
+| Alert form (increment 2)       | [screens/alert-form.md](screens/alert-form.md)                       | `/alerts/new`, `/alerts/<id>/edit`                      | `AlertForm2`, `AlertFormNewsError`                                                                                                             |
+| Notification history (incr. 2) | [screens/notifications.md](screens/notifications.md)                 | `/notifications`                                        | `Notifications2`                                                                                                                               |
+| Admin overview and frame       | [screens/admin-overview.md](screens/admin-overview.md)               | `/admin`                                                | `AdminOverview`, `AdminOverviewNotPolled`, `MobileAdmin`                                                                                       |
+| Admin lists                    | [screens/admin-lists.md](screens/admin-lists.md)                     | `/admin/users`, `/admin/events`, `/admin/notifications` | `AdminUsers`, `AdminEvents`, `AdminNotifications`, `AdminNotificationsEmpty`, `AdminListLoading`, `AdminListError`, `MobileAdminNotifications` |
+| Simulate (increment 2)         | [screens/admin-simulate.md](screens/admin-simulate.md)               | `/admin/simulate`                                       | `Simulate2`                                                                                                                                    |
+| Slack message                  | [screens/slack-message.md](screens/slack-message.md)                 | sent by the Slack channel                               | `SlackMessage`                                                                                                                                 |
+| Emails (increment 2)           | [screens/emails.md](screens/emails.md)                               | sent by the email channel                               | `Emails2`                                                                                                                                      |
+
+Increment 2 artboards keep increment 1's and add new ones with new names (`Destinations2`, not a rewritten `Destinations`); where a screen file has an "Increment 2" section, it wins over the increment 1 text above it. Screenshots are named `2-<artboard>.png`.
 
 ## Decisions made during review
 
@@ -85,3 +97,20 @@ Applying the design is part of the increment's Contracts ticket, not of any impl
 - Add the shadcn/ui primitives and create the shared components listed at the top of [components.md](components.md).
 - Set the metadata title to "Heads-up".
 - Provide one shared way to show a success Notice after a redirect. Four notices cross a redirect: "Email confirmed.", "Alert created.", "Changes saved." and "Alert deleted.". Parallel tickets must not each invent their own.
+
+## Increment 2
+
+Designed on 2026-11-27 on the existing system, no change to the tokens. Decisions, all in the decision log (18:29, 18:35, 18:50, 19:05):
+
+- The user chose, from the agent's recommendations: all ten screens #4 touches; the Slack form on its own page; admin lists as rows like notification history; Broken in the destructive style with an unplugged icon; a neutral hash icon for Slack; a refused removal shown inside the dialog. Then the user delegated the remaining choices to the agent.
+- The agent chose, under that delegation: the Slack message title as a linked section rather than a header block; one credit line per history row; admin tabs as links, scrolling at 360px; the status filter as links; a neutral budget meter; Failing winning over Late.
+- New shared pieces: Tabs, Filter, Meter, BrokenMark, source credit (components.md, "Increment 2 additions"). They are in the canvas's stylesheet only; the design system artifact was not updated.
+- The agent checked the exported HTML of every new artboard in a headless browser (screenshots in `screens/`), not the canvas itself.
+
+### For the increment 2 Contracts ticket
+
+- No token changes. Add the `Tabs`, `Filter` and `Meter` styles with existing tokens, and `BrokenMark` and the source-credit function, before the parallel tickets start.
+- shadcn primitives: none new beyond increment 1's; `checkbox` is already listed.
+- `/admin` stops redirecting to `/admin/simulate` and becomes the overview; the admin layout renders the `h1` and the tabs.
+- The redirect-notice mechanism gains "Slack destination added. Send a test to check it works." and "Slack destination removed."
+- Icons from `lucide-react`: `hash`, `unplug`, plus those increment 1 uses.

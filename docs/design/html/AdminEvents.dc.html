@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Admin events</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 700px">
+<header class="hu-header"><a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a><nav class="hu-nav" aria-label="Main"><a href="Main.dc.html">Alerts</a><a href="Notifications.dc.html">Notifications</a><a href="Destinations2.dc.html">Destinations</a><a href="AdminOverview.dc.html" aria-current="page">Admin</a></nav><div class="hu-header__end"><span class="hu-muted">admin@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div></header>
+<main class="hu-page">
+<h1 class="hu-title" style="margin-bottom: 16px">Admin</h1>
+<nav class="hu-tabs" aria-label="Admin"><a href="AdminOverview.dc.html">Overview</a><a href="AdminUsers.dc.html">Users</a><a href="AdminEvents.dc.html" aria-current="page">Events</a><a href="AdminNotifications.dc.html">Notifications</a><a href="Simulate2.dc.html">Simulate</a></nav>
+<div class="hu-card"><div class="hu-row hu-muted" style="display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.4fr) 120px; align-items: start; padding-top: 8px; padding-bottom: 8px; font-weight: 500"><span>Event</span><span>Source and category</span><span>Severity</span></div><ul style="list-style: none; margin: 0; padding: 0"><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.4fr) 120px; align-items: start"><div><p class="hu-row__title">Bitcoin (BTC) up 4.2% in the past hour</p><p class="hu-muted">27 Nov 2026, 18:05 UTC</p></div><div><p>CoinGecko</p><p class="hu-muted">Markets</p><p class="hu-caption hu-muted">Powered by CoinGecko</p></div><span class="hu-sev hu-sev--moderate"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Moderate</span></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.4fr) 120px; align-items: start"><div><p class="hu-row__title">Fed holds rates as inflation cools</p><p class="hu-muted">27 Nov 2026, 17:48 UTC</p></div><div><p>The Guardian</p><p class="hu-muted">News</p><p class="hu-caption hu-muted">Source: The Guardian</p></div><span class="hu-sev hu-sev--low"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Low</span></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.4fr) 120px; align-items: start"><div><p class="hu-row__title">Test quake near Tokyo<span class="hu-chip hu-chip--simulated" style="margin-left: 4px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 12px; height: 12px"><path d="M10 2v7.5L4.7 19a2 2 0 0 0 1.8 3h11a2 2 0 0 0 1.8-3L14 9.5V2M8.5 2h7M7 16h10"></path></svg>Simulated</span></p><p class="hu-muted">27 Nov 2026, 13:50 UTC</p></div><div><p>Simulated</p><p class="hu-muted">Natural disasters</p></div><span class="hu-sev hu-sev--high"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>High</span></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.4fr) 120px; align-items: start"><div><p class="hu-row__title">M 6.8 - 40 km S of Hualien, Taiwan</p><p class="hu-muted">27 Nov 2026, 13:42 UTC</p></div><div><p>U.S. Geological Survey</p><p class="hu-muted">Natural disasters</p><p class="hu-caption hu-muted">U.S. Geological Survey</p></div><span class="hu-sev hu-sev--high"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>High</span></li></ul></div><nav class="hu-pager" aria-label="Pagination"><span class="hu-muted">Page 1</span><a class="hu-btn hu-btn--outline hu-btn--sm" href="AdminEvents.dc.html">Next</a></nav>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":700}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

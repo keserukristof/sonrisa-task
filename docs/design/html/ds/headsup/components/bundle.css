@@ -622,3 +622,69 @@
   margin-bottom: 24px;
   flex-wrap: wrap;
 }
+
+/* Increment 2: admin tabs */
+.hu-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+.hu-tabs a {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 12px;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.hu a.hu-tabs__on,
+.hu-tabs a[aria-current="page"] {
+  color: var(--foreground);
+  font-weight: 600;
+  border-bottom-color: var(--primary);
+}
+
+/* Increment 2: filter, a row of links on a query parameter */
+.hu-filter {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 4.8px);
+  background: var(--card);
+}
+.hu-filter a {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: var(--radius-sm, 3.6px);
+  color: var(--muted-foreground);
+  text-decoration: none;
+  font-weight: 500;
+}
+.hu-filter a[aria-current="page"] {
+  background: var(--accent);
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+/* Increment 2: meter */
+.hu-meter {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--muted);
+  overflow: hidden;
+}
+.hu-meter i {
+  display: block;
+  height: 100%;
+  background: var(--foreground);
+}

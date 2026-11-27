@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Admin list loading</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 520px">
+<header class="hu-header"><a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a><nav class="hu-nav" aria-label="Main"><a href="Main.dc.html">Alerts</a><a href="Notifications.dc.html">Notifications</a><a href="Destinations2.dc.html">Destinations</a><a href="AdminOverview.dc.html" aria-current="page">Admin</a></nav><div class="hu-header__end"><span class="hu-muted">admin@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div></header>
+<main class="hu-page">
+<h1 class="hu-title" style="margin-bottom: 16px">Admin</h1>
+<nav class="hu-tabs" aria-label="Admin"><a href="AdminOverview.dc.html">Overview</a><a href="AdminUsers.dc.html">Users</a><a href="AdminEvents.dc.html">Events</a><a href="AdminNotifications.dc.html" aria-current="page">Notifications</a><a href="Simulate2.dc.html">Simulate</a></nav>
+<div class="hu-inline" style="margin-bottom: 16px; gap: 12px"><span class="hu-label" id="filter-l">Status</span><nav class="hu-filter" aria-labelledby="filter-l"><a href="AdminNotifications.dc.html" aria-current="page">All</a><a href="AdminNotifications.dc.html">Pending</a><a href="AdminNotifications.dc.html">Sent</a><a href="AdminNotificationsEmpty.dc.html">Failed</a><a href="AdminNotifications.dc.html">Skipped</a></nav></div><div class="hu-card" aria-busy="true" aria-label="Loading notifications"><div class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr) 110px minmax(0, 1.6fr); align-items: start"><div><span class="hu-skel" style="width: 220px; height: 16px"></span><span class="hu-skel" style="width: 150px; margin-top: 8px"></span></div><div><span class="hu-skel" style="width: 140px"></span><span class="hu-skel" style="width: 60px; margin-top: 8px"></span></div><span class="hu-skel" style="width: 70px"></span><span class="hu-skel" style="width: 90px"></span></div><div class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr) 110px minmax(0, 1.6fr); align-items: start"><div><span class="hu-skel" style="width: 220px; height: 16px"></span><span class="hu-skel" style="width: 150px; margin-top: 8px"></span></div><div><span class="hu-skel" style="width: 140px"></span><span class="hu-skel" style="width: 60px; margin-top: 8px"></span></div><span class="hu-skel" style="width: 70px"></span><span class="hu-skel" style="width: 90px"></span></div><div class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr) 110px minmax(0, 1.6fr); align-items: start"><div><span class="hu-skel" style="width: 220px; height: 16px"></span><span class="hu-skel" style="width: 150px; margin-top: 8px"></span></div><div><span class="hu-skel" style="width: 140px"></span><span class="hu-skel" style="width: 60px; margin-top: 8px"></span></div><span class="hu-skel" style="width: 70px"></span><span class="hu-skel" style="width: 90px"></span></div></div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":520}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
