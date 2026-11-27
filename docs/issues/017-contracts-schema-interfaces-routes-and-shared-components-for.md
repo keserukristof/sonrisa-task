@@ -1,6 +1,6 @@
 # #17: Contracts: schema, interfaces, routes and shared components for increment 2
 
-- **State:** open
+- **State:** closed, closed 2026-11-27 18:30 UTC
 - **Opened:** 2026-11-27 18:14 UTC by keserukristof
 - **Labels:** `ready-for-agent`
 - **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/17
@@ -32,4 +32,10 @@ Everything the other tickets of increment 2 share, landed once and serially, so 
 - [ ] The README says reviewers get an admin login privately, with the SQL that grants admin (story 67)
 - [ ] Every other ticket of #4 lists the paths it owns, with no path in two tickets
 - [ ] `pnpm verify`, `pnpm build` and the smoke e2e green
+
+## Comments
+
+### keserukristof, 2026-11-27 18:30 UTC
+
+Contracts landed on `increment-2` (d90c55c to f531b07): four migrations with pgTAP (109 passing), shared schemas, the source catalog, Slack settings and reasons, BrokenMark, FilterLinks, Meter, AdminFrame, route placeholders, a local Slack stub for e2e, and owned paths on #18 to #27. `pnpm verify`, `pnpm build` and `pnpm e2e` (56) green.
 

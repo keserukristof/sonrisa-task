@@ -17,7 +17,7 @@ A mirror of the GitHub issues: the spec, its increments and their tickets, with 
 | 13 | Ticket | [Simulate an event](013-simulate-an-event.md) | closed |
 | 14 | Ticket | [End to end: a simulated event arrives by email](014-end-to-end-a-simulated-event-arrives-by-email.md) | closed |
 | 15 | Ticket | [Contracts: schema, interfaces, routes and design tokens for increment 1](015-contracts-schema-interfaces-routes-and-design-tokens-for-inc.md) | closed |
-| 17 | Ticket | [Contracts: schema, interfaces, routes and shared components for increment 2](017-contracts-schema-interfaces-routes-and-shared-components-for.md) | open |
+| 17 | Ticket | [Contracts: schema, interfaces, routes and shared components for increment 2](017-contracts-schema-interfaces-routes-and-shared-components-for.md) | closed |
 | 18 | Ticket | [Slack channel: Block Kit messages and delivery outcomes](018-slack-channel-block-kit-messages-and-delivery-outcomes.md) | open |
 | 19 | Ticket | [Slack destinations: add, test, broken and remove](019-slack-destinations-add-test-broken-and-remove.md) | open |
 | 20 | Ticket | [Alerts: Slack destinations and the news keyword rule](020-alerts-slack-destinations-and-the-news-keyword-rule.md) | open |

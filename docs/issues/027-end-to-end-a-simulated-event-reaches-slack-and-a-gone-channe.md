@@ -27,7 +27,7 @@ Screens: `docs/design/` (README, "Increment 2"); the design decisions recorded o
 
 ## Contracts already in place
 
-- The Slack stub helpers are in `e2e/support/slack.ts`; the stub starts with every e2e run.
+- The Slack stub helpers are in `e2e/support/slack.ts`; the stub starts with every local e2e run. This spec cannot run against a deployment (`E2E_BASE_URL`).
 - Run the tick as `e2e/end-to-end.spec.ts` does: `POST /api/tick` with `Authorization: Bearer ${process.env.TICK_SECRET}`. The tick processes everyone's rows; assert only on this test's account.
 - Simulate as that spec does, through `/admin/simulate` (now under the admin tabs) with an admin created by `createUser({ admin: true })`.
 - To see "broken" arrive through delivery, set the stub's answer to `{ status: 404, body: "channel_not_found" }` before the tick.

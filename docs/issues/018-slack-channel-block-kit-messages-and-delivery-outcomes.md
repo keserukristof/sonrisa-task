@@ -32,7 +32,7 @@ The Slack channel implements the Channel interface: it posts the alert, simulate
 - A permanent answer returns `{ kind: "broken", error: <failure sentence>, destinationReason: <broken sentence> }`. The tick stores `error` on the notification and `destinationReason` on the destination. A 429 returns `retry` with `retryAfterSeconds` from `Retry-After`; the tick honours it. Other 5xx and network errors are `retry`.
 - The source credit comes from `sourceCredit()` in `src/lib/alerting/sources/catalog.ts`.
 - Rendering and classification are pure functions exported for unit tests. Copy and block order: `docs/design/screens/slack-message.md`. The test message links to `${APP_URL}/destinations`.
-- Requests use `fetch` with a timeout, `content-type: application/json`, and never log the URL.
+- Requests use `fetch` with a timeout, `redirect: "error"`, `content-type: application/json`, and never log the URL (security audit F4).
 
 ## Owned paths
 
