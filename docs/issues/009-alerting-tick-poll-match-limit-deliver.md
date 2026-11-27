@@ -54,3 +54,6 @@ Not yours: `src/lib/alerting/types.ts`, `config.ts`, `collaborators.ts`, `source
 
 **Fake channels answer `sent` for any notification that is not the test's own.** A fake that answers `broken` or `retry` by default would mark other tickets' and the seed's destinations broken, for everyone, in the shared database. Make failure the exception, keyed on the test's own event or user.
 
+
+**After the security audit:** the tick route's response body carries counts only, never an email address, a title or an error message: pg_net stores responses where more roles can read them than should. `tick_match_events` now skips an event that fails and logs a warning, leaving it for the next tick. The recipient is read from auth, never from `profiles.email`, which can be stale.
+

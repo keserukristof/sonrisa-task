@@ -51,3 +51,6 @@ Stories 8, 13, 14, 33 and 66 of #3. Screens: `docs/design/screens/destinations.m
 
 **Accessibility scans:** wait for the page title (`await expect(page).toHaveTitle(…)`) before running axe after a navigation; the title streams in. The suite runs with reduced motion, so panels and dialogs are scanned fully open.
 
+
+**After the security audit:** `claim_test_send` has a fourth outcome, `test_limit`: an account gets 3 test sends per UTC day. Show "Not sent. You've sent 3 tests today." in the skipped style. `daily_limit` now also covers the system's share for tests (20 of the 80 a day); its copy is unchanged.
+

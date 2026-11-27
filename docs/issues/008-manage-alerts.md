@@ -46,3 +46,6 @@ Stories 18–31 of #3 (story 20 brought forward). Screens: `docs/design/screens/
 
 **Accessibility scans:** wait for the page title (`await expect(page).toHaveTitle(…)`) before running axe after a navigation; the title streams in. The suite runs with reduced motion, so panels and dialogs are scanned fully open.
 
+
+**After the security audit:** the database now enforces the keyword rules too (each 1 to 40 characters, trimmed, lowercase) and allows 50 alerts per account; both raise `23514`. Map a `23514` on create to "You've reached 50 alerts. Delete one to add another." Resuming an alert sets the time it became active in the database; nothing to do in the action.
+

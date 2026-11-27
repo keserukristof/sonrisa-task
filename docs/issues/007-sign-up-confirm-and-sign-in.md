@@ -50,3 +50,6 @@ Stories 1–7 of #3. Screens: `docs/design/screens/landing.md`, `sign-up.md`, `s
 
 **Accessibility scans:** wait for the page title (`await expect(page).toHaveTitle(…)`) before running axe after a navigation; the title streams in. The suite runs with reduced motion, so panels and dialogs are scanned fully open.
 
+
+**After the security audit:** the confirm route takes no `next` parameter; it always lands on `/alerts`. Sign-up builds `emailRedirectTo` from the request's own origin only.
+

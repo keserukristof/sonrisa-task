@@ -44,9 +44,10 @@ Shown inline in the row with `role="status"`, replacing any earlier result:
 | Delivered             | Sent status style (check, `success`): Delivered at 13:55 UTC                                   |
 | Refused, hourly limit | Skipped status style (barred circle, `warning`): Not sent. You've reached 10 emails this hour. |
 | Refused, daily limit  | Skipped status style: Not sent. Heads-up has reached its 80 emails for today.                  |
+| Refused, daily tests  | Skipped status style: Not sent. You've sent 3 tests today.                                     |
 | Failed                | Failed status style (cross, `destructive`): Couldn't send the test. Try again in a minute.     |
 
-While the test is being sent, the button is disabled and reads "Sending…". The test is sent at once by the Server Action; it does not wait for a tick and does not appear in notification history.
+While the test is being sent, the button is disabled and reads "Sending…". The test is sent at once by the Server Action; it does not wait for a tick and does not appear in notification history. An account gets 3 test sends per UTC day (added after the security audit, so tests cannot use up the shared email budget).
 
 ## States
 
