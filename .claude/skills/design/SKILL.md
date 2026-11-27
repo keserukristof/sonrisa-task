@@ -1,24 +1,26 @@
 ---
 name: design
-description: Design phase. Turns the spec into an approved design system and screen designs as Claude Design artifacts, then exports them into docs/design/ so implementers can build from files. Run after /to-spec and before /to-tickets or /contracts.
-argument-hint: "[spec issue number or path]"
+description: Design phase. Turns one increment into approved screen designs as Claude Design artifacts, and on the first run builds the design system they share, then exports them into docs/design/ so implementers can build from files. Run once per increment, after its Refine phase and before /to-tickets.
+argument-hint: "[increment issue number]"
 ---
 
 # Design
 
-The user sees and approves how the application looks and flows **before** any feature code is written. Parallel implementers work in git worktrees and read files, not artifacts, so the phase ends with the approved design exported into the repo.
+The user sees and approves how an increment looks and flows **before** any of its feature code is written. Parallel implementers work in git worktrees and read files, not artifacts, so the phase ends with the approved design exported into the repo.
 
 Write no application code in this phase.
 
 ## 1. Understand what has to be designed
 
-Read the spec (`$ARGUMENTS`, or the spec issue from the conversation), `GLOSSARY.md` if it exists, and `.claude/rules/ui.md`.
+Read the increment issue (`$ARGUMENTS`, or the increment from the conversation), the spec above it, `GLOSSARY.md` if it exists, `.claude/rules/ui.md`, and what earlier increments exported to `docs/design/`.
 
-List every screen the Must and Should user stories need. For each one note its purpose, the primary action, the data it shows, and the states it needs beyond success: loading, empty, error.
+List every screen the increment's user stories need, new or changed. For each one note its purpose, the primary action, the data it shows, and the states it needs beyond success: loading, empty, error.
 
 Show the list to the user and confirm it before designing.
 
 ## 2. Choose the look and feel
+
+Steps 2 and 3 belong to the first increment. Once `docs/design/tokens.md` exists the look is settled: go to step 4, and return to step 3 only to add a token or component a new screen needs.
 
 Call the Skill tool with `frontend-design:frontend-design` for aesthetic direction.
 
@@ -39,7 +41,7 @@ Check text and UI contrast against WCAG 2.2 AA before showing it.
 
 ## 4. Design the screens
 
-Create a Claude **Design** artifact that builds on that design system:
+On the first increment, create a Claude **Design** artifact that builds on that design system. On later increments, add the new artboards to it:
 
 - One artboard per screen from step 1
 - The primary flow at both mobile (360px) and desktop width
@@ -52,7 +54,7 @@ Share both artifacts. Walk through the primary flow in one or two sentences per 
 
 ## 6. Export into the repo
 
-Write the approved design to `docs/design/`:
+Write the approved design to `docs/design/`, adding to what earlier increments exported:
 
 - `README.md`: links to both artifacts, the chosen direction and why, and decisions made during review
 - `tokens.md`: every token with its light and dark value, the type scale, spacing and radius
@@ -63,6 +65,6 @@ A screen file is complete when an implementer who cannot open the artifact could
 
 ## 7. Hand off
 
-- Applying the tokens to `src/app/globals.css` and the fonts to the root layout is part of the **Contracts** ticket. Say so when `/to-tickets` runs.
+- Applying new tokens to `src/app/globals.css` and the fonts to the root layout is part of the increment's **Contracts** ticket. Say so when `/to-tickets` runs.
 - Add a line to `docs/ai-workflow.md` for this phase.
-- Commit `docs/design/` with `docs(design): approved design system and screens`.
+- Commit `docs/design/` with `docs(design): increment <n> screens`, or `docs(design): design system and increment 1 screens` on the first run.

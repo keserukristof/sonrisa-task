@@ -23,18 +23,29 @@ One page on the solutions actually used. It is filled in as the work happens; ro
 
 ## Phases
 
-| #   | Phase      | What was used                                                     | Output           |
-| --- | ---------- | ----------------------------------------------------------------- | ---------------- |
-| 1   | Understand | `/grill-with-docs`, `/to-spec`                                    | _spec issue_     |
-| 2   | Design     | `/design`, Claude Design System and Design                        | _docs/design/_   |
-| 3   | Slice      | `/to-tickets`                                                     | _ticket issues_  |
-| 4   | Contracts  | `/contracts`                                                      | _commits_        |
-| 5   | Build      | `/implement-spec`, parallel `implementer` agents in git worktrees | _pull request_   |
-| 6   | Review     | `/code-review`, `security-auditor`, `ux-reviewer`                 | _findings fixed_ |
-| 7   | Ship       | `/ship`                                                           | _live URL_       |
+The brief was understood once (phases 1 and 2), then built in increments: phases 3 to 9 ran once per increment, each ending in a deployment.
+
+| #   | Phase      | What was used                                                     | Output                                 |
+| --- | ---------- | ----------------------------------------------------------------- | -------------------------------------- |
+| 1   | Understand | `/grill-with-docs`, `/to-spec`                                    | _spec issue_                           |
+| 2   | Increments | The spec cut into ordered increments                              | _increment issues_                     |
+| 3   | Refine     | A short grill of the increment                                    | _acceptance criteria in the increment_ |
+| 4   | Design     | `/design`, Claude Design System and Design                        | _docs/design/_                         |
+| 5   | Slice      | `/to-tickets`                                                     | _ticket issues_                        |
+| 6   | Contracts  | `/contracts`                                                      | _commits_                              |
+| 7   | Build      | `/implement-spec`, parallel `implementer` agents in git worktrees | _pull request_                         |
+| 8   | Review     | `/code-review`, `security-auditor`, `ux-reviewer`                 | _findings fixed_                       |
+| 9   | Ship       | `/ship`                                                           | _live URL_                             |
+
+## Increments
+
+| #   | What a user can do after it | Issue | Pull request | Shipped |
+| --- | --------------------------- | ----- | ------------ | ------- |
+| _1_ | _filled in during the task_ |       |              |         |
 
 ## Ideas that shaped the setup
 
+- **Thin increments, each shipped.** One grill fixes the scope and the data model for the whole brief. The build then goes slice by slice through design, tickets, contracts, build, review and deploy, so there is a working live version from the first increment on.
 - **Contracts before parallel work.** Schema, types, routes, dependencies and design tokens land first and serially; parallel agents then only add files in their own feature folder.
 - **Gates are commands, not promises.** A hook runs lint, typecheck and tests before any agent can finish a turn that changed code. CI runs the same script.
 - **Fresh eyes review.** Reviewers are separate agents that see only the diff, the spec and the written standards.

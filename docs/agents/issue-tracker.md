@@ -16,10 +16,14 @@ Infer the repo from `git remote -v`; `gh` does this automatically when run insid
 
 ## Project conventions
 
-- The **spec** is one issue. Every ticket is a sub-issue of it.
-- **Ticket 1 is "Contracts"** and blocks every other ticket (see the `contracts` skill).
+Three levels: spec, then increments, then tickets.
+
+- The **spec** is one issue for the whole brief. It stays open until the last increment has shipped, then it is closed by hand.
+- An **increment** is a sub-issue of the spec, titled `Increment <n>: <what a user can do once it ships>`. Its body lists the spec user stories it delivers, then the acceptance criteria from the Refine phase. Each increment is blocked by the one before it.
+- A **ticket** is a sub-issue of its increment. Pass the increment, never the spec, to the plugin skills: `/to-tickets #<increment>`, `/implement-spec #<increment>`.
+- **Ticket 1 of every increment is "Contracts"** and blocks that increment's other tickets (see the `contracts` skill).
 - Each ticket body ends with an **Owned paths** list, written during the Contracts phase. An implementer edits nothing outside it.
-- All tickets of a spec land on one integration branch through one pull request that closes the spec and its tickets.
+- Each increment lands on its own integration branch, `increment-<n>`, cut from `main` after the previous increment merged. One pull request per increment closes the increment and its tickets, and leaves the spec open.
 
 ## Pull requests as a triage surface
 

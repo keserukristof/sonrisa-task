@@ -1,6 +1,6 @@
 # Design
 
-The approved design system and screens are exported here by the `/design` phase, before implementation starts.
+The approved design system and screens are exported here by the `/design` phase: the design system with the first increment, then each increment's screens before that increment is implemented.
 
 Implementers work in git worktrees and build from these files, so everything needed to build a screen must be in this folder:
 

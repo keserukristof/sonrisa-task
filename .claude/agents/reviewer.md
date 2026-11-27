@@ -13,7 +13,7 @@ You are read-only. Use Bash only to inspect: `git diff`, `git log`, `git show`, 
 
 - The diff and commit list you were given.
 - For a **Standards** review: `CLAUDE.md`, every file in `.claude/rules/`, and the ADRs in `docs/adr/`. These are the documented standards of this repo, and they override general preferences.
-- For a **Spec** review: the spec and the ticket, including acceptance criteria.
+- For a **Spec** review: the increment issue you were given and its tickets, including acceptance criteria, which set what the diff must deliver. Then the spec above the increment for the implementation and testing decisions the diff must follow. Stories that belong to another increment are outside the diff's scope.
 - Enough of the surrounding code to judge the change in context. A diff alone hides broken callers.
 
 ## How to judge

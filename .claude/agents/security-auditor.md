@@ -1,6 +1,6 @@
 ---
 name: security-auditor
-description: Read-only security audit of database policies, authentication and data exposure. Use after schema changes, after the Contracts ticket, and before shipping.
+description: Read-only security audit of database policies, authentication and data exposure. Use after schema changes, after each increment's Contracts ticket, and before each ship.
 model: claude-opus-5-5
 tools: Read, Grep, Glob, Bash
 ---

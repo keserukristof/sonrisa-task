@@ -47,22 +47,37 @@ Detailed rules live in `.claude/rules/` and load automatically for the files the
 
 ## Workflow
 
-| #   | Phase      | How                                                            | Model      |
-| --- | ---------- | -------------------------------------------------------------- | ---------- |
-| 1   | Understand | `/grill-with-docs` on the task brief, then `/to-spec`          | Opus 5.5   |
-| 2   | Design     | `/design`: design system and screens, approved by the user     | Fable 5.2  |
-| 3   | Slice      | `/to-tickets`: vertical slices with blocking edges             | Opus 5.5   |
-| 4   | Contracts  | `/contracts`: schema, types, routes, tokens. Serial            | Fable 5.2  |
-| 5   | Build      | `/implement-spec`: one `implementer` per ticket, in parallel   | Sonnet 5.5 |
-| 6   | Review     | `/code-review`, then `security-auditor` and `ux-reviewer`      | Opus 5.5   |
-| 7   | Ship       | `/ship`: deploy, verify production, finish README and write-up | Fable 5.2  |
+The brief is understood once, then built in **increments**: thin slices of the spec that each go through the whole loop and reach production before the next one starts.
 
-Phases 1 and 3 run in the main session, so the user switches the session model for them. Phases 5 and 6 get their model from the agent definitions in `.claude/agents/`.
+**Once, for the whole brief:**
 
-- The spec splits scope into **Must / Should / Could**. Build Must first; scope freezes four hours before the deadline.
-- **Ticket 1 is always "Contracts" and blocks every other ticket.** See `/contracts` for why.
-- A small change (one feature folder, no schema change) skips phases 1 to 4: implement it directly with `/tdd`. The gates still apply.
-- `/design`, `/contracts` and `/ship` are project skills in `.claude/skills/`. Every other command in the table comes from the `mattpocock-skills` plugin and is namespaced: `/mattpocock-skills:to-spec`, and `mattpocock-skills:tdd` when calling the Skill tool. Use the plugin's `code-review`, not the built-in one of the same name.
+| #   | Phase      | How                                                              | Model    |
+| --- | ---------- | ---------------------------------------------------------------- | -------- |
+| 1   | Understand | `/grill-with-docs` on the task brief, then `/to-spec`            | Opus 5.5 |
+| 2   | Increments | Cut the spec into ordered increment issues, approved by the user | Opus 5.5 |
+
+**Then for each increment, in order:**
+
+| #   | Phase     | How                                                                             | Model      |
+| --- | --------- | ------------------------------------------------------------------------------- | ---------- |
+| 3   | Refine    | Grill the increment, write the outcome into its issue                           | Opus 5.5   |
+| 4   | Design    | `/design`: the increment's screens (first run: the design system too), approved | Fable 5.2  |
+| 5   | Slice     | `/to-tickets #<increment>`: vertical slices with blocking edges                 | Opus 5.5   |
+| 6   | Contracts | `/contracts`: schema, types, routes, tokens. Serial                             | Fable 5.2  |
+| 7   | Build     | `/implement-spec #<increment>`: one `implementer` per ticket, in parallel       | Sonnet 5.5 |
+| 8   | Review    | `/code-review`, then `security-auditor` and `ux-reviewer`                       | Opus 5.5   |
+| 9   | Ship      | `/ship`: deploy, verify production, update README and write-up                  | Fable 5.2  |
+
+Phases 1, 2, 3 and 5 run in the main session, so the user switches the session model for them. Phases 7 and 8 get their model from the agent definitions in `.claude/agents/`.
+
+- **Everything agreed in the grill is Must.** The spec has no priority tiers: what was not agreed goes under its Out of Scope. Increments order the Must scope, most valuable flow first.
+- Scope freezes four hours before the deadline: no increment starts after that.
+- **The increment issue stands in for the spec** wherever a plugin skill takes one: `/to-tickets`, `/implement-spec` and the Spec axis of `/code-review`. Given the whole spec, they would review and close work that later increments own. The increment bounds the scope; the implementation and testing decisions still come from the spec above it. Issue structure is in `docs/agents/issue-tracker.md`.
+- **Refine** is a ten-minute grill of one increment with `mattpocock-skills:grilling`: edge cases, empty and error states, acceptance criteria. It is done when every user story of the increment has acceptance criteria written into the increment issue. Implementers read issues, not this conversation.
+- **Ticket 1 of every increment is "Contracts"** and blocks that increment's other tickets. See `/contracts` for why.
+- `/grill-with-docs`, `/to-spec`, `/to-tickets`, `/implement-spec` and `/ship` run only when the user types them. When the loop reaches one, name the exact command and wait.
+- A small change (one feature folder, no schema change) needs no increment: implement it directly with `/tdd`. The gates still apply.
+- `/design`, `/contracts` and `/ship` are project skills in `.claude/skills/`. Every other command in the tables comes from the `mattpocock-skills` plugin and is namespaced: `/mattpocock-skills:to-spec`, and `mattpocock-skills:tdd` when calling the Skill tool. Use the plugin's `code-review`, not the built-in one of the same name.
 - After each phase, add one line to `docs/ai-workflow.md` saying what was used and what it produced.
 
 ## Agent routing
@@ -80,7 +95,7 @@ One agent advises instead of building or reviewing: `nextjs-advisor` answers a N
 
 ## Parallel work
 
-Implementers run in separate git worktrees against **one shared local database**. Parallel work stays safe only because the Contracts ticket lands everything shared first. Inside an implementation ticket, never:
+Implementers run in separate git worktrees against **one shared local database**. Parallel work stays safe only because the increment's Contracts ticket lands everything shared first. Inside an implementation ticket, never:
 
 - add or edit a migration, or run `pnpm db:reset`
 - add, remove or upgrade a dependency

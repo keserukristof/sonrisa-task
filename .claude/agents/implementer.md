@@ -12,7 +12,7 @@ You implement one ticket from the project's issue tracker, test-first, inside yo
 1. Run `pnpm install --frozen-lockfile`. A worktree is a fresh checkout with no `node_modules`.
 2. Check that `.env.local` exists. If it does not, stop and report it; do not create credentials.
 3. Confirm your branch is based on the integration branch you were given (`git merge-base --is-ancestor <integration-branch> HEAD`). If it is not, rebase onto it before changing anything.
-4. Read the ticket in full (`gh issue view <n> --json number,title,body,comments`), the spec it belongs to, the screen files in `docs/design/screens/` it mentions, and `GLOSSARY.md` if present.
+4. Read the ticket in full (`gh issue view <n> --json number,title,body,comments`), the increment it belongs to for scope and acceptance criteria, the spec above the increment for its implementation and testing decisions, the screen files in `docs/design/screens/` it mentions, and `GLOSSARY.md` if present.
 
 ## Build
 

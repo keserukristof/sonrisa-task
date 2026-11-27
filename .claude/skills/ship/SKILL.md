@@ -1,12 +1,12 @@
 ---
 name: ship
-description: Ship phase. Deploys the application to production (Supabase cloud and Vercel), verifies the live deployment, and finishes the reviewer-facing README and the AI workflow write-up. Run when the Must scope is merged and green.
+description: Ship phase. Deploys one increment to production (Supabase cloud and Vercel), verifies the live deployment, and brings the reviewer-facing README and the AI workflow write-up up to date. Run each time an increment is merged and green.
 disable-model-invocation: true
 ---
 
 # Ship
 
-Reviewers get a live URL and a repo they can run in one command. Nothing here is finished until it has been checked against the live deployment.
+Reviewers get a live URL and a repo they can run in one command. Every increment ends here, so the live site, the README and the write-up always describe the same, submittable state. Nothing here is finished until it has been checked against the live deployment.
 
 **Every command that changes a cloud resource needs the user's explicit approval in this session, each time.** That covers `supabase db push --remote`, seeding the cloud database, and `vercel deploy --prod`. Show what will change, then ask.
 
@@ -14,9 +14,9 @@ The cloud targets: Supabase project `lrnzhnrxjwfckwwmtajn` (organisation `ai-tas
 
 ## 1. Preconditions
 
-- The integration branch is merged to `main` and `main` is pushed.
+- The increment's integration branch is merged to `main` and `main` is pushed.
 - `pnpm verify:full` is green locally and CI is green on `main`.
-- No open Must ticket. List any open Should or Could tickets for the README.
+- No open ticket under the increment being shipped.
 
 Stop and report if any of these fails.
 
@@ -37,17 +37,17 @@ Stop and report if any of these fails.
 
 - `GET <url>/api/health` returns 200 with `"status":"ok"`.
 - `E2E_BASE_URL=<url> pnpm e2e` passes against the live site.
-- Walk the primary user story in the browser as the demo user, on desktop and mobile widths.
+- Walk the increment's primary user story in the browser as the demo user, on desktop and mobile widths, then the primary story of each earlier increment once.
 
 Fix what fails and redeploy before continuing.
 
 ## 5. README
 
-Rewrite `README.md` for a reviewer who has ten minutes:
+On the first increment, rewrite `README.md` for a reviewer who has ten minutes. On later ones, update the parts the increment changed:
 
 1. What the application does, in two sentences, with the live URL and demo credentials at the top
 2. Run it locally: prerequisites, then `pnpm install`, `pnpm bootstrap`, `pnpm dev`
-3. What was built, mapped to the task's requirements, and what was deliberately left out
+3. What was built, mapped to the task's requirements, what was deliberately left out, and which increments have not shipped yet
 4. Architecture in a short paragraph and the folder map, with links to the ADRs
 5. How to run the tests
 6. Known limitations and what would come next
@@ -55,8 +55,10 @@ Rewrite `README.md` for a reviewer who has ten minutes:
 
 ## 6. AI workflow write-up
 
-Finish `docs/ai-workflow.md`. Keep it to one compact page of what was **actually used** in this project: fill the phase table from the real issues, pull requests and commits, link them, and delete any row that did not happen.
+Add the increment's row to the increments table in `docs/ai-workflow.md`, linking its issue and pull request.
+
+After the last increment, finish the page. Keep it to one compact page of what was **actually used** in this project: fill the phase table from the real issues, pull requests and commits, link them, and delete any row that did not happen. Then close the spec issue.
 
 ## 7. Report
 
-Give the user the live URL, the repository URL, what was verified and how, and anything that is not done.
+Give the user the live URL, the repository URL, what was verified and how, and anything that is not done, including the increments still open under the spec.
