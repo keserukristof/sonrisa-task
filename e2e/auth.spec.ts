@@ -14,6 +14,7 @@ async function expectNoViolations(page: Page, title: string | RegExp) {
 
 test("a visitor signs up, confirms through the emailed link, signs out and signs in", async ({
   page,
+  isMobile,
 }) => {
   const email = uniqueEmail("e2e-signup");
   const password = `pw-${randomUUID()}`;
@@ -50,10 +51,10 @@ test("a visitor signs up, confirms through the emailed link, signs out and signs
   await page.goto(link ?? "/");
 
   await expect(page).toHaveURL(/\/alerts/);
-  // The alerts page renders the notice (its own ticket); here the redirect.
-  await expect(page).toHaveURL(/notice=email-confirmed/);
+  await expect(page.getByText("Email confirmed.")).toBeVisible();
 
-  await page.getByRole("button", { name: "Sign out" }).first().click();
+  if (isMobile) await page.getByRole("button", { name: "Menu" }).click();
+  await page.getByRole("button", { name: "Sign out" }).click();
   await expect(page).toHaveURL(/\/$/);
   await expect(
     page.getByRole("link", { name: "Sign up" }).first(),
