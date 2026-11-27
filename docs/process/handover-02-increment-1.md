@@ -1,15 +1,15 @@
 # Handover: start of increment 1
 
-Written 2026-11-27 12:40 at the end of the phase 1 and 2 session, for the session that runs increment 1. Read this, then `CLAUDE.md`, then the increment issue [#3](https://github.com/keserukristof/ai-task/issues/3) and the spec [#2](https://github.com/keserukristof/ai-task/issues/2).
+Written 2026-11-27 12:40 at the end of the phase 1 and 2 session, for the session that runs increment 1. Read this, then `CLAUDE.md`, then the increment issue [#3](https://github.com/keserukristof/sonrisa-task/issues/3) and the spec [#2](https://github.com/keserukristof/sonrisa-task/issues/2).
 
 ## Where things stand
 
-- **`main`:** the starter, the agent kit and the phase 1 and 2 output, merged from `spec` by [keserukristof/sonrisa-task#6](https://github.com/keserukristof/ai-task/pull/6). No application code for the brief yet.
+- **`main`:** the starter, the agent kit and the phase 1 and 2 output, merged from `spec` by [keserukristof/sonrisa-task#6](https://github.com/keserukristof/sonrisa-task/pull/6). No application code for the brief yet.
 - **Branch:** `increment-1`, cut from that `main`. It holds only this handover. Every phase of increment 1 commits there, and it reaches `main` through one pull request in `/ship`.
 - **Live:** https://sonrisa-task.vercel.app still runs the starter only.
 - **Issues:**
-  - Spec [#2](https://github.com/keserukristof/ai-task/issues/2): 69 user stories, implementation and testing decisions, Out of Scope.
-  - Increments [#3](https://github.com/keserukristof/ai-task/issues/3), [#4](https://github.com/keserukristof/ai-task/issues/4) and [#5](https://github.com/keserukristof/ai-task/issues/5), each a sub-issue of the spec and blocked by the one before. Each lists its stories. Acceptance criteria are empty until its Refine phase.
+  - Spec [#2](https://github.com/keserukristof/sonrisa-task/issues/2): 69 user stories, implementation and testing decisions, Out of Scope.
+  - Increments [#3](https://github.com/keserukristof/sonrisa-task/issues/3), [#4](https://github.com/keserukristof/sonrisa-task/issues/4) and [#5](https://github.com/keserukristof/sonrisa-task/issues/5), each a sub-issue of the spec and blocked by the one before. Each lists its stories. Acceptance criteria are empty until its Refine phase.
 - **Local:** Supabase runs in Docker in lite mode. `pg_cron` and `pg_net` are available but not installed; the grill's checks installed them and dropped them again.
 
 ## What was decided (the short version)
@@ -43,7 +43,7 @@ The full record is [decision-log.md](decision-log.md), with the vocabulary in [G
 
 | #   | Step                                                                                        | How                                                                                                     | Model      |
 | --- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ---------- |
-| 1   | **Refine** increment 1: a ten-minute grill of #3, acceptance criteria written into its body | `mattpocock-skills:grilling` on [#3](https://github.com/keserukristof/ai-task/issues/3)                 | Opus 5.5   |
+| 1   | **Refine** increment 1: a ten-minute grill of #3, acceptance criteria written into its body | `mattpocock-skills:grilling` on [#3](https://github.com/keserukristof/sonrisa-task/issues/3)            | Opus 5.5   |
 | 2   | **Design** the increment's screens, and the design system on this first run                 | `/design`, approved by the user, exported into `docs/design/`                                           | Fable 5.2  |
 | 3   | **Slice** into tickets, ticket 1 is Contracts                                               | the user types `/mattpocock-skills:to-tickets #3`                                                       | Opus 5.5   |
 | 4   | **Contracts**: schema with RLS, pgTAP, types, Zod schemas, routes, env schema, admin client | `/contracts`, serial, then `security-auditor`; consult `nextjs-advisor` for routing and caching         | Fable 5.2  |

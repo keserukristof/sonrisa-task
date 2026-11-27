@@ -1,6 +1,6 @@
 # Handover: ship of increment 1
 
-Written 2026-11-27 18:02 at the end of the session that ran Build and Review for increment 1, for the session that runs Ship. Read this, then `CLAUDE.md`, then `.claude/skills/ship/SKILL.md`, then the increment issue [#3](https://github.com/keserukristof/ai-task/issues/3). The previous handover, [handover-03](handover-03-build-increment-1.md), still holds for everything under "For /ship" and "Only the user can".
+Written 2026-11-27 18:02 at the end of the session that ran Build and Review for increment 1, for the session that runs Ship. Read this, then `CLAUDE.md`, then `.claude/skills/ship/SKILL.md`, then the increment issue [#3](https://github.com/keserukristof/sonrisa-task/issues/3). The previous handover, [handover-03](handover-03-build-increment-1.md), still holds for everything under "For /ship" and "Only the user can".
 
 ## Before anything else: `/ship` ran the wrong skill
 
