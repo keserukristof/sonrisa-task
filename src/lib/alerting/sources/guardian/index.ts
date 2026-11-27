@@ -27,10 +27,13 @@ export const guardianSource: Source = {
     url.searchParams.set("order-by", "newest");
     url.searchParams.set("page-size", "50");
     url.searchParams.set("show-fields", "standfirst,trailText");
+    // The Content API documents the key as the \`api-key\` query parameter; a
+    // header form was not verified. The URL is never logged: errors carry
+    // only the status.
+    url.searchParams.set("api-key", key);
 
     const response = await fetch(url, {
-      // The key travels in a header so it never lands in a logged URL.
-      headers: { accept: "application/json", "api-key": key },
+      headers: { accept: "application/json" },
       cache: "no-store",
       signal: AbortSignal.timeout(10_000),
     });
