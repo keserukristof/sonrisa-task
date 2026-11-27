@@ -1,4 +1,5 @@
 import { formatUtcDateTime } from "@/lib/format";
+import { sourceCredit } from "@/lib/alerting/sources/catalog";
 import {
   CATEGORY_LABELS,
   SEVERITY_LABELS,
@@ -31,7 +32,6 @@ const FONT =
 
 const SIMULATED_BANNER =
   "This is a simulated event created by an admin. Nothing happened.";
-const USGS_CREDIT = "Data: U.S. Geological Survey.";
 
 function esc(value: string): string {
   return value
@@ -69,7 +69,8 @@ export function renderAlertEmail(
   const category = CATEGORY_LABELS[event.category];
   const when = formatUtcDateTime(event.occurredAt);
   const alertsUrl = `${base(appUrl)}/alerts`;
-  const credit = !event.simulated && event.source === "usgs";
+  const sourceLine = event.simulated ? null : sourceCredit(event.source);
+  const credit = sourceLine ? `${sourceLine}.` : null;
 
   const subject =
     `${event.simulated ? "[SIMULATED] " : ""}[${severity}] ${event.title}${
@@ -130,7 +131,7 @@ export function renderAlertEmail(
     );
   }
 
-  const footerHtml = `${credit ? `${USGS_CREDIT} ` : ""}${esc(reason)} <a href="${esc(alertsUrl)}" style="color:${COLOR.primary};">Manage your alerts</a>`;
+  const footerHtml = `${credit ? `${esc(credit)} ` : ""}${esc(reason)} <a href="${esc(alertsUrl)}" style="color:${COLOR.primary};">Manage your alerts</a>`;
 
   const textLines: string[] = [];
   if (event.simulated) textLines.push(SIMULATED_BANNER, "");
@@ -140,7 +141,7 @@ export function renderAlertEmail(
   if (event.url) textLines.push("", `View at source: ${event.url}`);
   textLines.push(
     "",
-    `${credit ? `${USGS_CREDIT} ` : ""}${reason}`,
+    `${credit ? `${credit} ` : ""}${reason}`,
     `Manage your alerts: ${alertsUrl}`,
   );
 

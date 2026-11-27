@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useActionState, useEffect, useRef, useState } from "react";
+import { BrokenMark } from "@/components/broken-mark";
 import { Field, FieldGroup, describedBy } from "@/components/form-field";
 import { Notice } from "@/components/notice";
 import { SubmitButton } from "@/components/submit-button";
@@ -188,8 +189,8 @@ export function AlertForm({
       <Field
         id="keywords"
         label="Keywords"
-        optional
-        hint="Separate with commas. Every keyword must appear in the event as a whole word. Up to 10."
+        optional={!isNews}
+        hint={`${isNews ? "Required for news. " : ""}Separate with commas. Every keyword must appear in the event as a whole word. Up to 10.`}
         error={errors.keywords}
       >
         <Input
@@ -210,8 +211,8 @@ export function AlertForm({
       >
         <div className="flex flex-col gap-2">
           {destinations.map((destination) => {
-            const address =
-              destination.channelType === "email" ? accountEmail : null;
+            const kind =
+              destination.channelType === "email" ? accountEmail : "Slack";
             return (
               <label
                 key={destination.id}
@@ -233,9 +234,10 @@ export function AlertForm({
                 />
                 <span className="flex flex-col gap-0.5 sm:flex-row sm:gap-2">
                   <span>{destination.name}</span>
-                  {address ? (
-                    <span className="text-muted-foreground">{address}</span>
+                  {kind ? (
+                    <span className="text-muted-foreground">{kind}</span>
                   ) : null}
+                  {destination.status === "broken" ? <BrokenMark /> : null}
                 </span>
               </label>
             );

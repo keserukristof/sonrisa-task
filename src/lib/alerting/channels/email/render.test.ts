@@ -53,15 +53,15 @@ describe("renderAlertEmail", () => {
     expect(email.html).not.toContain("View at source");
   });
 
-  it("credits the USGS for USGS events only", () => {
-    const usgs = renderAlertEmail(notification(), APP_URL);
-    expect(usgs.html).toContain("Data: U.S. Geological Survey.");
-    expect(usgs.text).toContain("Data: U.S. Geological Survey.");
-    const other = renderAlertEmail(
-      notification({ source: "guardian" }),
-      APP_URL,
-    );
-    expect(other.html).not.toContain("U.S. Geological Survey");
+  it.each([
+    ["usgs", "U.S. Geological Survey."],
+    ["guardian", "Source: The Guardian."],
+    ["coingecko", "Powered by CoinGecko."],
+  ])("starts the footer with the %s credit", (source, credit) => {
+    const email = renderAlertEmail(notification({ source }), APP_URL);
+    expect(email.html).toContain(`${credit} You get this email`);
+    expect(email.text).toContain(`${credit} You get this email`);
+    expect(email.html).not.toContain("Data:");
   });
 
   it("links to the source and to the alerts page", () => {

@@ -1,0 +1,74 @@
+{
+  "response": {
+    "status": "ok",
+    "userTier": "developer",
+    "total": 5,
+    "startIndex": 1,
+    "pageSize": 5,
+    "currentPage": 1,
+    "pages": 1,
+    "orderBy": "newest",
+    "results": [
+      {
+        "id": "world/2026/nov/27/ceasefire-talks-resume",
+        "type": "article",
+        "sectionId": "world",
+        "sectionName": "World news",
+        "webPublicationDate": "2026-11-27T08:15:00Z",
+        "webTitle": "Ceasefire talks resume as mediators report progress",
+        "webUrl": "https://www.theguardian.com/world/2026/nov/27/ceasefire-talks-resume",
+        "apiUrl": "https://content.guardianapis.com/world/2026/nov/27/ceasefire-talks-resume",
+        "fields": {
+          "standfirst": "<p>Negotiators say a <strong>framework</strong> is within reach &amp; talks continue tomorrow.</p>",
+          "trailText": "Negotiators say a framework is within reach."
+        },
+        "isHosted": false,
+        "pillarId": "pillar/news"
+      },
+      {
+        "id": "business/2026/nov/27/central-bank-holds-rates",
+        "type": "article",
+        "sectionId": "business",
+        "sectionName": "Business",
+        "webPublicationDate": "2026-11-27T07:40:00Z",
+        "webTitle": "Central bank holds rates steady",
+        "webUrl": "https://www.theguardian.com/business/2026/nov/27/central-bank-holds-rates",
+        "apiUrl": "https://content.guardianapis.com/business/2026/nov/27/central-bank-holds-rates",
+        "fields": {
+          "trailText": "Policymakers cite <em>persistent</em> inflation."
+        },
+        "isHosted": false
+      },
+      {
+        "id": "environment/2026/nov/26/reef-bleaching-record",
+        "type": "article",
+        "sectionId": "environment",
+        "sectionName": "Environment",
+        "webPublicationDate": "2026-11-26T22:05:00Z",
+        "webTitle": "Reef bleaching reaches record extent",
+        "webUrl": "https://www.theguardian.com/environment/2026/nov/26/reef-bleaching-record",
+        "apiUrl": "https://content.guardianapis.com/environment/2026/nov/26/reef-bleaching-record",
+        "isHosted": false
+      },
+      {
+        "id": "sport/2026/nov/26/cup-final-preview",
+        "type": "article",
+        "sectionId": "sport",
+        "sectionName": "Sport",
+        "webPublicationDate": "2026-11-26T20:00:00Z",
+        "webTitle": "Cup final preview",
+        "webUrl": "https://www.theguardian.com/sport/2026/nov/26/cup-final-preview",
+        "apiUrl": "https://content.guardianapis.com/sport/2026/nov/26/cup-final-preview",
+        "fields": { "standfirst": "<p>Not one of our sections.</p>" }
+      },
+      {
+        "id": "world/2026/nov/26/broken-item",
+        "type": "article",
+        "sectionId": "world",
+        "webPublicationDate": "not a date",
+        "webTitle": "Item with an unparseable date",
+        "webUrl": "https://www.theguardian.com/world/2026/nov/26/broken-item"
+      }
+    ]
+  }
+}
