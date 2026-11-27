@@ -107,3 +107,20 @@ describe("malformed items", () => {
     expect(mapUsgsFeed({ features: "nope" })).toEqual([]);
   });
 });
+
+describe("event links", () => {
+  it("keeps an https link", () => {
+    const [event] = mapUsgsFeed({ features: [item(5)] });
+    expect(event?.url).toBe(
+      "https://earthquake.usgs.gov/earthquakes/eventpage/us1",
+    );
+  });
+
+  it("drops a link that is not http(s) but keeps the event", () => {
+    const feature = item(5);
+    feature.properties.url = "javascript:alert(1)";
+    const [event] = mapUsgsFeed({ features: [feature] });
+    expect(event?.externalId).toBe("us1");
+    expect(event?.url).toBeNull();
+  });
+});

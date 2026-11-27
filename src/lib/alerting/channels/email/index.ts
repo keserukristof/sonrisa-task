@@ -8,7 +8,11 @@ import type {
   OutgoingNotification,
   SendOutcome,
 } from "@/lib/alerting/types";
-import { classifyResendResponse, classifySmtpError } from "./outcome";
+import {
+  classifyResendResponse,
+  classifySmtpError,
+  EMAIL_SERVICE_UNREACHABLE,
+} from "./outcome";
 import {
   renderAlertEmail,
   renderTestEmail,
@@ -19,10 +23,6 @@ const settingsSchema = z.object({});
 type EmailSettings = z.infer<typeof settingsSchema>;
 
 const SEND_TIMEOUT_MS = 15_000;
-
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : "Unknown error";
-}
 
 async function sendWithResend(
   apiKey: string,
@@ -47,13 +47,18 @@ async function sendWithResend(
       signal: AbortSignal.timeout(SEND_TIMEOUT_MS),
     });
     const body: unknown = await response.json().catch(() => null);
-    return classifyResendResponse({
+    const outcome = classifyResendResponse({
       status: response.status,
       retryAfter: response.headers.get("retry-after"),
       body,
     });
+    if (outcome.kind !== "sent") {
+      console.error("[email] Resend answered", response.status, body);
+    }
+    return outcome;
   } catch (error) {
-    return { kind: "retry", error: errorMessage(error) };
+    console.error("[email] Resend request failed", error);
+    return { kind: "retry", error: EMAIL_SERVICE_UNREACHABLE };
   }
 }
 
@@ -82,6 +87,7 @@ async function sendWithSmtp(
     });
     return { kind: "sent" };
   } catch (error) {
+    console.error("[email] SMTP send failed", error);
     if (error instanceof Error) {
       const details: { code?: string; responseCode?: number } = {};
       if ("code" in error && typeof error.code === "string") {
@@ -92,7 +98,7 @@ async function sendWithSmtp(
       }
       return classifySmtpError({ ...details, message: error.message });
     }
-    return { kind: "retry", error: "Unknown error" };
+    return { kind: "retry", error: EMAIL_SERVICE_UNREACHABLE };
   } finally {
     transport.close();
   }

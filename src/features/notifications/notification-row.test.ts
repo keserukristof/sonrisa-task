@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   parsePage,
+  parseRawNotifications,
   toNotificationRow,
   type RawNotification,
 } from "./notification-row";
@@ -25,6 +26,22 @@ function raw(overrides: Partial<RawNotification> = {}): RawNotification {
     ...overrides,
   };
 }
+
+describe("parseRawNotifications", () => {
+  it("accepts rows shaped like the query's", () => {
+    expect(parseRawNotifications([raw()])).toEqual([raw()]);
+  });
+
+  it("rejects a row with an unknown status", () => {
+    expect(
+      parseRawNotifications([{ ...raw(), status: "exploded" }]),
+    ).toBeNull();
+  });
+
+  it("rejects something that is not a list of rows", () => {
+    expect(parseRawNotifications({ id: "n1" })).toBeNull();
+  });
+});
 
 describe("parsePage", () => {
   it.each([

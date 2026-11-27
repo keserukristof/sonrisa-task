@@ -71,9 +71,10 @@ export function renderAlertEmail(
   const alertsUrl = `${base(appUrl)}/alerts`;
   const credit = !event.simulated && event.source === "usgs";
 
-  const subject = `${event.simulated ? "[SIMULATED] " : ""}[${severity}] ${event.title}${
-    alertName ? ` · ${alertName}` : ""
-  }`;
+  const subject =
+    `${event.simulated ? "[SIMULATED] " : ""}[${severity}] ${event.title}${
+      alertName ? ` · ${alertName}` : ""
+    }`.replace(/[\r\n]+/g, " ");
 
   const reason = alertName
     ? `You get this email because your alert "${alertName}" matched.`
@@ -136,7 +137,7 @@ export function renderAlertEmail(
   textLines.push(event.title);
   if (event.summary) textLines.push("", event.summary);
   textLines.push("", ...facts.map(([term, value]) => `${term}: ${value}`));
-  if (event.url) textLines.push("", event.url);
+  if (event.url) textLines.push("", `View at source: ${event.url}`);
   textLines.push(
     "",
     `${credit ? `${USGS_CREDIT} ` : ""}${reason}`,

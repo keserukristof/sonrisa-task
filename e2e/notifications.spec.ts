@@ -53,7 +53,11 @@ test.describe("notification history", () => {
     await signIn(page, DEMO_USER);
     await page.goto("/notifications");
     await expect(page).toHaveTitle(/Notifications/);
-    await expect(page.getByRole("listitem")).toHaveCount(25);
+    // Other tests add notifications for the demo user, so nothing here
+    // depends on which rows are newest: only that the seed fills several pages.
+    const items = page.getByRole("listitem");
+    await expect(items).toHaveCount(25);
+    const firstOnPage1 = await items.first().innerText();
     const pagination = page.getByRole("navigation", { name: "Pagination" });
     await expect(
       pagination.getByRole("link", { name: "Previous" }),
@@ -65,17 +69,13 @@ test.describe("notification history", () => {
     await expect(
       pagination.getByRole("link", { name: "Previous" }),
     ).toBeVisible();
-    await expect(
-      page.getByText("M 6.8 - 40 km S of Hualien, Taiwan"),
-    ).toHaveCount(0);
+    await expect(items.first()).not.toHaveText(firstOnPage1);
 
     for (const bad of ["abc", "0", "9999"]) {
       await page.goto(`/notifications?page=${bad}`);
       await expect(page).toHaveTitle(/Notifications/);
-      await expect(
-        page.getByText("M 6.8 - 40 km S of Hualien, Taiwan"),
-      ).toBeVisible();
       await expect(pagination).toContainText("Page 1");
+      await expect(items).toHaveCount(25);
     }
   });
 
