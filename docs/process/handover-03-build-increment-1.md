@@ -56,6 +56,16 @@ Written 2026-11-27 16:45 at the end of the session that ran Refine, Design, Slic
 
 The session that runs `/implement-spec` starts the implementers itself, as sub-agents. An implementer cannot start sub-agents of its own.
 
+## Models and effort
+
+The user asked for this explicitly on 2026-11-27, so it holds for the build whatever the kit's tables say:
+
+- **Implementers run on Sonnet 5.5 at medium effort, whatever model the main session uses.**
+  - The model comes from the agent definition: `.claude/agents/implementer.md` has `model: claude-sonnet-5-5`. A sub-agent takes its model from there, not from the session that starts it, so a main session on Opus 5.5 still gets Sonnet 5.5 implementers.
+  - The effort does not come from the definition, which sets none. Pass `effort: "medium"` on every Agent call that starts an implementer. That parameter is only for cases where the user asked for a level, and here they did.
+- **The main session runs at medium effort too.** The user sets that themselves, with the model and effort picker of the session; ask them to confirm it is set before the build starts.
+- The review agents (`reviewer`, `security-auditor`, `ux-reviewer`) keep the models in their definitions, Opus 5.5. The user said nothing about their effort: do not pass one.
+
 ## The testing arrangement (proposed, not yet confirmed)
 
 The user asked how to make the build as fast as possible, and whether tests could be skipped and run once at the end. The previous session proposed the arrangement below. **The user has not said yes to it. Ask before briefing the implementers**, and log the answer.
