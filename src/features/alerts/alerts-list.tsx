@@ -1,7 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useOptimistic, useRef, useState, useTransition } from "react";
+import {
+  Fragment,
+  useOptimistic,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
+import { BrokenMark } from "@/components/broken-mark";
 import { KeywordChip } from "@/components/simulated-badge";
 import { Notice } from "@/components/notice";
 import { SeverityMark } from "@/components/severity-mark";
@@ -65,7 +72,20 @@ function AlertRow({
         <p className="font-semibold">{alert.name}</p>
         <p className="text-muted-foreground text-sm">
           {CATEGORY_LABELS[alert.category]}, to{" "}
-          {alert.destinationNames.join(", ")}
+          {alert.destinations.map((destination, index) => (
+            <Fragment key={destination.name}>
+              {index === 0
+                ? ""
+                : index === alert.destinations.length - 1
+                  ? " and "
+                  : ", "}
+              {destination.broken ? (
+                <BrokenMark>{destination.name} (broken)</BrokenMark>
+              ) : (
+                destination.name
+              )}
+            </Fragment>
+          ))}
         </p>
         {alert.keywords.length > 0 ? (
           <ul className="mt-1.5 flex flex-wrap gap-1.5">
