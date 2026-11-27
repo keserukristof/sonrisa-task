@@ -25,3 +25,23 @@ Stories 37, 39 and 40 of #3. Screen: `docs/design/screens/notifications.md`.
 - [ ] Loading, empty, error and success states, stacked rows at 360px
 - [ ] Playwright spec with an axe scan over the seeded history
 
+
+## Contracts already in place
+
+- Read `notifications` with its event (`events`), alert name (`alerts`, null when deleted) and destination name (`destinations`; select `name`, never `settings`). Row Level Security returns only the user's own rows.
+- Page with `.range()`: 25 a page, newest first by `created_at`; ask for one extra row to know whether there is a next page. Use the shared `Pager`.
+- Shared components: `SeverityMark`, `NotificationStatus`, `SimulatedBadge`, `EmptyState`, `Notice`. Skip reasons arrive ready to show in `skip_reason`; the failure sentence is in `last_error`.
+- The seed gives the demo user 34 notifications: sent, skipped and failed ones, one for a simulated event, one whose alert was deleted, and enough for a second page. There is no pending one, on purpose: a tick would send it. Cover the pending row in a component test.
+- The end-to-end test signs in as the demo user and only reads. It asserts on the seeded rows it names, never on totals.
+
+## Owned paths
+
+- `src/features/notifications/**`
+- `src/app/(app)/notifications/**`
+- `e2e/notifications.spec.ts`
+
+**For every ticket:** forms use `Field`, `FieldGroup`, `describedBy` and `SubmitButton` from `src/components/`, and return `ActionResult` (`src/lib/action-result.ts`). Feedback is a `Notice`; a notice after a redirect uses `withNotice()` and `<FlashNotice>` (`src/lib/notices.ts`). Times go through `src/lib/format.ts`. Links that look like buttons use `buttonVariants()` on a `Link`; page buttons are `size="lg"` (36px), row buttons the default size. End-to-end tests create their own account with `createUser()` from `e2e/support/users.ts`, never write through the demo accounts, and read mail with `waitForEmail()` from `e2e/support/mailbox.ts`. Remove your page's `<Placeholder>`.
+
+
+**Accessibility scans:** wait for the page title (`await expect(page).toHaveTitle(…)`) before running axe after a navigation; the title streams in. The suite runs with reduced motion, so panels and dialogs are scanned fully open.
+

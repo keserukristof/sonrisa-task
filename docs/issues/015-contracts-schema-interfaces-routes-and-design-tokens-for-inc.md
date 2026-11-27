@@ -20,8 +20,9 @@ Everything the other tickets of increment 1 share, landed once and serially, so 
 - [ ] Migrations for profiles, destinations, alerts, alert_destinations, events, notifications, source_polls and a log of test sends, each with RLS enabled and its policies, as the spec's data model says
 - [ ] Every new account gets a profile and exactly one email destination, created in the database
 - [ ] The role change and simulate functions are security-definer and check the caller is an admin; an admin cannot change their own role
-- [ ] `pg_cron` and `pg_net` enabled; `anon` and `authenticated` have no usage on the `net` schema; the tick job reads its URL and secret from database settings (ADR-0003)
-- [ ] pgTAP tests for every policy in #3's Tests section, including the restricted `net` schema; `pnpm db:test` green
+- [ ] `pg_cron` and `pg_net` enabled; the tick job reads its URL and secret from Supabase Vault and does nothing until both are set (ADR-0003 addendum). The `net` schema cannot be restricted from a migration: its grants belong to `supabase_admin`. An end-to-end test proves the API does not expose it instead
+- [ ] pgTAP tests for every policy in #3's Tests section; `pnpm db:test` green
+- [ ] Matching with limits and claiming for delivery are SQL functions callable only by the tick, because the API cannot lock rows; pgTAP covers them
 - [ ] Seed: a demo user and a demo admin, alerts, events (one simulated) and notifications in every status; idempotent
 - [ ] Email confirmation enabled locally; local auth emails reach the mail catcher
 - [ ] Server-only env schema (secret key, tick secret, Resend key and sender, Guardian key, CoinGecko key, real-polling flag), and an admin client used only by the tick

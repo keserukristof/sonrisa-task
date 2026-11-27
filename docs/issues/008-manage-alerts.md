@@ -25,3 +25,24 @@ Stories 18–31 of #3 (story 20 brought forward). Screens: `docs/design/screens/
 - [ ] Editing keeps the creation time; another user's alert gives the not-found page
 - [ ] Playwright spec with an axe scan: create, edit, pause, resume and delete an alert; a form without a destination shows the field error
 
+
+## Contracts already in place
+
+- `src/features/alerts/schema.ts` has `alertSchema`, `parseKeywords` and the limits, with tests.
+- Create and edit go through one database call, `supabase.rpc("save_alert", …)`: pass a null id to create. It writes the alert and its destinations in one transaction, as the user. It raises `23514` without a destination, `23503` for a destination that is not the user's, `P0002` for an alert that is not theirs.
+- Pause and resume are an update of `active`; delete is a delete. The database lets a user change only `name`, `category`, `min_severity`, `keywords` and `active`, so the creation time cannot move.
+- Destinations for the form: select `id, name, channel_type` from `destinations` (never `settings`, which is not readable). The address shown next to "Account email" is the signed-in user's email.
+- Labels: `CATEGORY_LABELS`, `MIN_SEVERITY_LABELS` in `src/lib/alerting/types.ts`. Shared components: `SeverityMark` (`kind="minimum"`), `KeywordChip`, `EmptyState`, `Notice`, `FlashNotice`, `PageContainer`, `PageHeader`.
+- Seeded alerts exist for the demo user, for looking at the list. Tests use their own account.
+
+## Owned paths
+
+- `src/features/alerts/**`
+- `src/app/(app)/alerts/**`
+- `e2e/alerts.spec.ts`
+
+**For every ticket:** forms use `Field`, `FieldGroup`, `describedBy` and `SubmitButton` from `src/components/`, and return `ActionResult` (`src/lib/action-result.ts`). Feedback is a `Notice`; a notice after a redirect uses `withNotice()` and `<FlashNotice>` (`src/lib/notices.ts`). Times go through `src/lib/format.ts`. Links that look like buttons use `buttonVariants()` on a `Link`; page buttons are `size="lg"` (36px), row buttons the default size. End-to-end tests create their own account with `createUser()` from `e2e/support/users.ts`, never write through the demo accounts, and read mail with `waitForEmail()` from `e2e/support/mailbox.ts`. Remove your page's `<Placeholder>`.
+
+
+**Accessibility scans:** wait for the page title (`await expect(page).toHaveTitle(…)`) before running axe after a navigation; the title streams in. The suite runs with reduced motion, so panels and dialogs are scanned fully open.
+
