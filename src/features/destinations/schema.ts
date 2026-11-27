@@ -5,11 +5,13 @@ export const sendTestSchema = z.object({
   destinationId: z.uuid(),
 });
 
+export const SLACK_NAME_MAX = 60;
+
 export const removeDestinationSchema = z.object({
   destinationId: z.uuid(),
+  /** Shown in the refusal message, so validated like any other input. */
+  name: z.string().trim().min(1).max(SLACK_NAME_MAX),
 });
-
-export const SLACK_NAME_MAX = 60;
 
 /**
  * The "Add Slack destination" form. Whether the local stub's URL is accepted
