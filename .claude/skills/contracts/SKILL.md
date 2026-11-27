@@ -8,7 +8,7 @@ argument-hint: "[contracts ticket number]"
 
 Parallel implementers share one local database, one lockfile, one `globals.css` and one set of UI primitives. Two tickets changing any of those at once produce conflicts or a broken database, not speed. This phase makes every shared decision of one increment once, in the main session, so the tickets that follow only add files inside their own feature folder.
 
-Work on the increment's integration branch. Do this serially and do not delegate it.
+Work on the increment's integration branch, `increment-<n>`, and push it when done: the implementers branch from it. Do this serially and do not delegate it.
 
 ## 1. Read
 

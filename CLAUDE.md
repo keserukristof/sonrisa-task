@@ -80,6 +80,23 @@ Phases 1, 2, 3 and 5 run in the main session, so the user switches the session m
 - `/design`, `/contracts` and `/ship` are project skills in `.claude/skills/`. Every other command in the tables comes from the `mattpocock-skills` plugin and is namespaced: `/mattpocock-skills:to-spec`, and `mattpocock-skills:tdd` when calling the Skill tool. Use the plugin's `code-review`, not the built-in one of the same name.
 - After each phase, add one line to `docs/ai-workflow.md` saying what was used and what it produced.
 
+## Branches
+
+`main` is what is deployed. Nothing is committed or pushed to it directly: it changes only by merging a pull request, and the user approves every merge.
+
+| Work                                                          | Branch                                                                   | Reaches `main`                       |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------ |
+| Phases 1 and 2: grill, spec, increments, plan of attack       | `spec`                                                                   | one pull request, before increment 1 |
+| One increment, phases 3 to 8                                  | `increment-<n>`, cut from the latest `main` when its Refine phase starts | one pull request, in `/ship`         |
+| One implementation ticket                                     | the implementer's worktree branch, merged into `increment-<n>`           | only through the increment           |
+| Evidence from production after a deploy (screenshots, README) | `ship-<n>`                                                               | a small pull request, in `/ship`     |
+| A small change, a fix, a kit change                           | `feat/<topic>`, `fix/<topic>`, `chore/<topic>`                           | its own pull request                 |
+
+- Push a branch as soon as it has commits, so CI runs on it and the work is backed up.
+- Open the pull request with `gh pr create`, its body written with `mattpocock-skills:pr`, and link the issues it closes.
+- Merge with a merge commit, never squash: the brief asks for a commit per milestone, and squashing collapses them. The user runs or approves `gh pr merge --merge`.
+- `.claude/hooks/guard-main.mjs` refuses a commit on `main` and a push to it. If it fires, move the work to a branch; do not work around it.
+
 ## Process evidence
 
 The reviewers judge how the result was reached, not the result. The brief is in `docs/process/brief.md`. Record the process while it happens, in the repository, never from memory at the end:

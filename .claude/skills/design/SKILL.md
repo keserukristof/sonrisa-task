@@ -69,4 +69,4 @@ A screen file is complete when an implementer who cannot open the artifact could
 
 - Applying new tokens to `src/app/globals.css` and the fonts to the root layout is part of the increment's **Contracts** ticket. Say so when `/to-tickets` runs.
 - Add a line to `docs/ai-workflow.md` for this phase.
-- Commit `docs/design/` with `docs(design): increment <n> screens`, or `docs(design): design system and increment 1 screens` on the first run.
+- Commit `docs/design/` on the increment's branch, `increment-<n>`, with `docs(design): increment <n> screens`, or `docs(design): design system and increment 1 screens` on the first run.

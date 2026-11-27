@@ -23,7 +23,8 @@ Three levels: spec, then increments, then tickets.
 - A **ticket** is a sub-issue of its increment. Pass the increment, never the spec, to the plugin skills: `/to-tickets #<increment>`, `/implement-spec #<increment>`.
 - **Ticket 1 of every increment is "Contracts"** and blocks that increment's other tickets (see the `contracts` skill).
 - Each ticket body ends with an **Owned paths** list, written during the Contracts phase. An implementer edits nothing outside it.
-- Each increment lands on its own integration branch, `increment-<n>`, cut from `main` after the previous increment merged. One pull request per increment closes the increment and its tickets, and leaves the spec open.
+- Each increment lands on its own integration branch, `increment-<n>`, cut from `main` after the previous increment merged, when its Refine phase starts. Every phase of the increment commits there, and `/implement-spec` merges the ticket branches into it. One pull request per increment, merged with a merge commit, closes the increment and its tickets, and leaves the spec open.
+- The spec, the increment issues and the plan of attack are committed on the `spec` branch, merged by pull request before increment 1 starts. Branch rules are in `CLAUDE.md`.
 
 ## Pull requests as a triage surface
 
