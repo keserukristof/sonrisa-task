@@ -119,7 +119,12 @@ function DeleteAlert({ alert }: { alert: AlertSummary }) {
 
   return (
     <>
-      <Button variant="destructive" size="sm" onClick={() => setOpen(true)}>
+      <Button
+        variant="outline"
+        size="sm"
+        className="text-destructive"
+        onClick={() => setOpen(true)}
+      >
         Delete
         <span className="sr-only"> {alert.name}</span>
       </Button>
