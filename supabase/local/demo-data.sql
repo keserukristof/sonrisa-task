@@ -150,23 +150,23 @@ on conflict do nothing;
 
 insert into public.events (id, source, external_id, category, severity, title, summary, url, occurred_at, ingested_at, simulated, matched_at)
 values
-  ('e3000000-0000-4000-8000-000000000001', 'coingecko', 'seed-bitcoin-2026-11-26T18', 'markets', 'moderate',
+  ('e8000000-0000-4000-8000-000000000001', 'coingecko', 'seed-bitcoin-2026-11-26T18', 'markets', 'moderate',
    'Bitcoin (BTC) up 4.2% in the past hour', 'Price $64,210. 24-hour change −1.8%.',
    'https://www.coingecko.com/en/coins/bitcoin', '2026-11-26 18:05+00', '2026-11-26 18:05+00', false, '2026-11-26 18:05+00'),
-  ('e3000000-0000-4000-8000-000000000002', 'guardian', 'seed-business/2026/nov/26/fed-holds-rates', 'news', 'low',
+  ('e8000000-0000-4000-8000-000000000002', 'guardian', 'seed-business/2026/nov/26/fed-holds-rates', 'news', 'low',
    'Fed holds rates as inflation cools', 'The US central bank kept its main rate unchanged for a third meeting.',
    'https://www.theguardian.com/business', '2026-11-26 17:48+00', '2026-11-26 17:49+00', false, '2026-11-26 17:49+00')
 on conflict (id) do nothing;
 
 insert into public.notifications (id, event_id, alert_id, destination_id, user_id, channel_type, status, attempts, next_attempt_at, last_error, skip_reason, sent_at, created_at)
 values
-  ('b2000000-0000-4000-8000-000000000001', 'e3000000-0000-4000-8000-000000000001', 'a1000000-0000-4000-8000-000000000004',
+  ('b2000000-0000-4000-8000-000000000001', 'e8000000-0000-4000-8000-000000000001', 'a1000000-0000-4000-8000-000000000004',
    'd2000000-0000-4000-8000-000000000001', '11111111-1111-4111-8111-111111111111', 'slack', 'sent', 1,
    '2026-11-26 18:06+00', null, null, '2026-11-26 18:06+00', '2026-11-26 18:06+00'),
   ('b2000000-0000-4000-8000-000000000002', 'e1000000-0000-4000-8000-000000000001', 'a1000000-0000-4000-8000-000000000001',
    'd2000000-0000-4000-8000-000000000002', '11111111-1111-4111-8111-111111111111', 'slack', 'failed', 1,
    '2026-11-26 13:44+00', 'The Slack channel no longer exists.', null, null, '2026-11-26 13:43+00'),
-  ('b2000000-0000-4000-8000-000000000003', 'e3000000-0000-4000-8000-000000000002', 'a1000000-0000-4000-8000-000000000003',
+  ('b2000000-0000-4000-8000-000000000003', 'e8000000-0000-4000-8000-000000000002', 'a1000000-0000-4000-8000-000000000003',
    null, '11111111-1111-4111-8111-111111111111', 'email', 'sent', 1,
    '2026-11-26 17:50+00', null, null, '2026-11-26 17:50+00', '2026-11-26 17:50+00')
 on conflict (id) do nothing;

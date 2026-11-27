@@ -236,6 +236,9 @@ isOneToOne: false
 "simulate_event":
 { Args: { "p_category": Database["public"]['Enums']["event_category"],"p_severity": Database["public"]['Enums']["severity"],"p_summary"?: string,"p_title": string,"p_url"?: string }; Returns: string
                            },
+"slack_test_target":
+{ Args: { "p_test_send_id": string }; Returns: string
+                           },
 "text_has_word":
 { Args: { "p_text": string,"p_word": string }; Returns: boolean
                            },
