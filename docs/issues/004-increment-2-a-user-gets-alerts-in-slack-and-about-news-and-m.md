@@ -108,3 +108,18 @@ _Written in the Refine phase on 2026-11-27, from two grill rounds (14 decisions)
 - Every data view handles loading, empty, error and success.
 - Each new user-facing flow has a Playwright spec on both projects. The Slack paths, broken state included, are tested end to end against the stub.
 
+## Comments
+
+### keserukristof, 2026-11-27 17:52 UTC
+
+## Design decisions that refine the acceptance criteria
+
+Agreed on 2026-11-27 at 18:51 in the Design phase (decision log). They hold wherever the criteria above are silent or differ:
+
+1. **Slack message title.** The title is a bold linked line in a section block, not a header block. Slack's header block takes plain text only, so it cannot link to the source. See `docs/design/screens/slack-message.md`.
+2. **Destination names** are unique per account case-insensitively, after trimming spaces.
+3. **Resuming a news alert with no keyword** is refused. The switch reverts and shows: "News alerts need at least one keyword, or every article would notify you. Edit the alert to add one."
+4. **A source that has never been polled** shows "Never polled" and the status Late.
+
+The approved screens for this increment are in `docs/design/` (README, "Increment 2").
+

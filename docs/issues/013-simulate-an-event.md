@@ -1,6 +1,6 @@
 # #13: Simulate an event
 
-- **State:** open
+- **State:** closed, closed 2026-11-27 18:05 UTC
 - **Opened:** 2026-11-27 14:20 UTC by keserukristof
 - **Labels:** `ready-for-agent`
 - **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/13
