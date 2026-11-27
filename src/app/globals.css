@@ -139,3 +139,13 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Notification history: event, alert, destination, status (docs/design/screens/notifications.md). */
+@utility grid-cols-notification-row {
+  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.3fr) 120px 200px;
+}
+
+/* A term and its description side by side. */
+@utility grid-cols-term {
+  grid-template-columns: auto 1fr;
+}

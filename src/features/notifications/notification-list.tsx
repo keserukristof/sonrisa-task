@@ -5,8 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { NotificationRowData } from "./notification-row";
 
 // The same grid on the header row and every row; stacked below 640px.
-const grid =
-  "sm:grid sm:grid-cols-[minmax(0,2.2fr)_minmax(0,1.3fr)_120px_200px] sm:gap-x-4";
+const grid = "sm:grid sm:grid-cols-notification-row sm:gap-x-4";
 
 /** The card: a header row (from 640px) and one row per notification. */
 export function NotificationList({ rows }: { rows: NotificationRowData[] }) {
@@ -41,7 +40,7 @@ export function NotificationList({ rows }: { rows: NotificationRowData[] }) {
             <div className="max-sm:order-1 sm:order-2">
               {row.severity ? <SeverityMark severity={row.severity} /> : null}
             </div>
-            <dl className="grid min-w-0 grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 text-sm max-sm:order-2 sm:order-1 sm:block">
+            <dl className="grid-cols-term grid min-w-0 gap-x-3 gap-y-0.5 text-sm max-sm:order-2 sm:order-1 sm:block">
               <dt className="text-muted-foreground sm:sr-only">Alert</dt>
               <dd className={row.alertName ? "" : "text-muted-foreground"}>
                 {row.alertName ?? "Deleted alert"}
