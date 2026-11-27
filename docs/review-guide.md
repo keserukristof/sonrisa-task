@@ -2,7 +2,7 @@
 
 The fastest way through this submission. The brief says the process is graded, not the product ("The code is evidence, not the point"), so this guide is organised by **task**: for each piece of work, what was done, what changed, the decisions that mattered, and where the evidence is. Every claim links to the record it comes from.
 
-> **Status:** drafted on 2026-11-27 during the review of increment 2. The sections marked _after ship_ are filled in once increment 2 is deployed and checked in production.
+> **Status:** both increments shipped on 2026-11-27. Production is live; what it does not do yet is listed under [Production check](#production-check).
 
 ## Start here
 
@@ -76,8 +76,8 @@ Brief ──► Grill (questions with options, decided by me) ──► Spec #2 
 - **Design:** 23 new artboards on the existing system; six choices put to me with mockups, the rest delegated to the agent and logged ([README, "Increment 2"](design/README.md#increment-2)). Four rules the design added beyond #4 were confirmed by me and recorded on [#4](https://github.com/keserukristof/sonrisa-task/issues/4#issuecomment-7224886815).
 - **Contracts ([#17](https://github.com/keserukristof/sonrisa-task/issues/17)):** five migrations; every write to Slack destinations goes through narrow database functions so the webhook URL is never readable through the API; CoinGecko's "one event per coin per 6 hours" is a database trigger, because a source never touches the database; a local Slack stub for end-to-end tests.
 - **Build:** ten implementers in three waves (eight in parallel). Every report was read against its diff before a merge commit; five were corrected by the main session (see below).
-- **Review:** [code review](reviews/2-code-review.md) (two axes, 17 findings, 11 fixed), [security audit of the contracts](reviews/2-security-auditor-contracts.md) (one major fixed by design change), [security audit before ship](reviews/2-security-auditor.md) (notes only), UX review _(in progress)_.
-- **Ship:** _after ship._
+- **Review:** [code review](reviews/2-code-review.md) (two axes, 17 findings, 11 fixed), [security audit of the contracts](reviews/2-security-auditor-contracts.md) (one major fixed by design change), [security audit before ship](reviews/2-security-auditor.md) (notes only), UX review: stopped before it reported, by my decision, to ship sooner (its screenshots are kept, `docs/screenshots/2-ux-*`).
+- **Ship:** PR [#28](https://github.com/keserukristof/sonrisa-task/pull/28), merged with a merge commit. Production still ran the starter, so increments 1 and 2 went live together: 15 migrations pushed to the cloud database (local and remote match), the app deployed to Vercel. The production check caught a stylesheet problem in Vercel's remote build, fixed by deploying a verified local build (decision log).
 
 ## Key decisions
 
@@ -151,7 +151,7 @@ e2e/                        Playwright, one spec per feature, axe scan on every 
 
 ## Known limitations
 
-- **The Guardian and CoinGecko mappers are tested on response shapes built from the providers' documentation**, because no keys existed during the build. They are to be re-recorded with real keys at ship (code review P1). _Status after ship._
+- **The Guardian and CoinGecko mappers are tested on response shapes built from the providers' documentation**, because no keys existed during the build. They are to be re-recorded once the keys exist (code review P1); in production the two sources show as Failing until their keys are set.
 - **Promotion and demotion of admins** were cut; admin is granted by SQL ([README](../README.md#admin-access)).
 - **A removed Slack destination shows as "Slack · Removed destination"** in history, because its name is not kept after removal.
 - **The Slack stub** runs only with the local end-to-end suite; the Slack specs cannot run against a deployment.
@@ -159,7 +159,23 @@ e2e/                        Playwright, one spec per feature, axe scan on every 
 
 ## Production check
 
-_After ship: what was checked on the live site, with screenshots in [docs/screenshots/](screenshots/README.md)._
+Checked on https://sonrisa-task.vercel.app after the deploy, with screenshots in `docs/screenshots/2-production-*` (desktop and mobile):
+
+- `/api/health` returns `"status":"ok"` with the database clock.
+- The landing, sign-in and sign-up pages render with the approved design; `/admin` signed out shows the not-found page and reveals nothing.
+- The scheduled job (`pg_cron`, every minute) reaches the deployed tick route with its secret from Vault.
+- The served stylesheet carries the Heads-up tokens. The first deploy did not: Vercel's remote build served the starter's palette, caught by comparing screenshots and grepping the CSS, and fixed by deploying a verified local build.
+
+**Not working in production yet, and why:**
+
+| What                                                  | Why                                                                                                    | What turns it on                                                  |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| The tick (polling, matching, delivery)                | `SUPABASE_SECRET_KEY` in Vercel is a placeholder: the agent does not copy credentials between services | The project owner sets the real key in Vercel and redeploys       |
+| Email (alerts, tests, sign-up confirmation to others) | No Resend key; Resend's test sender reaches only its owner                                             | A Resend key, and a verified domain for other recipients          |
+| The Guardian and CoinGecko                            | No API keys                                                                                            | `GUARDIAN_API_KEY`, `COINGECKO_API_KEY`                           |
+| Signed-in flows checked by hand                       | No account could be confirmed without email                                                            | Reviewer accounts created and confirmed in the Supabase dashboard |
+
+Locally, every flow runs end to end, and the e2e suite (98 tests on desktop and mobile) covers them.
 
 ## Where everything is
 

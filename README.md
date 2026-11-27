@@ -84,6 +84,7 @@ The reasoning: [ADR-0001](docs/adr/0001-architecture-baseline.md) (baseline), [A
 - The Guardian and CoinGecko mappers are unit-tested on responses built from the providers' documentation; they should be re-recorded from the live APIs.
 - Admins are granted by SQL; promotion from the interface was cut.
 - A removed Slack destination shows as "Removed destination" in history, because its name is not kept.
+- The landing page still describes increment 1 (earthquakes, by email); the app itself has Slack, news and markets.
 - Notices after a redirect live in the URL and reappear on refresh.
 - Next: Slack OAuth instead of pasted webhooks, a digest instead of one notification per event, and more sources per category.
 
