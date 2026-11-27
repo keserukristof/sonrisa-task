@@ -4,7 +4,7 @@ The Heads-up design system, direction "Instrument room". Source of truth for the
 
 ## Colour
 
-Names match the shadcn variables in `src/app/globals.css`. The tokens below the line `ring` are additions the Contracts ticket must add, each with a `--color-<name>` entry in `@theme inline` so Tailwind classes such as `text-severity-high` and `bg-warning-muted` exist.
+Names match the shadcn variables in `src/app/globals.css`. Eleven tokens are additions that shadcn does not define: `destructive-foreground`, `destructive-muted`, the five `severity-*`, `success`, `success-muted`, `warning` and `warning-muted`. The Contracts ticket adds each with a `--color-<name>` entry in `@theme inline`, so Tailwind classes such as `text-severity-high` and `bg-warning-muted` exist.
 
 | Token                    | Light     | Dark      | Use                                                                                                                               |
 | ------------------------ | --------- | --------- | --------------------------------------------------------------------------------------------------------------------------------- |
@@ -113,7 +113,7 @@ The starter also defines `--chart-*` and `--sidebar-*`; no screen uses them, so 
 
 ## Type
 
-One family: **Schibsted Grotesk**, loaded with `next/font/google` as a variable font and exposed as `--font-sans`. It replaces Geist. Weights in use: 400, 500, 600, 700. Numbers are tabular (`tabular-nums`) in lists.
+One family: **Schibsted Grotesk**, loaded with `next/font/google` as a variable font and exposed as `--font-sans`. It replaces Geist. Weights in use: 400, 500, 600, 700. Numbers use the font's default figures: do not set `tabular-nums`, because this family's tabular feature also widens commas, full stops and colons, which breaks times and magnitudes.
 
 | Style     | Size / line height | Weight | Tracking | Tailwind                                | Use                                                                       |
 | --------- | ------------------ | ------ | -------- | --------------------------------------- | ------------------------------------------------------------------------- |

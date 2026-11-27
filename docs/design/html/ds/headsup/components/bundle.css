@@ -8,7 +8,6 @@
   font: 400 14px/20px var(--font-sans, "Schibsted Grotesk", system-ui, sans-serif);
   color: var(--foreground);
   background: var(--background);
-  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
 .hu h1,
@@ -119,6 +118,15 @@
 }
 .hu-btn--destructive {
   background: var(--destructive);
+  color: var(--destructive-foreground);
+}
+.hu a.hu-btn--ghost {
+  color: var(--foreground);
+}
+.hu a.hu-btn--danger {
+  color: var(--destructive);
+}
+.hu a.hu-btn--destructive {
   color: var(--destructive-foreground);
 }
 .hu-btn--sm {
