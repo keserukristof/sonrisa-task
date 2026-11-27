@@ -78,7 +78,7 @@ export function renderTestMessage(now: Date, appUrl: string): SlackMessage {
     blocks: [
       section("_This destination works_"),
       section(
-        `You sent this test from your destinations page on ${formatUtcDateTime(now)}. Notifications from your alerts arrive in this channel.`,
+        `You sent this test from your destinations page on ${formatUtcDateTime(now).replace(", ", " at ")}. Notifications from your alerts arrive in this channel.`,
       ),
       context(
         `Heads-up · <${linkUrl(destinationsUrl)}|Manage your destinations>`,
