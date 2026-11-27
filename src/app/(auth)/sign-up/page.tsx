@@ -14,7 +14,7 @@ export default function SignUpPage() {
   return (
     <>
       <SiteHeader signIn />
-      <PageContainer width="narrow" className="pt-12">
+      <PageContainer width="narrow" className="pt-12 md:pt-12">
         <h1 className="mb-6 text-2xl font-semibold tracking-tight">
           Create your account
         </h1>

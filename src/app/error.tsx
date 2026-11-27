@@ -16,7 +16,7 @@ export default function ErrorBoundary({
   }, [error]);
 
   return (
-    <PageContainer width="narrow" className="pt-12">
+    <PageContainer width="narrow" className="pt-12 md:pt-12">
       <div className="border-border bg-card flex flex-col gap-3 rounded-lg border p-6">
         <h1 className="text-2xl font-semibold tracking-tight">
           Something went wrong

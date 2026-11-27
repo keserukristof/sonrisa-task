@@ -95,6 +95,7 @@ function AlertRow({
             className={buttonVariants({ variant: "outline", size: "sm" })}
           >
             Edit
+            <span className="sr-only"> {alert.name}</span>
           </Link>
           <DeleteAlert alert={alert} />
         </div>
@@ -149,7 +150,13 @@ function DeleteAlert({ alert }: { alert: AlertSummary }) {
             <AlertDialogCancel ref={cancelRef} disabled={pending}>
               Cancel
             </AlertDialogCancel>
-            <Button variant="destructive" disabled={pending} onClick={confirm}>
+            <Button
+              variant="destructive"
+              focusableWhenDisabled
+              disabled={pending}
+              onClick={confirm}
+              className="data-disabled:pointer-events-none data-disabled:opacity-50"
+            >
               {pending ? "Deleting…" : "Delete alert"}
             </Button>
           </AlertDialogFooter>

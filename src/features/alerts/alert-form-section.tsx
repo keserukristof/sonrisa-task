@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Notice } from "@/components/notice";
 import { Skeleton } from "@/components/ui/skeleton";
-import { buttonVariants } from "@/components/ui/button";
 import { AlertForm } from "./alert-form";
 import { getAlert, getDestinationOptions, type AlertDetail } from "./queries";
 import { RetryButton } from "./retry-button";
@@ -28,7 +27,7 @@ export function BackToAlerts() {
   return (
     <Link
       href="/alerts"
-      className={buttonVariants({ variant: "link", size: "sm" })}
+      className="text-primary text-sm underline underline-offset-4"
     >
       Back to alerts
     </Link>

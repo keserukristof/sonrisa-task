@@ -2,11 +2,32 @@
 
 import { Mail } from "lucide-react";
 import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { NotificationStatus } from "@/components/notification-status";
 import { SubmitButton } from "@/components/submit-button";
 import { initialActionResult, type ActionResult } from "@/lib/action-result";
 import { sendTest } from "./actions";
 import { describeTestResult } from "./test-result";
+
+/**
+ * The inline result of "Send test". It empties while a send is pending, so a
+ * second identical result is a change in the live region and is announced.
+ */
+function TestStatus({
+  result,
+}: {
+  result: ReturnType<typeof describeTestResult>;
+}) {
+  const { pending } = useFormStatus();
+  const shown = pending ? null : result;
+  return (
+    <div role="status" className={shown ? "mt-2.5" : undefined}>
+      {shown ? (
+        <NotificationStatus status={shown.status} label={shown.label} />
+      ) : null}
+    </div>
+  );
+}
 
 /** The account email destination, with its "Send test" button and inline result. */
 export function EmailDestinationRow({
@@ -40,14 +61,7 @@ export function EmailDestinationRow({
             <p className="text-muted-foreground">
               Created with your account. It can&apos;t be removed.
             </p>
-            <div role="status" className={result ? "mt-2.5" : undefined}>
-              {result ? (
-                <NotificationStatus
-                  status={result.status}
-                  label={result.label}
-                />
-              ) : null}
-            </div>
+            <TestStatus result={result} />
           </div>
         </div>
         <SubmitButton variant="outline" size="default" pendingLabel="Sending…">

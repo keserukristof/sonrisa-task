@@ -14,7 +14,7 @@ export default function SignInPage({ searchParams }: PageProps<"/sign-in">) {
   return (
     <>
       <SiteHeader signUp />
-      <PageContainer width="narrow" className="pt-12">
+      <PageContainer width="narrow" className="pt-12 md:pt-12">
         <h1 className="mb-6 text-2xl font-semibold tracking-tight">Sign in</h1>
         <div className="border-border bg-card rounded-lg border p-6">
           <Suspense fallback={null}>
