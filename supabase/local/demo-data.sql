@@ -139,7 +139,7 @@ on conflict (id) do nothing;
 
 insert into public.alerts (id, user_id, name, category, min_severity, keywords, active, created_at)
 values
-  ('a1000000-0000-4000-8000-000000000004', '11111111-1111-4111-8111-111111111111', 'Crypto swings', 'markets', 'moderate', '{}', true, '2026-11-26 10:10+00')
+  ('a1000000-0000-4000-8000-000000000004', '11111111-1111-4111-8111-111111111111', 'Crypto swings', 'markets', 'moderate', '{bitcoin}', true, '2026-11-26 10:10+00')
 on conflict (id) do nothing;
 
 insert into public.alert_destinations (alert_id, destination_id, user_id)
@@ -184,3 +184,8 @@ set destination_id = (
   where d.user_id = '11111111-1111-4111-8111-111111111111' and d.channel_type = 'email'
 )
 where id = 'b2000000-0000-4000-8000-000000000003' and destination_id is null;
+
+-- The demo alerts must not match the events the e2e suite simulates, or
+-- their notifications push the seeded rows off the first page of history.
+update public.alerts set keywords = '{bitcoin}'
+where id = 'a1000000-0000-4000-8000-000000000004' and keywords = '{}';
