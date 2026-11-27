@@ -85,7 +85,7 @@ _Written in the Refine phase on 2026-11-27, from three grill rounds recorded in 
 ### Destinations (stories 8, 13, 14)
 
 - **Email destination (8).** Every new account has exactly one email destination, created with the account. It shows on `/destinations` as "Account email" with the account's address and "can't be removed". There is no remove control, and no Slack placeholder in this increment.
-- **Send test (13, 14).** "Send test" sends at once, without waiting for a tick, and shows the result inline: "Delivered at HH:MM UTC", or the reason it failed. A test counts toward the 10-an-hour and 80-a-day email limits through its own log, which notification history does not show. Over either limit it is refused, and the reason names the limit. The test email's subject begins "Test from Heads-up".
+- **Send test (13, 14).** "Send test" sends at once, without waiting for a tick, and shows the result inline: "Delivered at HH:MM UTC", or the reason it failed. A test counts toward the 10-an-hour and 80-a-day email limits through its own log, which notification history does not show. Over either limit it is refused, and the reason names the limit. An account gets 3 test sends per UTC day, and all test sends together use at most 20 of the system's 80 a day (added after the security audit). The test email's subject begins "Test from Heads-up".
 
 ### Alerts (stories 18, 19, 20 brought forward, 21–31)
 
@@ -104,6 +104,7 @@ _Written in the Refine phase on 2026-11-27, from three grill rounds recorded in 
 - **Edit (27).** `/alerts/<id>/edit` opens the form filled in. Saving keeps the alert's creation time. Opening another user's alert gives the 404 page.
 - **Pause (28).** The Active switch pauses and resumes in one click and shows Active or Paused. Events that arrive while an alert is paused are never matched to it, even after it resumes.
 - **Delete (29).** Delete opens a dialog: "Delete "<name>"? It stops matching events. Past notifications stay in your history." After confirming, the alert is gone from the list. Its notifications stay in history as "Deleted alert" and keep counting toward the limits.
+- **Limits in the database.** The keyword rules are enforced by the database as well as by the form, and an account can have 50 alerts at most (added after the security audit).
 - **Only new events (30).** An alert matches only events ingested after it was created.
 - **Matching rules.** An event matches an active alert when:
   - the category is equal;
@@ -161,7 +162,8 @@ _Written in the Refine phase on 2026-11-27, from three grill rounds recorded in 
 - **Email budget (62).** As in Limits above. The daily count resets at 00:00 UTC.
 - **Real polling (63).** Real polling runs only when the production flag is set. Locally and in tests, no request reaches USGS.
 - **Tick secret (64).** The tick route accepts only its own tick secret, compared in constant time. Anything else gets 401 and no tick. The tick secret is not the Supabase secret key.
-  - The `net` schema is not usable by `anon` or `authenticated` (ADR-0003); a pgTAP test proves it.
+  - The `net` schema cannot be restricted from a migration (ADR-0003 addendum). The API does not expose it, and an end-to-end test proves that on every run.
+  - The scheduler reads the tick URL and the tick secret from Supabase Vault and does nothing until both are set.
 - **Local development (65).** Local development runs with no keys, using recorded USGS responses committed to the repository, and simulated events.
 - **Local email (66).** Locally, alert, test and confirmation emails land in the local mail catcher (web UI on port 54324).
 
@@ -195,7 +197,8 @@ _Written in the Refine phase on 2026-11-27, from three grill rounds recorded in 
   - nobody signed in reads destination settings;
   - an alert cannot link another user's destination;
   - only admins simulate;
-  - the `net` schema is restricted.
+  - keyword limits, the test-send limits and the alert limit hold in the database;
+  - the tick's matching and claiming functions, which only the tick may call.
 - **Playwright with axe:**
   - sign up, confirm through the mail catcher, and sign in;
   - create, edit, pause and delete an alert;

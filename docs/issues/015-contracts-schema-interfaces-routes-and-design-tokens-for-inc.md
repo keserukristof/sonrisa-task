@@ -1,6 +1,6 @@
 # #15: Contracts: schema, interfaces, routes and design tokens for increment 1
 
-- **State:** open
+- **State:** closed, closed 2026-11-27 15:38 UTC
 - **Opened:** 2026-11-27 14:21 UTC by keserukristof
 - **Labels:** `ready-for-agent`
 - **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/15
@@ -33,4 +33,10 @@ Everything the other tickets of increment 1 share, landed once and serially, so 
 - [ ] Tokens applied to `globals.css`, Schibsted Grotesk as the font, the shadcn primitives and shared components listed in `docs/design/components.md`, and one shared way to show a notice after a redirect
 - [ ] Every other ticket of #3 lists the paths it owns, with no path in two tickets
 - [ ] `pnpm verify`, `pnpm build` and the smoke e2e green
+
+## Comments
+
+### keserukristof, 2026-11-27 15:38 UTC
+
+Done on `increment-1` (06cc7fc..1f48511). 74 pgTAP checks, 38 unit tests and 20 end-to-end tests pass. The security audit's three high findings are fixed: docs/reviews/1-security-auditor-contracts.md. Four choices that differ from the spec were confirmed by the user and written into #2 and #3. One step is left to a person: `node scripts/local-env.mjs`, because agents may not edit .env.local.
 

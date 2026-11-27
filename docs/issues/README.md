@@ -16,4 +16,4 @@ A mirror of the GitHub issues: the spec, its increments and their tickets, with 
 | 12 | Ticket | [Notification history](012-notification-history.md) | open |
 | 13 | Ticket | [Simulate an event](013-simulate-an-event.md) | open |
 | 14 | Ticket | [End to end: a simulated event arrives by email](014-end-to-end-a-simulated-event-arrives-by-email.md) | open |
-| 15 | Ticket | [Contracts: schema, interfaces, routes and design tokens for increment 1](015-contracts-schema-interfaces-routes-and-design-tokens-for-inc.md) | open |
+| 15 | Ticket | [Contracts: schema, interfaces, routes and design tokens for increment 1](015-contracts-schema-interfaces-routes-and-design-tokens-for-inc.md) | closed |
