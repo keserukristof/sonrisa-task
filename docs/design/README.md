@@ -100,12 +100,13 @@ Applying the design is part of the increment's Contracts ticket, not of any impl
 
 ## Increment 2
 
-Designed on 2026-11-27 on the existing system, no change to the tokens. Decisions, all in the decision log (18:29, 18:35, 18:50, 19:05):
+Designed on 2026-11-27 on the existing system, no change to the tokens. Decisions, all in the decision log (18:29, 18:31, 18:37, 18:40, 18:48):
 
 - The user chose, from the agent's recommendations: all ten screens #4 touches; the Slack form on its own page; admin lists as rows like notification history; Broken in the destructive style with an unplugged icon; a neutral hash icon for Slack; a refused removal shown inside the dialog. Then the user delegated the remaining choices to the agent.
 - The agent chose, under that delegation: the Slack message title as a linked section rather than a header block; one credit line per history row; admin tabs as links, scrolling at 360px; the status filter as links; a neutral budget meter; Failing winning over Late.
 - New shared pieces: Tabs, Filter, Meter, BrokenMark, source credit (components.md, "Increment 2 additions"). They are in the canvas's stylesheet only; the design system artifact was not updated.
-- The agent checked the exported HTML of every new artboard in a headless browser (screenshots in `screens/`), not the canvas itself.
+- The agent rendered the exported HTML of every new artboard in a headless browser and looked at each screenshot in `screens/`; it did not render the canvas itself.
+- Not drawn: a loading artboard for `/destinations` (two skeleton rows, described in destinations.md).
 
 ### For the increment 2 Contracts ticket
 

@@ -44,13 +44,13 @@ Accessible names carry the destination: "Send test to Ops channel", "Remove Ops 
 
 Shown inline in the row with `role="status"`, replacing any earlier result. The region is cleared while pending so that the same text is announced again (increment 1 review, m11). While sending, the button reads "Sending…" and keeps focus (`aria-disabled`, not `disabled`; increment 1 review, item 5).
 
-| Destination | Outcome                      | Display                                                                                                                                                           |
-| ----------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Either      | Delivered                    | Sent status style (check, `success`): Delivered at 18:12 UTC                                                                                                      |
-| Either      | Transient failure            | Failed status style (cross, `destructive`): Couldn't send the test. Try again in a minute.                                                                        |
-| Slack       | Over 5 tests today           | Skipped status style (barred circle, `warning`): Not sent. You've sent 5 tests to this destination today.                                                         |
-| Slack       | Permanent answer from Slack  | Failed status style: Couldn't send the test. The row's Broken line appears with the reason.                                                                       |
-| Email       | Hourly, daily or test limits | As in increment 1: Not sent. You've reached 10 emails this hour. / Not sent. Heads-up has reached its 80 emails for today. / Not sent. You've sent 3 tests today. |
+| Destination | Outcome                      | Display                                                                                                                                                                                |
+| ----------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Either      | Delivered                    | Sent status style (check, `success`): Delivered at 18:12 UTC                                                                                                                           |
+| Either      | Transient failure            | Failed status style (cross, `destructive`): Couldn't send the test. Try again in a minute.                                                                                             |
+| Slack       | Over 5 tests today           | Skipped status style (barred circle, `warning`): Not sent. You've sent 5 tests to this destination today.                                                                              |
+| Slack       | Permanent answer from Slack  | Failed status style, with the reason in our words (see Broken reasons): "Not delivered. Slack says this channel no longer exists." The row's Broken line appears with the same reason. |
+| Email       | Hourly, daily or test limits | As in increment 1: Not sent. You've reached 10 emails this hour. / Not sent. Heads-up has reached its 80 emails for today. / Not sent. You've sent 3 tests today.                      |
 
 A successful test of a broken destination returns it to active: the Broken line disappears and the Delivered result shows. Slack tests use no email budget.
 

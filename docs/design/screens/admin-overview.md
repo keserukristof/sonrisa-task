@@ -35,7 +35,7 @@ See components.md, Tabs.
    - "**37 of 80** emails sent today (UTC)" at 16px, the numbers at weight 700.
    - A meter, 8px tall, filled in `foreground` to the share used. It has `role="img"` and the label "37 of 80 emails sent today". It turns no colour: the numbers carry the meaning.
    - "4 of 20 test sends" in `muted-foreground`.
-   - A caption: Resets at 00:00 UTC. Over the budget, emails are skipped with the reason "Daily limit (80) reached".
+   - A caption: Resets at 00:00 UTC. Over the budget, emails are skipped with the reason "Daily system limit (80) reached".
 
 ## Source status
 
