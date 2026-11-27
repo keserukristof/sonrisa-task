@@ -51,14 +51,14 @@ isOneToOne: false
                   ]
                 },"alerts": {
                   Row: {
-                    "active": boolean,"category": Database["public"]['Enums']["event_category"],"created_at": string,"id": string,"keywords": (string)[],"min_severity": Database["public"]['Enums']["severity"] | null,"name": string,"updated_at": string,"user_id": string
+                    "activated_at": string,"active": boolean,"category": Database["public"]['Enums']["event_category"],"created_at": string,"id": string,"keywords": (string)[],"min_severity": Database["public"]['Enums']["severity"] | null,"name": string,"updated_at": string,"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "active"?: boolean,"category": Database["public"]['Enums']["event_category"],"created_at"?: string,"id"?: string,"keywords"?: (string)[],"min_severity"?: Database["public"]['Enums']["severity"] | null,"name": string,"updated_at"?: string,"user_id"?: string
+                    "activated_at"?: string,"active"?: boolean,"category": Database["public"]['Enums']["event_category"],"created_at"?: string,"id"?: string,"keywords"?: (string)[],"min_severity"?: Database["public"]['Enums']["severity"] | null,"name": string,"updated_at"?: string,"user_id"?: string
                   }
                   Update: {
-                    "active"?: boolean,"category"?: Database["public"]['Enums']["event_category"],"created_at"?: string,"id"?: string,"keywords"?: (string)[],"min_severity"?: Database["public"]['Enums']["severity"] | null,"name"?: string,"updated_at"?: string,"user_id"?: string
+                    "activated_at"?: string,"active"?: boolean,"category"?: Database["public"]['Enums']["event_category"],"created_at"?: string,"id"?: string,"keywords"?: (string)[],"min_severity"?: Database["public"]['Enums']["severity"] | null,"name"?: string,"updated_at"?: string,"user_id"?: string
                   }
                   Relationships: [
                     
@@ -195,6 +195,9 @@ isOneToOne: false
                            },
 "is_admin":
 { Args: Record<PropertyKey, never>; Returns: boolean
+                           },
+"keywords_valid":
+{ Args: { "p_keywords": (string)[] }; Returns: boolean
                            },
 "save_alert":
 { Args: { "p_alert_id": string,"p_category": Database["public"]['Enums']["event_category"],"p_destination_ids": (string)[],"p_keywords": (string)[],"p_min_severity": Database["public"]['Enums']["severity"],"p_name": string }; Returns: string
