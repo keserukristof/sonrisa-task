@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { Field, describedBy } from "@/components/form-field";
 import { Notice } from "@/components/notice";
 import { SubmitButton } from "@/components/submit-button";
@@ -15,6 +15,7 @@ export function SignInForm({ next }: { next: string | null }) {
     signIn,
     initialActionResult,
   );
+  const [email, setEmail] = useState("");
   const errors = state.ok ? {} : (state.fieldErrors ?? {});
 
   return (
@@ -42,6 +43,8 @@ export function SignInForm({ next }: { next: string | null }) {
           name="email"
           type="email"
           autoComplete="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
           required
           {...describedBy("email", { error: errors.email })}
         />

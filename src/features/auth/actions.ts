@@ -1,10 +1,59 @@
 "use server";
 
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { fieldErrorsFrom, type ActionResult } from "@/lib/action-result";
 import { safeNextPath } from "@/lib/auth/next-path";
 import { createClient } from "@/lib/supabase/server";
-import { signInSchema, type SignInField } from "./schema";
+import { originFrom } from "./origin";
+import { SIGN_UP_EMAIL_COOKIE } from "./sign-up-cookie";
+import {
+  signInSchema,
+  signUpSchema,
+  type SignInField,
+  type SignUpField,
+} from "./schema";
+
+export async function signUp(
+  _previous: ActionResult<SignUpField>,
+  formData: FormData,
+): Promise<ActionResult<SignUpField>> {
+  const parsed = signUpSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+  if (!parsed.success) {
+    return {
+      ok: false,
+      fieldErrors: fieldErrorsFrom<SignUpField>(parsed.error),
+    };
+  }
+
+  const origin = originFrom(await headers());
+  if (!origin) {
+    return { ok: false, message: "Couldn't create your account. Try again." };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signUp({
+    ...parsed.data,
+    options: { emailRedirectTo: `${origin}/auth/confirm` },
+  });
+  // An existing address is not an error to the visitor: they get the same
+  // page, so the response never reveals whether an account exists.
+  if (error && error.code !== "user_already_exists") {
+    return { ok: false, message: "Couldn't create your account. Try again." };
+  }
+
+  // An address that already has an account gets the same page.
+  (await cookies()).set(SIGN_UP_EMAIL_COOKIE, parsed.data.email, {
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/sign-up",
+    maxAge: 60 * 60,
+  });
+  redirect("/sign-up/confirm");
+}
 
 export async function signIn(
   _previous: ActionResult<SignInField>,
