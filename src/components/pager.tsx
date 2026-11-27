@@ -19,28 +19,26 @@ export function Pager({
   const hasPrevious = page > 1;
   if (!hasPrevious && !hasNext) return null;
 
-  const link = buttonVariants({ variant: "outline" });
+  const link = buttonVariants({ variant: "outline", size: "sm" });
 
   return (
     <nav
       aria-label="Pagination"
       className="flex items-center justify-between gap-3 pt-4"
     >
-      {hasPrevious ? (
-        <Link href={{ pathname, query: { page: page - 1 } }} className={link}>
-          Previous
-        </Link>
-      ) : (
-        <span />
-      )}
       <span className="text-muted-foreground text-sm">Page {page}</span>
-      {hasNext ? (
-        <Link href={{ pathname, query: { page: page + 1 } }} className={link}>
-          Next
-        </Link>
-      ) : (
-        <span />
-      )}
+      <div className="flex items-center gap-2">
+        {hasPrevious ? (
+          <Link href={{ pathname, query: { page: page - 1 } }} className={link}>
+            Previous
+          </Link>
+        ) : null}
+        {hasNext ? (
+          <Link href={{ pathname, query: { page: page + 1 } }} className={link}>
+            Next
+          </Link>
+        ) : null}
+      </div>
     </nav>
   );
 }

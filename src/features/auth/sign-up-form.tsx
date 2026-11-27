@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useRef, useState } from "react";
 import { Field, describedBy } from "@/components/form-field";
 import { Notice } from "@/components/notice";
 import { SubmitButton } from "@/components/submit-button";
+import { useFocusFirstInvalid } from "@/components/use-focus-first-invalid";
 import { Input } from "@/components/ui/input";
 import { initialActionResult, type ActionResult } from "@/lib/action-result";
 import { signUp } from "./actions";
@@ -15,10 +16,18 @@ export function SignUpForm() {
     initialActionResult,
   );
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const errors = state.ok ? {} : (state.fieldErrors ?? {});
+  const formRef = useRef<HTMLFormElement>(null);
+  useFocusFirstInvalid(formRef, state);
 
   return (
-    <form action={action} noValidate className="flex flex-col gap-5">
+    <form
+      ref={formRef}
+      action={action}
+      noValidate
+      className="flex flex-col gap-5"
+    >
       <Field id="email" label="Email" error={errors.email}>
         <Input
           id="email"
@@ -37,6 +46,8 @@ export function SignUpForm() {
           name="password"
           type="password"
           autoComplete="new-password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
           required
           {...describedBy("password", { error: errors.password })}
         />

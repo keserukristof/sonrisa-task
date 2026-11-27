@@ -1,10 +1,11 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -12,6 +13,29 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { NavRows, type NavItem } from "./nav-links";
+
+/**
+ * Keeps Tab and Shift+Tab inside the open panel. The dialog's own focus guards
+ * let focus leave from the last control to the page behind it.
+ */
+function keepTabInside(event: React.KeyboardEvent<HTMLElement>) {
+  if (event.key !== "Tab") return;
+  const controls = Array.from(
+    event.currentTarget.querySelectorAll<HTMLElement>(
+      "a[href], button:not([disabled])",
+    ),
+  );
+  const first = controls[0];
+  const last = controls[controls.length - 1];
+  if (!first || !last) return;
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
 
 /** The header's menu below 768px: the links, the account email and sign out in a panel. */
 export function MobileMenu({
@@ -31,12 +55,21 @@ export function MobileMenu({
         <Menu aria-hidden="true" />
         Menu
       </SheetTrigger>
-      <SheetContent side="right" className="shadow-overlay w-70 gap-1 p-4">
-        <SheetHeader className="p-0 pb-2 pl-3">
+      <SheetContent
+        side="right"
+        showCloseButton={false}
+        onKeyDown={keepTabInside}
+        className="shadow-overlay w-70 gap-1 p-4"
+      >
+        <SheetHeader className="flex-row items-center justify-between p-0 pb-2 pl-3">
           <SheetTitle className="text-lg font-semibold">Menu</SheetTitle>
           <SheetDescription className="sr-only">
             Main navigation
           </SheetDescription>
+          <SheetClose render={<Button variant="ghost" size="lg" />}>
+            <X aria-hidden="true" />
+            Close
+          </SheetClose>
         </SheetHeader>
         <nav aria-label="Main" className="flex flex-col gap-1">
           <NavRows items={items} onNavigate={() => setOpen(false)} />

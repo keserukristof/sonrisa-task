@@ -17,7 +17,7 @@ export default function LandingPage() {
       </Suspense>
       <PageContainer
         width="list"
-        className="grid items-center gap-12 pt-12 md:grid-cols-2 md:pt-18"
+        className="grid content-start items-center gap-12 pt-12 md:grid-cols-2 md:pt-18"
       >
         <div>
           <h1 className="text-4xl font-bold tracking-tight">

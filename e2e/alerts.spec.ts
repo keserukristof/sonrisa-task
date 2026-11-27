@@ -112,4 +112,6 @@ test("a form without a destination shows the field error", async ({ page }) => {
 test("another user's alert gives the not-found page", async ({ page }) => {
   await page.goto("/alerts/5b8e6c3a-0a53-4a43-8f55-9d3f3b0f6f11/edit");
   await expect(page.getByText("Page not found")).toBeVisible();
+  await expect(page).toHaveTitle(/^Page not found/);
+  await expect(page.getByRole("banner")).toHaveCount(1);
 });

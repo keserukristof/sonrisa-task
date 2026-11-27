@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useState } from "react";
+import { useActionState, useRef, useState } from "react";
 import { Field, describedBy } from "@/components/form-field";
 import { Notice } from "@/components/notice";
 import { SubmitButton } from "@/components/submit-button";
+import { useFocusFirstInvalid } from "@/components/use-focus-first-invalid";
 import { Input } from "@/components/ui/input";
 import { initialActionResult, type ActionResult } from "@/lib/action-result";
 import { signIn } from "./actions";
@@ -17,9 +18,16 @@ export function SignInForm({ next }: { next: string | null }) {
   );
   const [email, setEmail] = useState("");
   const errors = state.ok ? {} : (state.fieldErrors ?? {});
+  const formRef = useRef<HTMLFormElement>(null);
+  useFocusFirstInvalid(formRef, state);
 
   return (
-    <form action={action} noValidate className="flex flex-col gap-5">
+    <form
+      ref={formRef}
+      action={action}
+      noValidate
+      className="flex flex-col gap-5"
+    >
       {!state.ok && state.code === "unconfirmed" ? (
         <Notice variant="error">
           Your email address isn&apos;t confirmed yet.{" "}
