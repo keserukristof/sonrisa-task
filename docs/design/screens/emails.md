@@ -63,3 +63,16 @@ Literal light values: Low `#3F6485`, Moderate `#8A6100`, High `#B8440F`, Critica
 ## Confirmation email
 
 Sent by Supabase Auth, not by the email channel, so it is not designed here. Its template should use the subject "Confirm your Heads-up account", one sentence ("Open this link to confirm your email address and finish creating your account."), and a button "Confirm email address". Editing the template is a Contracts or ship task.
+
+## Increment 2: credits by source
+
+Artboard: [html/Emails2.dc.html](../html/Emails2.dc.html), screenshot `2-emails2.png`.
+
+- The footer's first sentence is the source's credit, verbatim, followed by a full stop:
+  - earthquakes: "U.S. Geological Survey." (replaces increment 1's "Data: U.S. Geological Survey.")
+  - news: "Source: The Guardian."
+  - markets: "Powered by CoinGecko."
+  - simulated events: no credit, as before.
+- A market event's email: title "Bitcoin (BTC) up 4.2% in the past hour" (or "down 3.6%"), summary "Price $64,210. 24-hour change −1.8%.", "View at source" links to the coin's CoinGecko page.
+- A news event's email: severity is always Low; the summary is the article's standfirst; "View at source" links to the article.
+- Failure reasons for email, stored for history, start "The email …" (see notifications.md).
