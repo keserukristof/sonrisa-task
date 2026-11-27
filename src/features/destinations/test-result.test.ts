@@ -1,6 +1,30 @@
 import { describe, expect, it } from "vitest";
 import { describeTestResult } from "./test-result";
 
+describe("describeTestResult for Slack", () => {
+  it("shows the five-a-day limit as skipped", () => {
+    expect(describeTestResult({ ok: false, code: "slack_test_limit" })).toEqual(
+      {
+        status: "skipped",
+        label: "Not sent. You've sent 5 tests to this destination today.",
+      },
+    );
+  });
+
+  it("shows a permanent answer as failed with the reason", () => {
+    expect(
+      describeTestResult({
+        ok: false,
+        code: "broken",
+        message: "Slack says this channel no longer exists.",
+      }),
+    ).toEqual({
+      status: "failed",
+      label: "Not delivered. Slack says this channel no longer exists.",
+    });
+  });
+});
+
 describe("describeTestResult", () => {
   it("shows nothing before a test", () => {
     expect(describeTestResult({ ok: true })).toBeNull();
