@@ -53,7 +53,11 @@ async function deliver(
       retryAfter: response.headers.get("retry-after"),
     });
     if (outcome.kind !== "sent") {
-      console.error("[slack] Slack answered", response.status, body);
+      console.error(
+        "[slack] Slack answered",
+        response.status,
+        body?.slice(0, 200),
+      );
     }
     return outcome;
   } catch (error) {
