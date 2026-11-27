@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Alerts, empty</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 620px">
+<header class="hu-header">
+<a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<nav class="hu-nav" aria-label="Main">
+<a href="Main.dc.html" aria-current="page">Alerts</a>
+<a href="Notifications.dc.html">Notifications</a>
+<a href="Destinations.dc.html">Destinations</a>
+</nav>
+<div class="hu-header__end"><span class="hu-muted">you@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div>
+</header>
+<main class="hu-page">
+<div class="hu-pagehead">
+<h1 class="hu-title">Alerts</h1>
+</div>
+<div class="hu-notice hu-notice--success" role="status" style="margin-bottom: 24px">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+<p>Email confirmed.</p>
+</div>
+<div class="hu-card">
+<div class="hu-empty">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 24px; height: 24px; color: var(--primary)"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+<h2 class="hu-heading">Create your first alert</h2>
+<p>An alert tells you when an event in a category you choose reaches a severity you choose. Your account email is ready as a destination.</p>
+<a class="hu-btn hu-btn--primary" href="AlertForm.dc.html">Create alert</a>
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":620}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

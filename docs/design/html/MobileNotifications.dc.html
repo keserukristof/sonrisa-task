@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Notifications at 360px</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="width: 360px; min-height: 1180px">
+<header class="hu-header" style="padding: 0 16px">
+<a class="hu-brand" href="MobileAlerts.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<div class="hu-header__end"><a class="hu-btn hu-btn--outline hu-btn--sm" href="MobileMenu.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>Menu</a></div>
+</header>
+<main class="hu-page" style="padding: 16px">
+<h1 class="hu-title" style="margin-bottom: 16px">Notifications</h1>
+<ul class="hu-card" style="list-style: none; margin: 0; padding: 0">
+<li class="hu-row hu-row--stack">
+<div><p class="hu-row__title">M 6.8 - 40 km S of Hualien, Taiwan</p><p class="hu-muted">27 Nov 2026, 13:42 UTC</p></div>
+<span class="hu-sev hu-sev--high"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>High</span>
+<dl class="hu-dl"><dt>Alert</dt><dd>Pacific rim quakes</dd><dt>Destination</dt><dd>Account email</dd></dl>
+<div><span class="hu-status hu-status--sent"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Sent</span><p class="hu-muted">13:43 UTC</p></div>
+</li>
+<li class="hu-row hu-row--stack">
+<div><p class="hu-row__title">Test quake near Tokyo</p><p style="margin-top: 4px"><span class="hu-chip hu-chip--simulated"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 12px; height: 12px"><path d="M10 2v7.5L4.7 19a2 2 0 0 0 1.8 3h11a2 2 0 0 0 1.8-3L14 9.5V2M8.5 2h7M7 16h10"></path></svg>Simulated</span></p><p class="hu-muted" style="margin-top: 4px">27 Nov 2026, 13:50 UTC</p></div>
+<span class="hu-sev hu-sev--high"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>High</span>
+<dl class="hu-dl"><dt>Alert</dt><dd>Pacific rim quakes</dd><dt>Destination</dt><dd>Account email</dd></dl>
+<div><span class="hu-status hu-status--pending"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>Pending</span><p class="hu-muted">Next attempt at 13:56 UTC</p></div>
+</li>
+<li class="hu-row hu-row--stack">
+<div><p class="hu-row__title">M 5.6 - 87 km E of Miyako, Japan</p><p class="hu-muted">27 Nov 2026, 12:10 UTC</p></div>
+<span class="hu-sev hu-sev--moderate"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Moderate</span>
+<dl class="hu-dl"><dt>Alert</dt><dd>Pacific rim quakes</dd><dt>Destination</dt><dd>Account email</dd></dl>
+<div><span class="hu-status hu-status--skipped"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m4.9 4.9 14.2 14.2"></path></svg>Skipped</span><p class="hu-muted">Hourly limit (10) reached</p></div>
+</li>
+</ul>
+<nav class="hu-pager" aria-label="Pagination">
+<span class="hu-muted">Page 1</span>
+<a class="hu-btn hu-btn--outline hu-btn--sm" href="MobileNotifications.dc.html">Next</a>
+</nav>
+<p class="hu-caption hu-muted" style="margin-top: 24px">Earthquake data: U.S. Geological Survey</p>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":360,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+/* Heads-up design system — generated from tokens.json */
+:root,
+[data-theme="light"] {
+  --background: #f3f6f6;
+  --foreground: #14262c;
+  --card: #ffffff;
+  --card-foreground: #14262c;
+  --popover: #ffffff;
+  --popover-foreground: #14262c;
+  --primary: #0d5c63;
+  --primary-foreground: #ffffff;
+  --secondary: #e4ebeb;
+  --secondary-foreground: #14262c;
+  --muted: #e9efef;
+  --muted-foreground: #52646b;
+  --accent: #dde9e9;
+  --accent-foreground: #14262c;
+  --destructive: #a3121a;
+  --destructive-foreground: #ffffff;
+  --destructive-muted: #fbe9e9;
+  --border: #d3dddd;
+  --input: #768b8b;
+  --ring: #0d5c63;
+  --severity-low: #3f6485;
+  --severity-moderate: #8a6100;
+  --severity-high: #b8440f;
+  --severity-critical: #a3121a;
+  --severity-track: #d3dddd;
+  --success: #17663a;
+  --success-muted: #e3f1e8;
+  --warning: #7a5600;
+  --warning-muted: #fbf1d9;
+  --shadow-overlay: 0 8px 24px rgba(20, 38, 44, 0.18);
+}
+[data-theme="dark"] {
+  --background: #0f1a1d;
+  --foreground: #e6eeee;
+  --card: #172529;
+  --card-foreground: #e6eeee;
+  --popover: #172529;
+  --popover-foreground: #e6eeee;
+  --primary: #5cc2c9;
+  --primary-foreground: #06282c;
+  --secondary: #22353a;
+  --secondary-foreground: #e6eeee;
+  --muted: #1d2e33;
+  --muted-foreground: #9db0b4;
+  --accent: #22353a;
+  --accent-foreground: #e6eeee;
+  --destructive: #ff8a80;
+  --destructive-foreground: #3b0a0a;
+  --destructive-muted: #3a1717;
+  --border: #2a3f44;
+  --input: #6a8388;
+  --ring: #5cc2c9;
+  --severity-low: #8fb4d9;
+  --severity-moderate: #e5b84b;
+  --severity-high: #ff9a66;
+  --severity-critical: #ff7b7b;
+  --severity-track: #2a3f44;
+  --success: #6fcf97;
+  --success-muted: #14301f;
+  --warning: #e5b84b;
+  --warning-muted: #33290e;
+  --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --radius-sm: 3.6px;
+  --radius-md: 4.8px;
+  --radius-lg: 6px;
+  --font-sans: "Schibsted Grotesk", system-ui, sans-serif;
+}

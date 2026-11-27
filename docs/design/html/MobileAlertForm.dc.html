@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Create alert at 360px</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="width: 360px; min-height: 1180px">
+<header class="hu-header" style="padding: 0 16px">
+<a class="hu-brand" href="MobileAlerts.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<div class="hu-header__end"><a class="hu-btn hu-btn--outline hu-btn--sm" href="MobileMenu.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>Menu</a></div>
+</header>
+<main class="hu-page" style="padding: 16px">
+<p style="margin-bottom: 8px"><a href="MobileAlerts.dc.html">Back to alerts</a></p>
+<h1 class="hu-title" style="margin-bottom: 16px">Create alert</h1>
+<form class="hu-card hu-stack" style="gap: 24px; padding: 16px">
+<div class="hu-field">
+<label class="hu-label" for="name">Name</label>
+<input class="hu-input" id="name" value="Pacific rim quakes">
+</div>
+<fieldset class="hu-field" style="border: 0; padding: 0; margin: 0">
+<legend class="hu-label" style="padding: 0; margin-bottom: 6px">Category</legend>
+<div class="hu-radio-group" style="flex-direction: column">
+<label class="hu-radio"><input type="radio" name="category">News</label>
+<label class="hu-radio"><input type="radio" name="category">Markets</label>
+<label class="hu-radio hu-radio--on"><input type="radio" name="category" checked="checked">Natural disasters</label>
+</div>
+</fieldset>
+<div class="hu-field">
+<label class="hu-label" for="severity">Minimum severity</label>
+<select class="hu-select" id="severity" aria-describedby="severity-hint">
+<option>Moderate and above</option>
+</select>
+<p class="hu-hint" id="severity-hint">You hear about events at this level or higher.</p>
+</div>
+<div class="hu-field">
+<label class="hu-label" for="keywords">Keywords <span class="hu-muted">(optional)</span></label>
+<input class="hu-input" id="keywords" value="japan, tsunami" aria-describedby="keywords-hint">
+<p class="hu-hint" id="keywords-hint">Separate with commas. Every keyword must appear in the event as a whole word. Up to 10.</p>
+</div>
+<fieldset class="hu-field" style="border: 0; padding: 0; margin: 0">
+<legend class="hu-label" style="padding: 0; margin-bottom: 6px">Destinations</legend>
+<label class="hu-check" style="align-items: flex-start"><input type="checkbox" checked="checked" style="margin-top: 2px"><span>Account email<br><span class="hu-muted">you@example.com</span></span></label>
+</fieldset>
+<div class="hu-stack" style="gap: 8px">
+<a class="hu-btn hu-btn--primary" href="MobileAlerts.dc.html">Create alert</a>
+<a class="hu-btn hu-btn--outline" href="MobileAlerts.dc.html">Cancel</a>
+</div>
+</form>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":360,"height":1180}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

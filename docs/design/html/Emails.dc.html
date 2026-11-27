@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Emails</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" data-theme="light" style="width: 1280px; height: 780px; padding: 32px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: start">
+<section class="hu-stack" style="gap: 12px">
+<h2 class="hu-heading">Alert email</h2>
+<div class="hu-card">
+<div class="hu-row hu-row--stack" style="gap: 2px">
+<p class="hu-row__title">[High] M 6.8 - 40 km S of Hualien, Taiwan · Pacific rim quakes</p>
+<p class="hu-muted">From Heads-up, to you@example.com</p>
+</div>
+<div style="padding: 24px 16px; display: flex; flex-direction: column; gap: 16px">
+<p class="hu-brand"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</p>
+<h3 class="hu-heading">M 6.8 - 40 km S of Hualien, Taiwan</h3>
+<p>Magnitude 6.8 earthquake, 40 km S of Hualien, Taiwan, at a depth of 18 km.</p>
+<dl class="hu-dl">
+<dt>Category</dt><dd>Natural disasters</dd>
+<dt>Severity</dt><dd><span class="hu-sev hu-sev--high"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>High</span></dd>
+<dt>When</dt><dd>27 Nov 2026, 13:42 UTC</dd>
+<dt>Alert</dt><dd>Pacific rim quakes</dd>
+</dl>
+<p><a class="hu-btn hu-btn--primary" href="https://earthquake.usgs.gov/">View at source</a></p>
+<p class="hu-caption hu-muted" style="border-top: 1px solid var(--border); padding-top: 12px">Data: U.S. Geological Survey. You get this email because your alert "Pacific rim quakes" matched. <a href="Main.dc.html">Manage your alerts</a></p>
+</div>
+</div>
+</section>
+<section class="hu-stack" style="gap: 12px">
+<h2 class="hu-heading">Simulated event</h2>
+<div class="hu-card">
+<div class="hu-row hu-row--stack" style="gap: 2px">
+<p class="hu-row__title">[SIMULATED] [High] Test quake near Tokyo · Pacific rim quakes</p>
+<p class="hu-muted">From Heads-up, to you@example.com</p>
+</div>
+<div style="padding: 24px 16px; display: flex; flex-direction: column; gap: 16px">
+<p class="hu-brand"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</p>
+<div class="hu-notice hu-notice--simulated">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2v7.5L4.7 19a2 2 0 0 0 1.8 3h11a2 2 0 0 0 1.8-3L14 9.5V2M8.5 2h7M7 16h10"></path></svg>
+<p>This is a simulated event created by an admin. Nothing happened.</p>
+</div>
+<h3 class="hu-heading">Test quake near Tokyo</h3>
+<dl class="hu-dl">
+<dt>Category</dt><dd>Natural disasters</dd>
+<dt>Severity</dt><dd><span class="hu-sev hu-sev--high"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>High</span></dd>
+<dt>When</dt><dd>27 Nov 2026, 13:50 UTC</dd>
+<dt>Alert</dt><dd>Pacific rim quakes</dd>
+</dl>
+<p class="hu-caption hu-muted" style="border-top: 1px solid var(--border); padding-top: 12px">You get this email because your alert "Pacific rim quakes" matched. <a href="Main.dc.html">Manage your alerts</a></p>
+</div>
+</div>
+</section>
+<section class="hu-stack" style="gap: 12px">
+<h2 class="hu-heading">Test email</h2>
+<div class="hu-card">
+<div class="hu-row hu-row--stack" style="gap: 2px">
+<p class="hu-row__title">Test from Heads-up</p>
+<p class="hu-muted">From Heads-up, to you@example.com</p>
+</div>
+<div style="padding: 24px 16px; display: flex; flex-direction: column; gap: 16px">
+<p class="hu-brand"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</p>
+<h3 class="hu-heading">This destination works</h3>
+<p>You sent this test from your destinations page on 27 Nov 2026 at 13:55 UTC. Notifications from your alerts arrive at this address.</p>
+<p class="hu-caption hu-muted" style="border-top: 1px solid var(--border); padding-top: 12px"><a href="Destinations.dc.html">Manage your destinations</a></p>
+</div>
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":780}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

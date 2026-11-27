@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Page not found</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 440px">
+<header class="hu-header">
+<a class="hu-brand" href="Landing.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+</header>
+<main class="hu-page hu-page--narrow" style="padding-top: 48px">
+<div class="hu-card hu-card--pad hu-stack" style="gap: 12px">
+<h1 class="hu-title">Page not found</h1>
+<p class="hu-muted">This page doesn't exist, or you don't have access to it.</p>
+<div class="hu-inline" style="margin-top: 8px">
+<a class="hu-btn hu-btn--primary" href="Main.dc.html">Go to alerts</a>
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":720,"height":440}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

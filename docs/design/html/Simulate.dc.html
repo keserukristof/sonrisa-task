@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Simulate an event</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 940px">
+<header class="hu-header">
+<a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<nav class="hu-nav" aria-label="Main">
+<a href="Main.dc.html">Alerts</a>
+<a href="Notifications.dc.html">Notifications</a>
+<a href="Destinations.dc.html">Destinations</a>
+<a href="Simulate.dc.html" aria-current="page">Admin</a>
+</nav>
+<div class="hu-header__end"><span class="hu-muted">admin@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div>
+</header>
+<main class="hu-page hu-page--form">
+<h1 class="hu-title" style="margin-bottom: 8px">Simulate an event</h1>
+<p class="hu-muted" style="margin-bottom: 24px">A simulated event is matched and delivered exactly like a real one. It is marked as simulated everywhere, including in the email.</p>
+<div class="hu-notice hu-notice--success" role="status" style="margin-bottom: 24px">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+<p>Event created. The next tick, within a minute, matches and delivers it. <a href="Notifications.dc.html">See your notifications</a></p>
+</div>
+<form class="hu-card hu-card--pad hu-stack" style="gap: 24px">
+<fieldset class="hu-field" style="border: 0; padding: 0; margin: 0">
+<legend class="hu-label" style="padding: 0; margin-bottom: 6px">Category</legend>
+<div class="hu-radio-group">
+<label class="hu-radio"><input type="radio" name="category">News</label>
+<label class="hu-radio"><input type="radio" name="category">Markets</label>
+<label class="hu-radio hu-radio--on"><input type="radio" name="category" checked="checked">Natural disasters</label>
+</div>
+</fieldset>
+<div class="hu-field">
+<label class="hu-label" for="severity">Severity</label>
+<select class="hu-select" id="severity">
+<option>Low</option>
+<option>Moderate</option>
+<option selected="selected">High</option>
+<option>Critical</option>
+</select>
+</div>
+<div class="hu-field">
+<label class="hu-label" for="title">Title</label>
+<input class="hu-input" id="title" value="Test quake near Tokyo">
+</div>
+<div class="hu-field">
+<label class="hu-label" for="summary">Summary <span class="hu-muted">(optional)</span></label>
+<textarea class="hu-textarea" id="summary"></textarea>
+</div>
+<div class="hu-field">
+<label class="hu-label" for="link">Link <span class="hu-muted">(optional)</span></label>
+<input class="hu-input" id="link" placeholder="https://example.com/report">
+</div>
+<div class="hu-inline">
+<button class="hu-btn hu-btn--primary" type="button">Create simulated event</button>
+</div>
+</form>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":940}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

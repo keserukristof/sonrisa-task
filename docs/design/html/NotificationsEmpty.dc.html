@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Notifications, empty</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 520px">
+<header class="hu-header">
+<a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<nav class="hu-nav" aria-label="Main">
+<a href="Main.dc.html">Alerts</a>
+<a href="Notifications.dc.html" aria-current="page">Notifications</a>
+<a href="Destinations.dc.html">Destinations</a>
+</nav>
+<div class="hu-header__end"><span class="hu-muted">you@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div>
+</header>
+<main class="hu-page">
+<div class="hu-pagehead">
+<h1 class="hu-title">Notifications</h1>
+</div>
+<div class="hu-card">
+<div class="hu-empty">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 24px; height: 24px; color: var(--muted-foreground)"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path></svg>
+<h2 class="hu-heading">No notifications yet</h2>
+<p>They appear here once one of your alerts matches an event.</p>
+<a class="hu-btn hu-btn--outline" href="Main.dc.html">Go to alerts</a>
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":520}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

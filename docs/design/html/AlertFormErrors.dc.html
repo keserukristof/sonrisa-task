@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Alert form, news and field errors</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 1100px">
+<header class="hu-header">
+<a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<nav class="hu-nav" aria-label="Main">
+<a href="Main.dc.html" aria-current="page">Alerts</a>
+<a href="Notifications.dc.html">Notifications</a>
+<a href="Destinations.dc.html">Destinations</a>
+</nav>
+<div class="hu-header__end"><span class="hu-muted">you@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div>
+</header>
+<main class="hu-page hu-page--form">
+<p style="margin-bottom: 8px"><a href="Main.dc.html">Back to alerts</a></p>
+<h1 class="hu-title" style="margin-bottom: 24px">Create alert</h1>
+<form class="hu-card hu-card--pad hu-stack" style="gap: 24px">
+<div class="hu-field">
+<label class="hu-label" for="name">Name</label>
+<input class="hu-input" id="name" value="" aria-invalid="true" aria-describedby="name-error">
+<p class="hu-error" id="name-error"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>Enter a name for this alert.</p>
+</div>
+<fieldset class="hu-field" style="border: 0; padding: 0; margin: 0">
+<legend class="hu-label" style="padding: 0; margin-bottom: 6px">Category</legend>
+<div class="hu-radio-group">
+<label class="hu-radio hu-radio--on"><input type="radio" name="category" checked="checked">News</label>
+<label class="hu-radio"><input type="radio" name="category">Markets</label>
+<label class="hu-radio"><input type="radio" name="category">Natural disasters</label>
+</div>
+</fieldset>
+<div class="hu-field">
+<label class="hu-label hu-muted" for="severity">Minimum severity</label>
+<select class="hu-select" id="severity" disabled="disabled" aria-describedby="severity-hint">
+<option>Not used for news</option>
+</select>
+<p class="hu-hint" id="severity-hint">News has no severity levels; every article matches. Use keywords to narrow it.</p>
+</div>
+<div class="hu-field">
+<label class="hu-label" for="keywords">Keywords <span class="hu-muted">(optional)</span></label>
+<input class="hu-input" id="keywords" value="ecb, rates, inflation, euro, fed, bank, bond, yield, oil, gold, tariff" aria-invalid="true" aria-describedby="keywords-error">
+<p class="hu-error" id="keywords-error"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>Use 10 keywords at most. You entered 11.</p>
+</div>
+<fieldset class="hu-field" style="border: 0; padding: 0; margin: 0" aria-describedby="destinations-error">
+<legend class="hu-label" style="padding: 0; margin-bottom: 6px">Destinations</legend>
+<label class="hu-check"><input type="checkbox">Account email <span class="hu-muted">you@example.com</span></label>
+<p class="hu-error" id="destinations-error"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>Choose at least one destination.</p>
+</fieldset>
+<div class="hu-notice hu-notice--error" role="alert">
+<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>
+<p>Couldn't save the alert. Nothing was changed. Try again.</p>
+</div>
+<div class="hu-inline">
+<button class="hu-btn hu-btn--primary" type="button" disabled="disabled">Creating…</button>
+<a class="hu-btn hu-btn--outline" href="Main.dc.html">Cancel</a>
+</div>
+</form>
+<p class="hu-muted" style="margin-top: 16px">This artboard shows every error at once: the three field errors after a failed submit, the server error above the button, and the pending button label. They do not normally appear together.</p>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1100}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

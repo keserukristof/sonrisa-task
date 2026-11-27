@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Alerts</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 720px">
+<header class="hu-header">
+<a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<nav class="hu-nav" aria-label="Main">
+<a href="Main.dc.html" aria-current="page">Alerts</a>
+<a href="Notifications.dc.html">Notifications</a>
+<a href="Destinations.dc.html">Destinations</a>
+<a href="Simulate.dc.html">Admin</a>
+</nav>
+<div class="hu-header__end"><span class="hu-muted">you@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div>
+</header>
+<main class="hu-page">
+<div class="hu-pagehead">
+<h1 class="hu-title">Alerts</h1>
+<a class="hu-btn hu-btn--primary" href="AlertForm.dc.html">Create alert</a>
+</div>
+<ul class="hu-card" style="list-style: none; margin: 0; padding: 0">
+<li class="hu-row">
+<div class="hu-row__main">
+<p class="hu-row__title">Pacific rim quakes</p>
+<p class="hu-muted">Natural disasters, to Account email</p>
+<div class="hu-inline" style="margin-top: 6px; gap: 6px"><span class="hu-chip">japan</span><span class="hu-chip">tsunami</span></div>
+</div>
+<span class="hu-sev hu-sev--moderate" style="width: 170px"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Moderate and above</span>
+<button class="hu-switch" role="switch" aria-checked="true" aria-label="Pacific rim quakes is active"><i></i>Active</button>
+<a class="hu-btn hu-btn--outline hu-btn--sm" href="AlertForm.dc.html">Edit</a>
+<a class="hu-btn hu-btn--danger hu-btn--sm" href="AlertsDelete.dc.html">Delete</a>
+</li>
+<li class="hu-row">
+<div class="hu-row__main">
+<p class="hu-row__title">Big ones anywhere</p>
+<p class="hu-muted">Natural disasters, to Account email</p>
+</div>
+<span class="hu-sev hu-sev--critical" style="width: 170px"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Critical only</span>
+<button class="hu-switch" role="switch" aria-checked="false" aria-label="Big ones anywhere is paused"><i></i>Paused</button>
+<a class="hu-btn hu-btn--outline hu-btn--sm" href="AlertForm.dc.html">Edit</a>
+<a class="hu-btn hu-btn--danger hu-btn--sm" href="AlertsDelete.dc.html">Delete</a>
+</li>
+<li class="hu-row">
+<div class="hu-row__main">
+<p class="hu-row__title">Rate decisions</p>
+<p class="hu-muted">News, to Account email</p>
+<div class="hu-inline" style="margin-top: 6px; gap: 6px"><span class="hu-chip">ecb</span><span class="hu-chip">rates</span></div>
+</div>
+<span class="hu-sev hu-sev--none" style="width: 170px">Any severity</span>
+<button class="hu-switch" role="switch" aria-checked="true" aria-label="Rate decisions is active"><i></i>Active</button>
+<a class="hu-btn hu-btn--outline hu-btn--sm" href="AlertForm.dc.html">Edit</a>
+<a class="hu-btn hu-btn--danger hu-btn--sm" href="AlertsDelete.dc.html">Delete</a>
+</li>
+</ul>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":720}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

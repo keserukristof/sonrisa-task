@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Heads-up</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 700px">
+<header class="hu-header">
+<a class="hu-brand" href="Landing.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a>
+<div class="hu-header__end"><a class="hu-btn hu-btn--ghost hu-btn--sm" href="SignIn.dc.html">Sign in</a><a class="hu-btn hu-btn--outline hu-btn--sm" href="SignUp.dc.html">Sign up</a></div>
+</header>
+<main class="hu-page" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: center; padding-top: 72px; padding-bottom: 72px; max-width: 1040px">
+<div style="flex: 1 1 380px; min-width: 0">
+<h1 class="hu-display">Hear about the earthquake, not the whole news cycle.</h1>
+<p class="hu-lg hu-muted" style="margin-top: 16px; max-width: 46ch">Heads-up watches for events in the world. You choose the category and how severe an event has to be, and it emails you when one arrives.</p>
+<div class="hu-inline" style="margin-top: 24px">
+<a class="hu-btn hu-btn--primary" href="SignUp.dc.html">Sign up</a>
+<a class="hu-btn hu-btn--outline" href="SignIn.dc.html">Sign in</a>
+</div>
+</div>
+<div style="flex: 1 1 380px; min-width: 0">
+<div class="hu-card">
+<div class="hu-row hu-muted" style="padding-top: 8px; padding-bottom: 8px; font-weight: 500">One scale for every event</div>
+<div class="hu-row"><span class="hu-sev hu-sev--low" style="width: 110px"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Low</span><span class="hu-row__main">Magnitude 4.5 to 5.4</span></div>
+<div class="hu-row"><span class="hu-sev hu-sev--moderate" style="width: 110px"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Moderate</span><span class="hu-row__main">Magnitude 5.5 to 6.4</span></div>
+<div class="hu-row"><span class="hu-sev hu-sev--high" style="width: 110px"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>High</span><span class="hu-row__main">Magnitude 6.5 to 7.4</span></div>
+<div class="hu-row"><span class="hu-sev hu-sev--critical" style="width: 110px"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Critical</span><span class="hu-row__main">Magnitude 7.5 and above</span></div>
+</div>
+<p class="hu-caption hu-muted" style="margin-top: 12px">Earthquakes of magnitude 4.5 and above, from the U.S. Geological Survey, checked every minute.</p>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":700}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
