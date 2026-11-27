@@ -1,35 +1,45 @@
 import type { SendOutcome } from "@/lib/alerting/types";
 
-function messageOf(body: unknown, fallback: string): string {
-  if (typeof body === "object" && body !== null && "message" in body) {
-    const { message } = body;
-    if (typeof message === "string" && message.length > 0) return message;
-  }
-  return fallback;
-}
+// The text of each outcome is a fixed sentence of ours. It is stored and
+// shown to the user, so provider text (which can echo addresses or keys) is
+// logged server-side only. Sentences start "The email " and end with a period
+// so the notification history can show them.
+const SLOW_DOWN = "The email service asked us to slow down.";
+const SERVICE_PROBLEM = "The email service had a problem on its side.";
+const CREDENTIALS = "The email service rejected our sending credentials.";
+const REJECTED_BY_SERVICE = "The email was rejected by the email service.";
+const REJECTED_BY_SERVER = "The email was rejected by the mail server.";
+const NOT_YET = "The email could not be delivered yet.";
+
+export const EMAIL_SERVICE_UNREACHABLE =
+  "The email service could not be reached.";
 
 /**
- * Sorts Resend's HTTP answer: 2xx is sent, 429 and 5xx (and 408) are worth
- * another try, any other answer is permanent: a bad key, an unverified
- * domain, a rejected address.
+ * Sorts Resend's HTTP answer: 2xx is sent; 429, 5xx and 408 are worth another
+ * try, and so are 401 and 403, because a bad key or an unverified domain is
+ * our failure, not the recipient's. Any other answer is permanent.
  */
 export function classifyResendResponse(response: {
   status: number;
   retryAfter: string | null;
-  body: unknown;
+  body?: unknown;
 }): SendOutcome {
-  const { status, retryAfter, body } = response;
+  const { status, retryAfter } = response;
   if (status >= 200 && status < 300) return { kind: "sent" };
 
-  const error = messageOf(body, `Resend answered ${status}.`);
   if (status === 429) {
     const seconds = Number(retryAfter);
     return Number.isFinite(seconds) && retryAfter !== null && seconds > 0
-      ? { kind: "retry", error, retryAfterSeconds: seconds }
-      : { kind: "retry", error };
+      ? { kind: "retry", error: SLOW_DOWN, retryAfterSeconds: seconds }
+      : { kind: "retry", error: SLOW_DOWN };
   }
-  if (status === 408 || status >= 500) return { kind: "retry", error };
-  return { kind: "broken", error };
+  if (status === 401 || status === 403) {
+    return { kind: "retry", error: CREDENTIALS };
+  }
+  if (status === 408 || status >= 500) {
+    return { kind: "retry", error: SERVICE_PROBLEM };
+  }
+  return { kind: "broken", error: REJECTED_BY_SERVICE };
 }
 
 /**
@@ -41,9 +51,9 @@ export function classifySmtpError(error: {
   responseCode?: number;
   message: string;
 }): SendOutcome {
-  const { responseCode, message } = error;
+  const { responseCode } = error;
   if (typeof responseCode === "number" && responseCode >= 500) {
-    return { kind: "broken", error: message };
+    return { kind: "broken", error: REJECTED_BY_SERVER };
   }
-  return { kind: "retry", error: message };
+  return { kind: "retry", error: NOT_YET };
 }

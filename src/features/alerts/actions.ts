@@ -62,13 +62,16 @@ export async function setAlertActive(
     message: `Couldn't ${active ? "resume" : "pause"} the alert. Try again.`,
   } as const;
   const user = await getCurrentUser();
-  if (!user || !z.uuid().safeParse(alertId).success) return failure;
+  const parsed = z
+    .object({ alertId: z.uuid(), active: z.boolean() })
+    .safeParse({ alertId, active });
+  if (!user || !parsed.success) return failure;
 
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("alerts")
-    .update({ active })
-    .eq("id", alertId)
+    .update({ active: parsed.data.active })
+    .eq("id", parsed.data.alertId)
     .select("id");
   if (error || data.length === 0) return failure;
 

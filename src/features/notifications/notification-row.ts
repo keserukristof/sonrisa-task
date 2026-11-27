@@ -1,27 +1,43 @@
+import { z } from "zod";
 import { formatUtcDateTime, formatUtcTime } from "@/lib/format";
-import type { NotificationStatus, Severity } from "@/lib/alerting/types";
+import {
+  NOTIFICATION_STATUSES,
+  SEVERITIES,
+  type NotificationStatus,
+  type Severity,
+} from "@/lib/alerting/types";
 
 export const PAGE_SIZE = 25;
 
 /** A notification as the query returns it, with its event, alert and destination. */
-export type RawNotification = {
-  id: string;
-  status: NotificationStatus;
-  attempts: number;
-  next_attempt_at: string;
-  last_error: string | null;
-  skip_reason: string | null;
-  sent_at: string | null;
-  events: {
-    title: string;
-    severity: Severity;
-    occurred_at: string;
-    simulated: boolean;
-  } | null;
+const rawNotificationSchema = z.object({
+  id: z.string(),
+  status: z.enum(NOTIFICATION_STATUSES),
+  attempts: z.number(),
+  next_attempt_at: z.string(),
+  last_error: z.string().nullable(),
+  skip_reason: z.string().nullable(),
+  sent_at: z.string().nullable(),
+  events: z
+    .object({
+      title: z.string(),
+      severity: z.enum(SEVERITIES),
+      occurred_at: z.string(),
+      simulated: z.boolean(),
+    })
+    .nullable(),
   /** Null once the alert is deleted. */
-  alerts: { name: string } | null;
-  destinations: { name: string } | null;
-};
+  alerts: z.object({ name: z.string() }).nullable(),
+  destinations: z.object({ name: z.string() }).nullable(),
+});
+
+export type RawNotification = z.infer<typeof rawNotificationSchema>;
+
+/** The embedded rows of the query, or null when they are not the expected shape. */
+export function parseRawNotifications(data: unknown): RawNotification[] | null {
+  const parsed = z.array(rawNotificationSchema).safeParse(data);
+  return parsed.success ? parsed.data : null;
+}
 
 /** What a history row shows. */
 export type NotificationRowData = {

@@ -368,7 +368,7 @@ describe("delivery", () => {
     expect(channel.calls).toHaveLength(4);
   });
 
-  it("fails at once and marks the destination broken on a permanent error", async () => {
+  it("fails the notification at once on a permanent error and leaves the email destination working", async () => {
     const { now, tag, user } = await oneEvent(2111);
     const channel = fakeChannel("email", tag, () => ({
       kind: "broken",
@@ -385,10 +385,7 @@ describe("delivery", () => {
       .select("status, broken_reason")
       .eq("id", user.emailDestinationId)
       .single();
-    expect(data).toEqual({
-      status: "broken",
-      broken_reason: "address rejected",
-    });
+    expect(data).toEqual({ status: "active", broken_reason: null });
   });
 
   it("sends once when two ticks run back to back", async () => {

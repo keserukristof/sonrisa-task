@@ -21,7 +21,7 @@ describe("classifyResendResponse", () => {
       }),
     ).toEqual({
       kind: "retry",
-      error: "Too many requests",
+      error: "The email service asked us to slow down.",
       retryAfterSeconds: 12,
     });
   });
@@ -29,23 +29,38 @@ describe("classifyResendResponse", () => {
   it("retries on 5xx without a wait", () => {
     expect(
       classifyResendResponse({ status: 503, retryAfter: null, body: null }),
-    ).toEqual({ kind: "retry", error: "Resend answered 503." });
+    ).toEqual({
+      kind: "retry",
+      error: "The email service had a problem on its side.",
+    });
   });
 
-  it("is broken on 403 with the provider's message", () => {
+  it("retries on 401 and 403: our credentials are a system failure", () => {
+    for (const status of [401, 403]) {
+      expect(
+        classifyResendResponse({
+          status,
+          retryAfter: null,
+          body: { message: "API key is invalid" },
+        }),
+      ).toEqual({
+        kind: "retry",
+        error: "The email service rejected our sending credentials.",
+      });
+    }
+  });
+
+  it("is broken on 422 with a sentence of ours, not the provider's text", () => {
     expect(
       classifyResendResponse({
-        status: 403,
+        status: 422,
         retryAfter: null,
-        body: { message: "The domain is not verified" },
+        body: { message: "Invalid `to` field" },
       }),
-    ).toEqual({ kind: "broken", error: "The domain is not verified" });
-  });
-
-  it("is broken on 422 even when the body is not JSON", () => {
-    expect(
-      classifyResendResponse({ status: 422, retryAfter: null, body: "nope" }),
-    ).toEqual({ kind: "broken", error: "Resend answered 422." });
+    ).toEqual({
+      kind: "broken",
+      error: "The email was rejected by the email service.",
+    });
   });
 });
 
@@ -53,18 +68,27 @@ describe("classifySmtpError", () => {
   it("is broken when the server rejects the recipient permanently", () => {
     expect(
       classifySmtpError({ responseCode: 550, message: "No such user" }),
-    ).toEqual({ kind: "broken", error: "No such user" });
+    ).toEqual({
+      kind: "broken",
+      error: "The email was rejected by the mail server.",
+    });
   });
 
   it("retries on a 4xx reply", () => {
     expect(
       classifySmtpError({ responseCode: 451, message: "Try later" }),
-    ).toEqual({ kind: "retry", error: "Try later" });
+    ).toEqual({
+      kind: "retry",
+      error: "The email could not be delivered yet.",
+    });
   });
 
   it("retries when the connection fails", () => {
     expect(
       classifySmtpError({ code: "ECONNECTION", message: "connect refused" }),
-    ).toEqual({ kind: "retry", error: "connect refused" });
+    ).toEqual({
+      kind: "retry",
+      error: "The email could not be delivered yet.",
+    });
   });
 });

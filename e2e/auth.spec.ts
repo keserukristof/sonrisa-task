@@ -48,7 +48,10 @@ test("a visitor signs up, confirms through the emailed link, signs out and signs
   const mail = await waitForEmail(email, "Confirm your Heads-up account");
   const link = mail.links.find((href) => href.includes("/auth/confirm"));
   expect(link).toBeTruthy();
-  await page.goto(link ?? "/");
+  // The production build links to APP_URL, not this worktree's port: follow
+  // the path on the server under test.
+  const confirm = new URL(link ?? "/", "http://placeholder.invalid");
+  await page.goto(`${confirm.pathname}${confirm.search}`);
 
   await expect(page).toHaveURL(/\/alerts/);
   await expect(page.getByText("Email confirmed.")).toBeVisible();

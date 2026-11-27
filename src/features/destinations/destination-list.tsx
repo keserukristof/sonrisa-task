@@ -5,17 +5,23 @@ import { listDestinations } from "./queries";
 export async function DestinationList() {
   const { accountEmail, destinations } = await listDestinations();
 
+  if (destinations.length === 0) {
+    return (
+      <p className="border-border bg-card text-muted-foreground rounded-lg border px-4 py-3 text-sm">
+        No destinations yet. Your account email appears here once it is set up.
+      </p>
+    );
+  }
+
   return (
     <ul className="border-border bg-card divide-border divide-y rounded-lg border">
-      {destinations
-        .filter((destination) => destination.channelType === "email")
-        .map((destination) => (
-          <EmailDestinationRow
-            key={destination.id}
-            destinationId={destination.id}
-            accountEmail={accountEmail}
-          />
-        ))}
+      {destinations.map((destination) => (
+        <EmailDestinationRow
+          key={destination.id}
+          destinationId={destination.id}
+          accountEmail={accountEmail}
+        />
+      ))}
     </ul>
   );
 }

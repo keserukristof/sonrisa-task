@@ -25,6 +25,7 @@ export async function listDestinations(): Promise<DestinationsView> {
     .from("destinations")
     .select("id, name, channel_type, status")
     .eq("user_id", user.id)
+    .eq("channel_type", "email")
     .order("created_at", { ascending: true });
   if (error) throw new Error("Could not read the destinations.");
 

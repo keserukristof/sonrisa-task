@@ -20,6 +20,19 @@ describe("originFrom", () => {
     ).toBe("https://heads-up.example");
   });
 
+  it("ignores forwarded headers in production and uses the configured URL", () => {
+    expect(
+      originFrom(
+        new Headers({
+          host: "evil.example",
+          "x-forwarded-host": "evil.example",
+          "x-forwarded-proto": "https",
+        }),
+        { production: true, appUrl: "https://heads-up.example" },
+      ),
+    ).toBe("https://heads-up.example");
+  });
+
   it("refuses a host that is not a plain host name", () => {
     expect(
       originFrom(new Headers({ host: "evil.example/path?x=" })),

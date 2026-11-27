@@ -27,6 +27,15 @@ describe("describeTestResult", () => {
     });
   });
 
+  it("shows the system-wide test cap as skipped", () => {
+    expect(
+      describeTestResult({ ok: false, code: "system_test_limit" }),
+    ).toEqual({
+      status: "skipped",
+      label: "Not sent. Heads-up has reached its 20 test emails for today.",
+    });
+  });
+
   it("shows any other failure as failed", () => {
     expect(describeTestResult({ ok: false, code: "failed" })).toEqual({
       status: "failed",
