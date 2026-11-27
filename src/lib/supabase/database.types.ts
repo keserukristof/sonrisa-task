@@ -177,7 +177,30 @@ isOneToOne: false
             [_ in never]: never
           }
           Functions: {
-            "claim_test_send":
+            "add_slack_destination":
+{ Args: { "p_name": string,"p_url": string }; Returns: string
+                           },
+"admin_email_budget":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "emails_today": number,"test_sends_today": number
+            }[]
+                           },
+"admin_notifications":
+{ Args: { "p_limit": number,"p_offset": number,"p_status": string }; Returns: {
+              "attempts": number,"channel_type": string,"created_at": string,"event_occurred_at": string,"event_simulated": boolean,"event_title": string,"id": string,"last_error": string,"next_attempt_at": string,"owner_email": string,"sent_at": string,"skip_reason": string,"status": string,"total_count": number
+            }[]
+                           },
+"admin_source_health":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "last_error": string,"last_events_stored": number,"last_outcome": string,"last_polled_at": string,"last_success_at": string,"source": string
+            }[]
+                           },
+"admin_users":
+{ Args: { "p_limit": number,"p_offset": number }; Returns: {
+              "alert_count": number,"created_at": string,"email": string,"role": string,"total_count": number,"user_id": string
+            }[]
+                           },
+"claim_test_send":
 { Args: { "p_destination_id": string }; Returns: {
               "outcome": string,"test_send_id": string
             }[]
@@ -188,7 +211,7 @@ isOneToOne: false
             }[]
                            },
 "finish_test_send":
-{ Args: { "p_delivered": boolean,"p_error"?: string,"p_test_send_id": string }; Returns: undefined
+{ Args: { "p_broken_reason"?: string,"p_delivered": boolean,"p_error"?: string,"p_test_send_id": string }; Returns: undefined
                            },
 "health_check":
 { Args: Record<PropertyKey, never>; Returns: string
@@ -198,6 +221,11 @@ isOneToOne: false
                            },
 "keywords_valid":
 { Args: { "p_keywords": (string)[] }; Returns: boolean
+                           },
+"remove_destination":
+{ Args: { "p_destination_id": string }; Returns: {
+              "alert_count": number,"outcome": string
+            }[]
                            },
 "save_alert":
 { Args: { "p_alert_id": string,"p_category": Database["public"]['Enums']["event_category"],"p_destination_ids": (string)[],"p_keywords": (string)[],"p_min_severity": Database["public"]['Enums']["severity"],"p_name": string }; Returns: string
