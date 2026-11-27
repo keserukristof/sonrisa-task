@@ -1,0 +1,38 @@
+[
+  {
+    "id": "bitcoin",
+    "symbol": "btc",
+    "name": "Bitcoin",
+    "current_price": 64210,
+    "market_cap": 1268000000000,
+    "market_cap_rank": 1,
+    "price_change_percentage_24h": -1.8,
+    "last_updated": "2026-11-27T18:04:31.000Z",
+    "price_change_percentage_1h_in_currency": 4.21,
+    "price_change_percentage_24h_in_currency": -1.8
+  },
+  {
+    "id": "ethereum",
+    "symbol": "eth",
+    "name": "Ethereum",
+    "current_price": 3120.55,
+    "market_cap": 375000000000,
+    "market_cap_rank": 2,
+    "price_change_percentage_24h": 0.4,
+    "last_updated": "2026-11-27T18:04:29.000Z",
+    "price_change_percentage_1h_in_currency": -3.64,
+    "price_change_percentage_24h_in_currency": 0.4
+  },
+  {
+    "id": "tether",
+    "symbol": "usdt",
+    "name": "Tether",
+    "current_price": 1.0,
+    "market_cap": 120000000000,
+    "market_cap_rank": 3,
+    "price_change_percentage_24h": 0.01,
+    "last_updated": "2026-11-27T18:04:30.000Z",
+    "price_change_percentage_1h_in_currency": 0.02,
+    "price_change_percentage_24h_in_currency": 0.01
+  }
+]
