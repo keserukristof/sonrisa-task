@@ -8,6 +8,7 @@ export type DestinationOption = {
   id: string;
   name: string;
   channelType: string;
+  status: string;
 };
 
 export type AlertSummary = {
@@ -17,7 +18,7 @@ export type AlertSummary = {
   minSeverity: Severity | null;
   keywords: string[];
   active: boolean;
-  destinationNames: string[];
+  destinations: { name: string; broken: boolean }[];
 };
 
 export type AlertDetail = {
@@ -39,23 +40,38 @@ export async function getDestinationOptions(): Promise<{
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("destinations")
-    .select("id, name, channel_type")
+    .select("id, name, channel_type, status")
     .eq("user_id", user.id)
     .order("created_at", { ascending: true });
   if (error) throw new Error("Could not load destinations.");
   return {
-    destinations: data.map((row) => ({
-      id: row.id,
-      name: row.name,
-      channelType: row.channel_type,
-    })),
+    destinations: data
+      .toSorted((a, b) => emailFirst(a.channel_type, b.channel_type))
+      .map((row) => ({
+        id: row.id,
+        name: row.name,
+        channelType: row.channel_type,
+        status: row.status,
+      })),
     accountEmail: user.email,
   };
 }
 
+/** Sort order: the account email first, then Slack (the caller keeps oldest first). */
+function emailFirst(a: string, b: string): number {
+  return Number(b === "email") - Number(a === "email");
+}
+
 const destinationLink = z.object({
   destination_id: z.string(),
-  destinations: z.object({ name: z.string() }).nullable(),
+  destinations: z
+    .object({
+      name: z.string(),
+      status: z.string(),
+      channel_type: z.string(),
+      created_at: z.string(),
+    })
+    .nullable(),
 });
 
 /** The user's alerts, newest first, each with its destination names. */
@@ -66,7 +82,7 @@ export async function getAlerts(): Promise<AlertSummary[]> {
   const { data, error } = await supabase
     .from("alerts")
     .select(
-      "id, name, category, min_severity, keywords, active, created_at, alert_destinations(destination_id, destinations(name))",
+      "id, name, category, min_severity, keywords, active, created_at, alert_destinations(destination_id, destinations(name, status, channel_type, created_at))",
     )
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
@@ -79,10 +95,16 @@ export async function getAlerts(): Promise<AlertSummary[]> {
     minSeverity: row.min_severity,
     keywords: row.keywords,
     active: row.active,
-    destinationNames: z
+    destinations: z
       .array(destinationLink)
       .parse(row.alert_destinations)
-      .flatMap((link) => (link.destinations ? [link.destinations.name] : [])),
+      .flatMap((link) => (link.destinations ? [link.destinations] : []))
+      .toSorted(
+        (a, b) =>
+          emailFirst(a.channel_type, b.channel_type) ||
+          a.created_at.localeCompare(b.created_at),
+      )
+      .map((d) => ({ name: d.name, broken: d.status === "broken" })),
   }));
 }
 
