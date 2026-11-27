@@ -1,23 +1,26 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PageContainer, PageHeader } from "@/components/page-shell";
-import { Placeholder } from "@/components/placeholder";
+import { NotificationListSkeleton } from "@/features/notifications/notification-list";
+import { NotificationsView } from "@/features/notifications/notifications-view";
 import { requireUser } from "@/lib/auth/session";
 
 export const metadata: Metadata = { title: "Notifications" };
 
-export default function Page() {
+export default function Page({ searchParams }: PageProps<"/notifications">) {
   return (
     <PageContainer width="list">
       <PageHeader title="Notifications" />
-      <Suspense fallback={null}>
-        <Content />
+      <Suspense fallback={<NotificationListSkeleton />}>
+        <Content searchParams={searchParams} />
       </Suspense>
     </PageContainer>
   );
 }
 
-async function Content() {
+async function Content({
+  searchParams,
+}: Pick<PageProps<"/notifications">, "searchParams">) {
   await requireUser("/notifications");
-  return <Placeholder ticket={12} />;
+  return <NotificationsView searchParams={searchParams} />;
 }
