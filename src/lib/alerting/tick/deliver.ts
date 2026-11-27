@@ -4,6 +4,7 @@ import type { Channel, Clock, SendOutcome } from "../types";
 import type { TickConfig } from "../config";
 import { errorText } from "./error-text";
 import { planRetry } from "./retry";
+import { SLACK_INVALID_URL_REASON } from "../channels/slack/reasons";
 
 export type DeliverResult = {
   claimed: number;
@@ -67,7 +68,10 @@ export async function deliverNotifications(
       if (row.destination_id && row.channel_type !== "email") {
         const { error: brokenError } = await db
           .from("destinations")
-          .update({ status: "broken", broken_reason: outcome.error })
+          .update({
+            status: "broken",
+            broken_reason: outcome.destinationReason ?? outcome.error,
+          })
           .eq("id", row.destination_id);
         written("mark destination broken", brokenError);
       }
@@ -103,6 +107,11 @@ export async function deliverNotifications(
   return result;
 }
 
+/** "The email" or "The Slack": failure sentences name their channel (#4). */
+function channelSubject(channelType: string): string {
+  return channelType === "slack" ? "The Slack" : "The email";
+}
+
 type Claimed =
   Database["public"]["Functions"]["tick_claim_notifications"]["Returns"][number];
 
@@ -113,21 +122,34 @@ async function sendOne(
 ): Promise<SendOutcome> {
   try {
     if (!row.destination_id) {
-      return { kind: "broken", error: "The email destination was deleted." };
+      return {
+        kind: "broken",
+        error:
+          row.channel_type === "email"
+            ? "The email destination was deleted."
+            : "The Slack destination was removed.",
+      };
     }
     const channel = channels.find((c) => c.type === row.channel_type);
     if (!channel) {
       return {
         kind: "retry",
-        error: `The ${row.channel_type} channel is not set up.`,
+        error: `${channelSubject(row.channel_type)} channel is not set up.`,
       };
     }
     const settings = channel.settingsSchema.safeParse(row.destination_settings);
     if (!settings.success) {
-      return {
-        kind: "broken",
-        error: "The email destination's settings are invalid.",
-      };
+      // For Slack this is also how a stub URL is refused in production.
+      return row.channel_type === "slack"
+        ? {
+            kind: "broken",
+            error: SLACK_INVALID_URL_REASON.failure,
+            destinationReason: SLACK_INVALID_URL_REASON.broken,
+          }
+        : {
+            kind: "broken",
+            error: "The email destination's settings are invalid.",
+          };
     }
     const { data: auth, error } = await db.auth.admin.getUserById(row.user_id);
     if (error || !auth.user?.email) {
@@ -156,7 +178,7 @@ async function sendOne(
     console.error(`[tick] send failed: ${errorText(caught)}`);
     return {
       kind: "retry",
-      error: "The email could not be sent because of an internal error.",
+      error: `${channelSubject(row.channel_type)} message could not be sent because of an internal error.`,
     };
   }
 }

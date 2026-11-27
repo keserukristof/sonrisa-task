@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Slack messages</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="width: 1280px; height: 520px; position: relative; overflow: hidden">
+<div style="padding: 32px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: start"><section class="hu-stack" style="gap: 12px"><h2 class="hu-heading">Alert message</h2>
+<div class="hu-card" style="padding: 16px; display: flex; gap: 12px; align-items: flex-start">
+<span aria-hidden="true" style="width: 36px; height: 36px; flex: none; border-radius: var(--radius-md); background: var(--primary); display: grid; place-items: center"><svg viewBox="0 0 26 16" style="width: 22px; height: 14px; fill: none; stroke: var(--primary-foreground); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg></span>
+<div class="hu-stack" style="gap: 8px; min-width: 0"><p><b>Heads-up</b> <span class="hu-caption hu-muted">APP · 18:06</span></p><p class="hu-lg" style="font-weight: 700"><a href="https://www.coingecko.com/en/coins/bitcoin">Bitcoin (BTC) up 4.2% in the past hour</a></p>
+<p><b>Moderate</b> · Price $64,210. 24-hour change −1.8%.</p>
+<p class="hu-caption hu-muted">Alert: Crypto swings · Powered by CoinGecko</p></div></div></section><section class="hu-stack" style="gap: 12px"><h2 class="hu-heading">Simulated event</h2>
+<div class="hu-card" style="padding: 16px; display: flex; gap: 12px; align-items: flex-start">
+<span aria-hidden="true" style="width: 36px; height: 36px; flex: none; border-radius: var(--radius-md); background: var(--primary); display: grid; place-items: center"><svg viewBox="0 0 26 16" style="width: 22px; height: 14px; fill: none; stroke: var(--primary-foreground); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg></span>
+<div class="hu-stack" style="gap: 8px; min-width: 0"><p><b>Heads-up</b> <span class="hu-caption hu-muted">APP · 18:06</span></p><p class="hu-lg" style="font-weight: 700"><a href="Notifications2.dc.html">[SIMULATED] Test quake near Tokyo</a></p>
+<p><i>This is a simulated event created by an admin. Nothing happened.</i></p>
+<p><b>High</b> · Magnitude 6.1 test event near Tokyo.</p>
+<p class="hu-caption hu-muted">Alert: Pacific rim quakes · Simulated by an admin</p></div></div></section><section class="hu-stack" style="gap: 12px"><h2 class="hu-heading">Test message</h2>
+<div class="hu-card" style="padding: 16px; display: flex; gap: 12px; align-items: flex-start">
+<span aria-hidden="true" style="width: 36px; height: 36px; flex: none; border-radius: var(--radius-md); background: var(--primary); display: grid; place-items: center"><svg viewBox="0 0 26 16" style="width: 22px; height: 14px; fill: none; stroke: var(--primary-foreground); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg></span>
+<div class="hu-stack" style="gap: 8px; min-width: 0"><p><b>Heads-up</b> <span class="hu-caption hu-muted">APP · 18:06</span></p><p class="hu-lg" style="font-weight: 700">This destination works</p>
+<p>You sent this test from your destinations page on 27 Nov 2026 at 18:12 UTC. Notifications from your alerts arrive in this channel.</p>
+<p class="hu-caption hu-muted">Heads-up · Manage your destinations</p></div></div></section></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":520}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

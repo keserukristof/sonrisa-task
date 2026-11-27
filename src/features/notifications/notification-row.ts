@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { sourceCredit } from "@/lib/alerting/sources/catalog";
 import { formatUtcDateTime, formatUtcTime } from "@/lib/format";
 import {
   NOTIFICATION_STATUSES,
@@ -18,12 +19,14 @@ const rawNotificationSchema = z.object({
   last_error: z.string().nullable(),
   skip_reason: z.string().nullable(),
   sent_at: z.string().nullable(),
+  channel_type: z.string(),
   events: z
     .object({
       title: z.string(),
       severity: z.enum(SEVERITIES),
       occurred_at: z.string(),
       simulated: z.boolean(),
+      source: z.string(),
     })
     .nullable(),
   /** Null once the alert is deleted. */
@@ -45,6 +48,8 @@ export type NotificationRowData = {
   title: string;
   simulated: boolean;
   eventTime: string;
+  /** The source's credit line; null for simulated events. */
+  credit: string | null;
   /** Null when the alert was deleted. */
   alertName: string | null;
   destinationName: string;
@@ -61,11 +66,16 @@ export function parsePage(value: string | string[] | undefined): number {
 
 // Only sentences our own code writes are shown. A raw provider or database
 // message never reaches the page.
-const KNOWN_FAILURE = /^The email [^.]{1,120}\.$/;
+const KNOWN_FAILURE = /^The (?:email|Slack) [^.]{1,120}\.$/;
 
-function failureReason(lastError: string | null, attempts: number): string {
+function failureReason(
+  lastError: string | null,
+  attempts: number,
+  channelType: string,
+): string {
   if (lastError && KNOWN_FAILURE.test(lastError)) return lastError;
-  return `The email couldn't be sent after ${Math.max(attempts, 1)} attempts.`;
+  const what = channelType === "slack" ? "The Slack message" : "The email";
+  return `${what} couldn't be sent after ${Math.max(attempts, 1)} attempts.`;
 }
 
 function detailFor(raw: RawNotification): string | null {
@@ -77,10 +87,15 @@ function detailFor(raw: RawNotification): string | null {
     case "sent":
       return raw.sent_at ? formatUtcTime(raw.sent_at) : null;
     case "failed":
-      return failureReason(raw.last_error, raw.attempts);
+      return failureReason(raw.last_error, raw.attempts, raw.channel_type);
     case "skipped":
       return raw.skip_reason;
   }
+}
+
+function destinationLabel(raw: RawNotification): string {
+  const name = raw.destinations?.name ?? "Removed destination";
+  return raw.channel_type === "slack" ? `Slack \u00b7 ${name}` : name;
 }
 
 export function toNotificationRow(raw: RawNotification): NotificationRowData {
@@ -90,7 +105,11 @@ export function toNotificationRow(raw: RawNotification): NotificationRowData {
     simulated: raw.events?.simulated ?? false,
     eventTime: raw.events ? formatUtcDateTime(raw.events.occurred_at) : "",
     alertName: raw.alerts?.name ?? null,
-    destinationName: raw.destinations?.name ?? "Removed destination",
+    credit:
+      raw.events && !raw.events.simulated
+        ? sourceCredit(raw.events.source)
+        : null,
+    destinationName: destinationLabel(raw),
     severity: raw.events?.severity ?? null,
     status: raw.status,
     detail: detailFor(raw),

@@ -8,7 +8,7 @@ import { getCurrentUser } from "@/lib/auth/session";
 import { withNotice } from "@/lib/notices";
 import { createClient } from "@/lib/supabase/server";
 import { parseAlertForm } from "./form-data";
-import { saveAlertFailure } from "./save-error";
+import { resumeAlertFailure, saveAlertFailure } from "./save-error";
 import type { AlertField } from "./schema";
 
 const NOT_SIGNED_IN = "Your session has ended. Sign in again.";
@@ -45,7 +45,8 @@ export async function saveAlert(
     p_keywords: parsed.data.keywords,
     p_destination_ids: parsed.data.destinationIds,
   });
-  if (error) return saveAlertFailure(error.code, alertId !== null);
+  if (error)
+    return saveAlertFailure(error.code, alertId !== null, error.message);
 
   redirect(
     withNotice("/alerts", alertId === null ? "alert-created" : "changes-saved"),
@@ -73,7 +74,8 @@ export async function setAlertActive(
     .update({ active: parsed.data.active })
     .eq("id", parsed.data.alertId)
     .select("id");
-  if (error || data.length === 0) return failure;
+  if (error) return resumeAlertFailure(error.code, error.message, active);
+  if (data.length === 0) return failure;
 
   refresh();
   return { ok: true };

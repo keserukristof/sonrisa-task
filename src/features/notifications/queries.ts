@@ -19,7 +19,7 @@ export type NotificationPage =
   | { ok: false };
 
 const COLUMNS =
-  "id, status, attempts, next_attempt_at, last_error, skip_reason, sent_at, events(title, severity, occurred_at, simulated), alerts(name), destinations(name)";
+  "id, status, attempts, next_attempt_at, last_error, skip_reason, sent_at, channel_type, events(title, severity, occurred_at, simulated, source), alerts(name), destinations(name)";
 
 async function fetchPage(userId: string, page: number) {
   const supabase = await createClient();

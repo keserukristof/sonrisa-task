@@ -1,4 +1,5 @@
 import type { Source } from "@/lib/alerting/types";
+import { sourceEntry } from "../catalog";
 import { mapUsgsFeed } from "./map";
 
 export const USGS_FEED_URL =
@@ -11,7 +12,7 @@ export const USGS_FEED_URL =
 export const usgsSource: Source = {
   id: "usgs",
   category: "natural_disasters",
-  intervalSeconds: 60,
+  intervalSeconds: sourceEntry("usgs")?.intervalSeconds ?? 60,
   async fetch() {
     const response = await fetch(USGS_FEED_URL, {
       headers: { accept: "application/geo+json, application/json" },

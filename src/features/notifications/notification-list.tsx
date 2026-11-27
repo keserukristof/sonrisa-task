@@ -36,6 +36,9 @@ export function NotificationList({ rows }: { rows: NotificationRowData[] }) {
                 ) : null}
               </p>
               <p className="text-muted-foreground text-sm">{row.eventTime}</p>
+              {row.credit ? (
+                <p className="text-muted-foreground text-xs">{row.credit}</p>
+              ) : null}
             </div>
             <div className="max-sm:order-1 sm:order-2">
               {row.severity ? <SeverityMark severity={row.severity} /> : null}

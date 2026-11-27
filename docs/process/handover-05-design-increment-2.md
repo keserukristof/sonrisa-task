@@ -1,12 +1,12 @@
 # Handover: design of increment 2, alongside the ship of increment 1
 
-Written 2026-11-27 18:23, for the session that runs Design for increment 2 while increment 1 ships in another session. Read this, then `CLAUDE.md`, then [#4](https://github.com/keserukristof/sonrisa-task/issues/4) (the increment and its acceptance criteria), then `.claude/skills/design/SKILL.md`. For the ship itself, [handover-04](handover-04-ship-increment-1.md) is the brief; this one does not repeat it.
+Written 2026-11-27 18:23, for the session that runs Design for increment 2 while increment 1 ships in another session. Read this, then `CLAUDE.md`, then [#4](https://github.com/keserukristof/ai-task/issues/4) (the increment and its acceptance criteria), then `.claude/skills/design/SKILL.md`. For the ship itself, [handover-04](handover-04-ship-increment-1.md) is the brief; this one does not repeat it.
 
 ## Where things stand
 
 - **Branch:** `increment-1`, pushed, clean, at the commit that adds this file. It carries increment 1's code and, since 18:10, docs-only planning commits for increment 2. No pull request yet.
 - **Increment 1:** built, reviewed and fixed; full suite green at about 18:00. Not shipped. The ship runs in its own session from handover-04. The `/ship` command hit Claude Code's built-in `ship-local` instead of the project skill (handover-04, first section).
-- **Increment 2 ([#4](https://github.com/keserukristof/sonrisa-task/issues/4)):** increments 2 and 3 merged into it at the 17:30 checkpoint. #5 is closed into it. 22 stories: Slack (9–16, 34), the Guardian (41), CoinGecko (42, 43, 47), admin (48, 49, 51–54, 67), and 68 and 69. Dropped into #2's Out of Scope: 17, 50, 55–57.
+- **Increment 2 ([#4](https://github.com/keserukristof/ai-task/issues/4)):** increments 2 and 3 merged into it at the 17:30 checkpoint. #5 is closed into it. 22 stories: Slack (9–16, 34), the Guardian (41), CoinGecko (42, 43, 47), admin (48, 49, 51–54, 67), and 68 and 69. Dropped into #2's Out of Scope: 17, 50, 55–57.
 - **Refine is done.** The acceptance criteria are in #4, from 14 decisions (decision log, 18:20).
 - **Fallback, agreed in advance (decision log, 18:12):** if Build has not started by **01:00**, cut CoinGecko (42, 43, 47), then the admin events list (51), then source health (53), and nothing further. Scope freezes at 05:30 on 2026-11-28; the deadline is 09:30.
 

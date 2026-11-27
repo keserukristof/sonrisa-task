@@ -388,6 +388,62 @@ describe("delivery", () => {
     expect(data).toEqual({ status: "active", broken_reason: null });
   });
 
+  it("fails the notification and breaks a Slack destination whose channel is gone, then stops matching it", async () => {
+    const now = windowAt(2117);
+    const tag = tagOf();
+    const user = await account();
+    const slack = await addSlackDestination(db, user.id);
+    await createAlert(db, user, {
+      category: "markets",
+      keywords: [tag],
+      createdAt: new Date(now.getTime() - 3_600_000),
+      destinationIds: [slack],
+    });
+    await event({
+      category: "markets",
+      title: `Gone ${tag}`,
+      ingestedAt: new Date(now.getTime() - 60_000),
+    });
+    const gone = fakeChannel("slack", tag, () => ({
+      kind: "broken",
+      error: "The Slack channel no longer exists.",
+      destinationReason: "Slack says this channel no longer exists.",
+    }));
+    const clock = fakeClock(now);
+    const run = () =>
+      tick(clock, fakeChannel("email", "\u0000"), {
+        channels: [fakeChannel("email", "\u0000"), gone],
+      });
+
+    await run();
+
+    const rows = await notificationsFor(db, user.id);
+    expect(rows).toHaveLength(1);
+    expect(rows[0]?.status).toBe("failed");
+    expect(rows[0]?.last_error).toBe("The Slack channel no longer exists.");
+    const { data } = await db
+      .from("destinations")
+      .select("status, broken_reason")
+      .eq("id", slack)
+      .single();
+    expect(data).toEqual({
+      status: "broken",
+      broken_reason: "Slack says this channel no longer exists.",
+    });
+
+    // An event matched later creates nothing for the broken destination.
+    clock.advance(600);
+    await event({
+      category: "markets",
+      title: `Later ${tag}`,
+      ingestedAt: new Date(clock.now().getTime() - 30_000),
+    });
+    await run();
+
+    expect(await notificationsFor(db, user.id)).toHaveLength(1);
+    expect(gone.calls).toHaveLength(1);
+  });
+
   it("sends once when two ticks run back to back", async () => {
     const { now, tag, user } = await oneEvent(2112);
     const clock = fakeClock(now);

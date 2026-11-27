@@ -77,3 +77,25 @@ The page padding is 16px. No horizontal scrolling at 360px.
 ## Components
 
 Header, ListRow, Severity, Status, the Simulated badge, Pager, EmptyState, Skeleton, Notice.
+
+## Increment 2: Slack, channel-named failures and credits
+
+Artboard: [html/Notifications2.dc.html](../html/Notifications2.dc.html), screenshot `2-notifications2.png`. Everything above still holds unless this section changes it.
+
+- **Destination** (second line of the "Alert and destination" column): "Account email" for email; "Slack · <name>" for Slack. A destination removed since shows its name as it was stored, with "Slack · " in front.
+- **Failure reasons name their channel.** Every stored failure sentence starts "The email …" or "The Slack …" and ends with a full stop; history shows that sentence and nothing else. Slack examples:
+  - The Slack channel no longer exists.
+  - The Slack channel is archived.
+  - The Slack webhook was removed or revoked.
+  - The Slack workspace blocks this webhook.
+  - The Slack workspace is no longer active.
+  - The Slack destination was removed.
+  - The Slack webhook didn't respond after 4 attempts.
+  - The email reasons from increment 1 keep their wording: "The email provider didn't respond after 4 attempts."
+- **Credits.** Each row carries its source's credit as a third line in the Event column, in `caption` size and `muted-foreground`, under the event time:
+  - earthquakes: U.S. Geological Survey
+  - news: Source: The Guardian
+  - markets: Powered by CoinGecko
+  - simulated events: no credit line.
+    This replaces increment 1's single "Earthquake data: U.S. Geological Survey" line under the list, which is removed.
+- **At 360px** the credit stays under the time, as the third line of the stacked row's first block.

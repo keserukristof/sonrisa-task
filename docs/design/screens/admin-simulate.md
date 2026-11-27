@@ -71,3 +71,11 @@ Below 640px the page and card padding are 16px, the three category options stack
 ## Components
 
 Header, Field (radio group, select, input, textarea), Button, Notice.
+
+## Increment 2: under the admin tabs
+
+Artboard: [html/Simulate2.dc.html](../html/Simulate2.dc.html), screenshot `2-simulate2.png`.
+
+- The page joins the admin frame ([admin-overview.md](admin-overview.md)): the `h1` is now "Admin", the tabs follow with Simulate current, and "Simulate an event" becomes an `h2` at the top of the 560px-wide form column. The intro, the form, its copy and its states do not change.
+- `/admin` no longer redirects here; it is the overview.
+- The success Notice's link "See your notifications" is unchanged.

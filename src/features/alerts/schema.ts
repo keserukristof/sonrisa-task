@@ -37,6 +37,14 @@ const keywordsField = z
   });
 
 /**
+ * Why a news alert needs a keyword. The form shows it under Keywords, and the
+ * database's `alerts_news_needs_keywords` check enforces the same rule, also
+ * when a paused alert is resumed (add " Edit the alert to add one." there).
+ */
+export const NEWS_NEEDS_KEYWORDS =
+  "News alerts need at least one keyword, or every article would notify you.";
+
+/**
  * The alert form, as the form posts it. News has no severity: whatever the
  * form sent for it is dropped. Every other category needs one.
  */
@@ -58,6 +66,13 @@ export const alertSchema = z
     alert.category === "news" ? { ...alert, minSeverity: null } : alert,
   )
   .superRefine((alert, context) => {
+    if (alert.category === "news" && alert.keywords.length === 0) {
+      context.addIssue({
+        code: "custom",
+        path: ["keywords"],
+        message: NEWS_NEEDS_KEYWORDS,
+      });
+    }
     if (alert.category !== "news" && alert.minSeverity === null) {
       context.addIssue({
         code: "custom",

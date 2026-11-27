@@ -45,6 +45,20 @@ describe("alertSchema", () => {
     );
   });
 
+  it("refuses a news alert with no keyword, saying why", () => {
+    expect(
+      messageFor({ ...valid, category: "news", keywords: " , " }, "keywords"),
+    ).toBe(
+      "News alerts need at least one keyword, or every article would notify you.",
+    );
+  });
+
+  it("lets other categories have no keyword", () => {
+    expect(alertSchema.safeParse({ ...valid, keywords: "" }).success).toBe(
+      true,
+    );
+  });
+
   it("drops the severity of a news alert", () => {
     expect(
       alertSchema.parse({ ...valid, category: "news" }).minSeverity,

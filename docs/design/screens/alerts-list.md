@@ -78,3 +78,13 @@ The page padding is 16px, and the page head keeps the heading and the button on 
 ## Components
 
 Header, Button, ListRow, Severity, Switch, Status chips, Notice, Dialog, Skeleton, EmptyState.
+
+## Increment 2: a destination marked broken
+
+Artboard: [html/AlertsBroken.dc.html](../html/AlertsBroken.dc.html), screenshot `2-alerts-broken.png`. Everything above still holds.
+
+- **The supporting line names every destination** by name: "Natural disasters, to Account email and Ops channel". Two names are joined by "and"; three or more by commas with "and" before the last.
+- **A broken destination** in that line is shown as the unplug icon (lucide `unplug`, 14px) and "<name> (broken)" in `destructive` at weight 600: "Incident room (broken)". The word carries the state; the colour and icon only speed up scanning. This holds whether the alert is active or paused, and whether the broken destination is the alert's only one or one of several.
+- A broken destination receives nothing, so an alert whose only destination is broken sends nothing until the destination is fixed or replaced. The list does not say this in a separate notice; the mark is enough (decision log, 2026-11-27 18:31).
+- **News alerts paused by the migration** (they had no keyword) appear as any paused alert does: "Paused" on the switch. Resuming one without adding a keyword is refused by the database; the switch reverts and shows the inline error "News alerts need at least one keyword, or every article would notify you. Edit the alert to add one."
+- **At 360px** the line wraps; the broken mark wraps as a unit (`white-space: nowrap` on the name and icon).

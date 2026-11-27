@@ -64,9 +64,6 @@ export async function NotificationsView({
         page={result.page}
         hasNext={result.hasNext}
       />
-      <p className="text-muted-foreground mt-6 text-xs">
-        Earthquake data: U.S. Geological Survey
-      </p>
     </>
   );
 }

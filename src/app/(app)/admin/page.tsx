@@ -1,21 +1,42 @@
 import { Suspense } from "react";
-import { redirect } from "next/navigation";
+import {
+  AdminFrame,
+  AdminFrameFallback,
+} from "@/features/admin/frame/admin-frame";
+import {
+  EmailBudgetSection,
+  EmailBudgetSkeleton,
+} from "@/features/admin/overview/email-budget-section";
+import {
+  SourceHealthSection,
+  SourceHealthSkeleton,
+} from "@/features/admin/overview/source-health-section";
 import { requireAdmin } from "@/lib/auth/session";
 
 /**
- * The admin area has one page in increment 1. Anyone but an admin gets the
- * not-found page at this URL, so the area does not reveal itself.
+ * The admin overview: source health and today's email budget. Anyone but an
+ * admin gets the not-found page, and nothing of it is in the static shell.
  */
-export default function AdminPage() {
+export default function Page() {
   return (
-    <Suspense fallback={null}>
-      <Redirect />
+    <Suspense fallback={<AdminFrameFallback />}>
+      <Content />
     </Suspense>
   );
 }
 
-async function Redirect() {
+async function Content() {
   await requireAdmin();
-  redirect("/admin/simulate");
-  return null;
+  return (
+    <AdminFrame current="overview">
+      <div className="flex flex-col gap-8">
+        <Suspense fallback={<SourceHealthSkeleton />}>
+          <SourceHealthSection />
+        </Suspense>
+        <Suspense fallback={<EmailBudgetSkeleton />}>
+          <EmailBudgetSection />
+        </Suspense>
+      </div>
+    </AdminFrame>
+  );
 }

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Notifications with Slack and credits</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 860px">
+<header class="hu-header"><a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a><nav class="hu-nav" aria-label="Main"><a href="Main.dc.html">Alerts</a><a href="Notifications.dc.html" aria-current="page">Notifications</a><a href="Destinations2.dc.html">Destinations</a></nav><div class="hu-header__end"><span class="hu-muted">you@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div></header>
+<main class="hu-page">
+<div class="hu-pagehead"><h1 class="hu-title">Notifications</h1></div>
+<div class="hu-card">
+<div class="hu-row hu-muted" style="display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.3fr) 120px 220px; align-items: start; padding-top: 8px; padding-bottom: 8px; font-weight: 500"><span>Event</span><span>Alert and destination</span><span>Severity</span><span>Status</span></div>
+<ul style="list-style: none; margin: 0; padding: 0"><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.3fr) 120px 220px; align-items: start"><div><p class="hu-row__title">Bitcoin (BTC) up 4.2% in the past hour</p><p class="hu-muted">27 Nov 2026, 18:05 UTC</p><p class="hu-caption hu-muted">Powered by CoinGecko</p></div><div><p>Crypto swings</p><p class="hu-muted">Slack · Ops channel</p></div><span class="hu-sev hu-sev--moderate"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Moderate</span><div><span class="hu-status hu-status--sent"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Sent</span><p class="hu-muted">18:06 UTC</p></div></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.3fr) 120px 220px; align-items: start"><div><p class="hu-row__title">Fed holds rates as inflation cools</p><p class="hu-muted">27 Nov 2026, 17:48 UTC</p><p class="hu-caption hu-muted">Source: The Guardian</p></div><div><p>Rate decisions</p><p class="hu-muted">Account email</p></div><span class="hu-sev hu-sev--low"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Low</span><div><span class="hu-status hu-status--sent"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Sent</span><p class="hu-muted">17:49 UTC</p></div></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.3fr) 120px 220px; align-items: start"><div><p class="hu-row__title">M 6.8 - 40 km S of Hualien, Taiwan</p><p class="hu-muted">27 Nov 2026, 13:42 UTC</p><p class="hu-caption hu-muted">U.S. Geological Survey</p></div><div><p>Pacific rim quakes</p><p class="hu-muted">Slack · Incident room</p></div><span class="hu-sev hu-sev--high"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>High</span><div><span class="hu-status hu-status--failed"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>Failed</span><p class="hu-muted">The Slack channel no longer exists.</p></div></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.3fr) 120px 220px; align-items: start"><div><p class="hu-row__title">Test quake near Tokyo <span class="hu-chip hu-chip--simulated" style="margin-left: 4px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 12px; height: 12px"><path d="M10 2v7.5L4.7 19a2 2 0 0 0 1.8 3h11a2 2 0 0 0 1.8-3L14 9.5V2M8.5 2h7M7 16h10"></path></svg>Simulated</span></p><p class="hu-muted">27 Nov 2026, 13:50 UTC</p></div><div><p>Pacific rim quakes</p><p class="hu-muted">Slack · Ops channel</p></div><span class="hu-sev hu-sev--high"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>High</span><div><span class="hu-status hu-status--pending"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>Pending</span><p class="hu-muted">Next attempt at 13:56 UTC</p></div></li><li class="hu-row" style="display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.3fr) 120px 220px; align-items: start"><div><p class="hu-row__title">Ethereum (ETH) down 3.6% in the past hour</p><p class="hu-muted">27 Nov 2026, 12:20 UTC</p><p class="hu-caption hu-muted">Powered by CoinGecko</p></div><div><p>Crypto swings</p><p class="hu-muted">Slack · Old channel</p></div><span class="hu-sev hu-sev--moderate"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Moderate</span><div><span class="hu-status hu-status--failed"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>Failed</span><p class="hu-muted">The Slack destination was removed.</p></div></li></ul>
+</div>
+<nav class="hu-pager" aria-label="Pagination"><span class="hu-muted">Page 1</span><a class="hu-btn hu-btn--outline hu-btn--sm" href="Notifications2.dc.html">Next</a></nav>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":860}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

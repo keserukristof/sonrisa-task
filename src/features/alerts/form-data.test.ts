@@ -36,7 +36,8 @@ describe("parseAlertForm", () => {
         ["name", "Headlines"],
         ["category", "news"],
         ["minSeverity", "high"],
-        ["keywords", ""],
+        // Increment 2: a news alert needs a keyword (#4).
+        ["keywords", "ecb"],
         ["destinationIds", destination],
       ]),
     );

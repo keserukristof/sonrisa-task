@@ -1,0 +1,46 @@
+# #18: Slack channel: Block Kit messages and delivery outcomes
+
+- **State:** closed, closed 2026-11-27 19:46 UTC
+- **Opened:** 2026-11-27 18:14 UTC by keserukristof
+- **Labels:** `ready-for-agent`
+- **On GitHub:** https://github.com/keserukristof/ai-task/issues/18
+
+## Body
+
+## Parent
+
+#4
+
+## What to build
+
+The Slack channel implements the Channel interface: it posts the alert, simulated and test messages to an incoming webhook as Block Kit, and classifies Slack's answers. Once registered, the tick delivers to Slack destinations with no change to the alerting core. Story 34. Design: `docs/design/screens/slack-message.md`.
+
+## Acceptance criteria
+
+- [ ] Rendering as designed: a linked title section, severity in words and the summary, a context line with the alert name and the source credit; the simulated variant with `[SIMULATED]` and its banner line; the test message
+- [ ] Text from events is escaped for Slack's `mrkdwn`
+- [ ] Outcome classification on literal responses: sent; retry for transient failures, honouring `Retry-After` on 429; broken for `no_service`, `channel_not_found`, `channel_is_archived`, `action_prohibited`, `invalid_token`, `team_disabled`, `no_active_hooks`, 404 and 410, with the reason in our words
+- [ ] Failure sentences start "The Slack …" and end with a full stop
+- [ ] The channel is registered with the tick; unit tests cover rendering and classification, and no test calls Slack
+
+
+
+## Contracts already in place
+
+- A placeholder `slackChannel` in `src/lib/alerting/channels/slack/index.ts` is already registered with the tick (`collaborators.ts`). Replace its `send` and `sendTest`; keep its `type` and its `settingsSchema` getter, which re-validates every stored URL (the local stub is refused on Vercel production).
+- `settings.ts` (URL rule, `SlackSettings`, `slackHint`) and `reasons.ts` (`SLACK_PERMANENT_REASONS`, `SLACK_STATUS_REASONS`, `SLACK_INVALID_URL_REASON`, each with a `failure` and a `broken` sentence) are contracts: read them, do not edit them.
+- A permanent answer returns `{ kind: "broken", error: <failure sentence>, destinationReason: <broken sentence> }`. The tick stores `error` on the notification and `destinationReason` on the destination. A 429 returns `retry` with `retryAfterSeconds` from `Retry-After`; the tick honours it. Other 5xx and network errors are `retry`.
+- The source credit comes from `sourceCredit()` in `src/lib/alerting/sources/catalog.ts`.
+- Rendering and classification are pure functions exported for unit tests. Copy and block order: `docs/design/screens/slack-message.md`. The test message links to `${APP_URL}/destinations`.
+- Requests use `fetch` with a timeout, `redirect: "error"`, `content-type: application/json`, and never log the URL (security audit F4).
+
+## Owned paths
+
+- `src/lib/alerting/channels/slack/**`, except `settings.ts`, `settings.test.ts` and `reasons.ts`
+
+## Comments
+
+### keserukristof, 2026-11-27 19:46 UTC
+
+Merged into increment-2; report checked against its diff (owned paths only).
+

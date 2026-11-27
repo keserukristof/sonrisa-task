@@ -25,6 +25,14 @@ const serverEnvSchema = z.object({
   COINGECKO_API_KEY: z.string().min(1).optional(),
   /** "true" only in production: lets the tick call the real sources. */
   REAL_POLLING: flag,
+  /**
+   * Proves to the database that a request for a Slack webhook URL comes from
+   * this server (`slack_test_target`). The same value is the Vault secret
+   * `slack_target_key`. Without it, "Send test" for Slack cannot send.
+   */
+  SLACK_TARGET_KEY: z.string().min(32).optional(),
+  /** Set by Vercel on its deployments. Absent locally and in CI. */
+  VERCEL_ENV: z.enum(["production", "preview", "development"]).optional(),
 });
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>;
@@ -52,4 +60,16 @@ let cached: ServerEnv | undefined;
 export function serverEnv(): ServerEnv {
   cached ??= parseServerEnv(process.env);
   return cached;
+}
+
+/**
+ * Whether a Slack destination may point at the local stub
+ * (`http://127.0.0.1:<port>/slack/…`) instead of Slack. Never on the
+ * production deployment. Not `NODE_ENV`: the e2e suite runs a production
+ * build locally, against the stub.
+ */
+export function allowsLocalSlackStub(env: ServerEnv = serverEnv()): boolean {
+  // Two signals, so a missing VERCEL_ENV alone cannot open it: production is
+  // also the only place real polling is on.
+  return env.VERCEL_ENV !== "production" && !env.REAL_POLLING;
 }

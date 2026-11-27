@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Alerts with a broken destination</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div class="hu" style="min-height: 720px">
+<header class="hu-header"><a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a><nav class="hu-nav" aria-label="Main"><a href="Main.dc.html" aria-current="page">Alerts</a><a href="Notifications.dc.html">Notifications</a><a href="Destinations2.dc.html">Destinations</a></nav><div class="hu-header__end"><span class="hu-muted">you@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div></header>
+<main class="hu-page">
+<div class="hu-pagehead"><h1 class="hu-title">Alerts</h1><a class="hu-btn hu-btn--primary" href="AlertForm2.dc.html">Create alert</a></div>
+<ul class="hu-card" style="list-style: none; margin: 0; padding: 0">
+<li class="hu-row" style="align-items: flex-start">
+<div class="hu-row__main"><p class="hu-row__title">Pacific rim quakes</p><p class="hu-muted">Natural disasters, to Account email and <span class="hu-status hu-status--failed" style="font-weight: 600"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px"><path d="m19 5 3-3"></path><path d="m2 22 3-3"></path><path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z"></path><path d="M7.5 13.5 10 11"></path><path d="M10.5 16.5 13 14"></path><path d="m12 6 6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z"></path></svg>Incident room (broken)</span></p><div class="hu-inline" style="margin-top: 6px; gap: 6px"><span class="hu-chip">japan</span><span class="hu-chip">tsunami</span></div></div>
+<span style="width: 170px"><span class="hu-sev hu-sev--moderate"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Moderate and above</span></span>
+<button class="hu-switch" role="switch" aria-checked="true" aria-label="Pacific rim quakes is active"><i></i>Active</button>
+<a class="hu-btn hu-btn--outline hu-btn--sm" href="AlertForm2.dc.html">Edit<span class="sr-only"> Pacific rim quakes</span></a>
+<button class="hu-btn hu-btn--danger hu-btn--sm">Delete<span class="sr-only"> Pacific rim quakes</span></button>
+</li>
+<li class="hu-row" style="align-items: flex-start">
+<div class="hu-row__main"><p class="hu-row__title">Crypto swings</p><p class="hu-muted">Markets, to <span class="hu-status hu-status--failed" style="font-weight: 600"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px"><path d="m19 5 3-3"></path><path d="m2 22 3-3"></path><path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z"></path><path d="M7.5 13.5 10 11"></path><path d="M10.5 16.5 13 14"></path><path d="m12 6 6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z"></path></svg>Incident room (broken)</span></p></div>
+<span style="width: 170px"><span class="hu-sev hu-sev--moderate"><b aria-hidden="true"><i></i><i></i><i></i><i></i></b>Moderate and above</span></span>
+<button class="hu-switch" role="switch" aria-checked="true" aria-label="Crypto swings is active"><i></i>Active</button>
+<a class="hu-btn hu-btn--outline hu-btn--sm" href="AlertForm2.dc.html">Edit<span class="sr-only"> Crypto swings</span></a>
+<button class="hu-btn hu-btn--danger hu-btn--sm">Delete<span class="sr-only"> Crypto swings</span></button>
+</li>
+<li class="hu-row" style="align-items: flex-start">
+<div class="hu-row__main"><p class="hu-row__title">Rate decisions</p><p class="hu-muted">News, to Account email and Ops channel</p><div class="hu-inline" style="margin-top: 6px; gap: 6px"><span class="hu-chip">ecb</span><span class="hu-chip">rates</span></div></div>
+<span style="width: 170px"><span class="hu-sev hu-sev--none">Any severity</span></span>
+<button class="hu-switch" role="switch" aria-checked="true" aria-label="Rate decisions is active"><i></i>Active</button>
+<a class="hu-btn hu-btn--outline hu-btn--sm" href="AlertForm2.dc.html">Edit<span class="sr-only"> Rate decisions</span></a>
+<button class="hu-btn hu-btn--danger hu-btn--sm">Delete<span class="sr-only"> Rate decisions</span></button>
+</li>
+<li class="hu-row" style="align-items: flex-start">
+<div class="hu-row__main"><p class="hu-row__title">World headlines</p><p class="hu-muted">News, to Ops channel</p></div>
+<span style="width: 170px"><span class="hu-sev hu-sev--none">Any severity</span></span>
+<button class="hu-switch" role="switch" aria-checked="false" aria-label="World headlines is paused"><i></i>Paused</button>
+<a class="hu-btn hu-btn--outline hu-btn--sm" href="AlertForm2.dc.html">Edit<span class="sr-only"> World headlines</span></a>
+<button class="hu-btn hu-btn--danger hu-btn--sm">Delete<span class="sr-only"> World headlines</span></button>
+</li>
+</ul>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":720}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

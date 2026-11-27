@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseServerEnv } from "./env.server";
+import { allowsLocalSlackStub, parseServerEnv } from "./env.server";
 
 const required = {
   SUPABASE_SECRET_KEY: "sb_secret_test",
@@ -38,5 +38,26 @@ describe("parseServerEnv", () => {
     expect(() => parseServerEnv({})).toThrowError(
       /SUPABASE_SECRET_KEY, TICK_SECRET/,
     );
+  });
+});
+
+describe("allowsLocalSlackStub", () => {
+  it("allows the local Slack stub everywhere but Vercel's production", () => {
+    expect(allowsLocalSlackStub(parseServerEnv(required))).toBe(true);
+    expect(
+      allowsLocalSlackStub(
+        parseServerEnv({ ...required, VERCEL_ENV: "preview" }),
+      ),
+    ).toBe(true);
+    expect(
+      allowsLocalSlackStub(
+        parseServerEnv({ ...required, VERCEL_ENV: "production" }),
+      ),
+    ).toBe(false);
+    expect(
+      allowsLocalSlackStub(
+        parseServerEnv({ ...required, REAL_POLLING: "true" }),
+      ),
+    ).toBe(false);
   });
 });

@@ -123,3 +123,69 @@ values
   ('c1000000-0000-4000-8000-000000000001', 'usgs', '2026-11-26 13:43+00', 'ok', null, 1),
   ('c1000000-0000-4000-8000-000000000002', 'usgs', '2026-11-26 13:44+00', 'error', 'The feed did not respond.', 0)
 on conflict (id) do nothing;
+
+-- Increment 2: Slack destinations, news and market events, and polls of
+-- every source. The Slack URLs point at the local stub (e2e/support), which
+-- answers only while the e2e suite runs; with no stub, a send is a transient
+-- failure and retries, which is what a demo of the history needs anyway.
+insert into public.destinations (id, user_id, channel_type, name, settings, hint, status, broken_reason, created_at)
+values
+  ('d2000000-0000-4000-8000-000000000001', '11111111-1111-4111-8111-111111111111', 'slack', 'Ops channel',
+   '{"url":"http://127.0.0.1:4100/slack/demo-ops"}', 'hooks.slack.com/…/-ops', 'active', null, '2026-11-26 10:00+00'),
+  ('d2000000-0000-4000-8000-000000000002', '11111111-1111-4111-8111-111111111111', 'slack', 'Incident room',
+   '{"url":"http://127.0.0.1:4100/slack/demo-incident"}', 'hooks.slack.com/…/dent', 'broken',
+   'Slack says this channel no longer exists.', '2026-11-26 10:05+00')
+on conflict (id) do nothing;
+
+insert into public.alerts (id, user_id, name, category, min_severity, keywords, active, created_at)
+values
+  ('a1000000-0000-4000-8000-000000000004', '11111111-1111-4111-8111-111111111111', 'Crypto swings', 'markets', 'moderate', '{bitcoin}', true, '2026-11-26 10:10+00')
+on conflict (id) do nothing;
+
+insert into public.alert_destinations (alert_id, destination_id, user_id)
+values
+  ('a1000000-0000-4000-8000-000000000004', 'd2000000-0000-4000-8000-000000000001', '11111111-1111-4111-8111-111111111111'),
+  ('a1000000-0000-4000-8000-000000000001', 'd2000000-0000-4000-8000-000000000002', '11111111-1111-4111-8111-111111111111')
+on conflict do nothing;
+
+insert into public.events (id, source, external_id, category, severity, title, summary, url, occurred_at, ingested_at, simulated, matched_at)
+values
+  ('e8000000-0000-4000-8000-000000000001', 'coingecko', 'seed-bitcoin-2026-11-26T18', 'markets', 'moderate',
+   'Bitcoin (BTC) up 4.2% in the past hour', 'Price $64,210. 24-hour change −1.8%.',
+   'https://www.coingecko.com/en/coins/bitcoin', '2026-11-26 18:05+00', '2026-11-26 18:05+00', false, '2026-11-26 18:05+00'),
+  ('e8000000-0000-4000-8000-000000000002', 'guardian', 'seed-business/2026/nov/26/fed-holds-rates', 'news', 'low',
+   'Fed holds rates as inflation cools', 'The US central bank kept its main rate unchanged for a third meeting.',
+   'https://www.theguardian.com/business', '2026-11-26 17:48+00', '2026-11-26 17:49+00', false, '2026-11-26 17:49+00')
+on conflict (id) do nothing;
+
+insert into public.notifications (id, event_id, alert_id, destination_id, user_id, channel_type, status, attempts, next_attempt_at, last_error, skip_reason, sent_at, created_at)
+values
+  ('b2000000-0000-4000-8000-000000000001', 'e8000000-0000-4000-8000-000000000001', 'a1000000-0000-4000-8000-000000000004',
+   'd2000000-0000-4000-8000-000000000001', '11111111-1111-4111-8111-111111111111', 'slack', 'sent', 1,
+   '2026-11-26 18:06+00', null, null, '2026-11-26 18:06+00', '2026-11-26 18:06+00'),
+  ('b2000000-0000-4000-8000-000000000002', 'e1000000-0000-4000-8000-000000000001', 'a1000000-0000-4000-8000-000000000001',
+   'd2000000-0000-4000-8000-000000000002', '11111111-1111-4111-8111-111111111111', 'slack', 'failed', 1,
+   '2026-11-26 13:44+00', 'The Slack channel no longer exists.', null, null, '2026-11-26 13:43+00'),
+  ('b2000000-0000-4000-8000-000000000003', 'e8000000-0000-4000-8000-000000000002', 'a1000000-0000-4000-8000-000000000003',
+   null, '11111111-1111-4111-8111-111111111111', 'email', 'sent', 1,
+   '2026-11-26 17:50+00', null, null, '2026-11-26 17:50+00', '2026-11-26 17:50+00')
+on conflict (id) do nothing;
+
+insert into public.source_polls (id, source, polled_at, outcome, error, events_stored)
+values
+  ('c1000000-0000-4000-8000-000000000003', 'guardian', '2026-11-26 17:49+00', 'ok', null, 1),
+  ('c1000000-0000-4000-8000-000000000004', 'guardian', '2026-11-26 17:52+00', 'error', 'The Guardian answered 503 Service Unavailable.', 0),
+  ('c1000000-0000-4000-8000-000000000005', 'coingecko', '2026-11-26 18:05+00', 'ok', null, 1)
+on conflict (id) do nothing;
+
+update public.notifications
+set destination_id = (
+  select d.id from public.destinations d
+  where d.user_id = '11111111-1111-4111-8111-111111111111' and d.channel_type = 'email'
+)
+where id = 'b2000000-0000-4000-8000-000000000003' and destination_id is null;
+
+-- The demo alerts must not match the events the e2e suite simulates, or
+-- their notifications push the seeded rows off the first page of history.
+update public.alerts set keywords = '{bitcoin}'
+where id = 'a1000000-0000-4000-8000-000000000004' and keywords = '{}';

@@ -1,9 +1,9 @@
 # #11: Email channel and send test
 
-- **State:** open
+- **State:** closed, closed 2026-11-27 18:05 UTC
 - **Opened:** 2026-11-27 14:20 UTC by keserukristof
 - **Labels:** `ready-for-agent`
-- **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/11
+- **On GitHub:** https://github.com/keserukristof/ai-task/issues/11
 
 ## Body
 

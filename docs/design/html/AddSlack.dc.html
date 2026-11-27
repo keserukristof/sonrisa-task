@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Add Slack destination</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/headsup/tokens.css">
+<link rel="stylesheet" href="ds/headsup/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400..900&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div class="hu" style="min-height: 760px">
+<header class="hu-header"><a class="hu-brand" href="Main.dc.html"><svg viewBox="0 0 26 16" aria-hidden="true"><polyline points="1,9 6,9 9,2 13,14 16,6 18,9 25,9"></polyline></svg>Heads-up</a><nav class="hu-nav" aria-label="Main"><a href="Main.dc.html">Alerts</a><a href="Notifications.dc.html">Notifications</a><a href="Destinations2.dc.html" aria-current="page">Destinations</a></nav><div class="hu-header__end"><span class="hu-muted">you@example.com</span><a class="hu-btn hu-btn--ghost hu-btn--sm" href="Landing.dc.html">Sign out</a></div></header>
+<main class="hu-page hu-page--form">
+<p style="margin-bottom: 8px"><a href="Destinations2.dc.html">Back to destinations</a></p>
+<h1 class="hu-title" style="margin-bottom: 8px">Add Slack destination</h1>
+<p class="hu-muted" style="margin-bottom: 24px">Alerts can post to a Slack channel through an incoming webhook.</p>
+<form class="hu-card hu-card--pad hu-stack" style="gap: 24px">
+<div class="hu-field">
+<label class="hu-label" for="name">Name</label>
+<input class="hu-input" id="name" value="Ops channel" aria-describedby="name-hint">
+<p class="hu-hint" id="name-hint">Shown on your destinations and alerts. Up to 60 characters.</p>
+</div>
+<div class="hu-field">
+<label class="hu-label" for="url">Webhook URL</label>
+<input class="hu-input" id="url" placeholder="https://hooks.slack.com/services/…" aria-describedby="url-hint">
+<p class="hu-hint" id="url-hint">Create an incoming webhook for the channel in Slack, then paste its URL. Heads-up never shows it again: you see only its last 4 characters.</p>
+</div>
+
+<div class="hu-inline">
+<a class="hu-btn hu-btn--primary" href="Destinations2.dc.html">Add destination</a>
+<a class="hu-btn hu-btn--outline" href="Destinations2.dc.html">Cancel</a>
+</div>
+</form>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":760}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

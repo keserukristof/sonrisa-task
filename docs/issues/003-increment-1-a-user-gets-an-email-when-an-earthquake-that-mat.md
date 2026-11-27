@@ -1,9 +1,9 @@
 # #3: Increment 1: a user gets an email when an earthquake that matters to them happens
 
-- **State:** open
+- **State:** closed, closed 2026-11-27 18:05 UTC
 - **Opened:** 2026-11-27 11:21 UTC by keserukristof
 - **Labels:** none
-- **On GitHub:** https://github.com/keserukristof/sonrisa-task/issues/3
+- **On GitHub:** https://github.com/keserukristof/ai-task/issues/3
 
 ## Body
 
