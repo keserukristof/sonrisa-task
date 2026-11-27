@@ -30,6 +30,9 @@ export default defineConfig({
   use: {
     baseURL,
     trace: "on-first-retry",
+    // Panels fade in; an accessibility scan taken mid-fade reports blended
+    // colours as contrast failures. The app honours this setting.
+    contextOptions: { reducedMotion: "reduce" },
   },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },

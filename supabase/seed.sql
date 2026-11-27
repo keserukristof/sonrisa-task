@@ -46,6 +46,8 @@ values
 on conflict (id) do nothing;
 
 -- The new-user trigger created each profile and email destination.
+-- The demo admin has no alerts, on purpose: an alert without keywords would
+-- match every simulated event any test creates in the shared database.
 update public.profiles set role = 'admin'
 where user_id = '22222222-2222-4222-8222-222222222222' and role <> 'admin';
 
@@ -53,8 +55,7 @@ insert into public.alerts (id, user_id, name, category, min_severity, keywords, 
 values
   ('a1000000-0000-4000-8000-000000000001', '11111111-1111-4111-8111-111111111111', 'Pacific rim quakes', 'natural_disasters', 'moderate', '{japan,tsunami}', true, '2026-11-20 08:00+00'),
   ('a1000000-0000-4000-8000-000000000002', '11111111-1111-4111-8111-111111111111', 'Big ones anywhere', 'natural_disasters', 'critical', '{}', false, '2026-11-20 08:05+00'),
-  ('a1000000-0000-4000-8000-000000000003', '11111111-1111-4111-8111-111111111111', 'Rate decisions', 'news', null, '{ecb,rates}', true, '2026-11-20 08:10+00'),
-  ('a1000000-0000-4000-8000-000000000004', '22222222-2222-4222-8222-222222222222', 'Everything strong', 'natural_disasters', 'high', '{}', true, '2026-11-20 09:00+00')
+  ('a1000000-0000-4000-8000-000000000003', '11111111-1111-4111-8111-111111111111', 'Rate decisions', 'news', null, '{ecb,rates}', true, '2026-11-20 08:10+00')
 on conflict (id) do nothing;
 
 insert into public.alert_destinations (alert_id, destination_id, user_id)
@@ -63,7 +64,7 @@ from public.alerts a
 join public.destinations d on d.user_id = a.user_id and d.channel_type = 'email'
 where a.id in (
   'a1000000-0000-4000-8000-000000000001', 'a1000000-0000-4000-8000-000000000002',
-  'a1000000-0000-4000-8000-000000000003', 'a1000000-0000-4000-8000-000000000004'
+  'a1000000-0000-4000-8000-000000000003'
 )
 on conflict do nothing;
 

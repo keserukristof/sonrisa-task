@@ -4,6 +4,8 @@ import { expect, type Page } from "@playwright/test";
 import { createClient } from "@supabase/supabase-js";
 
 export type Credentials = { email: string; password: string };
+/** An account a test created for itself. */
+export type TestUser = Credentials & { id: string };
 
 /** The seeded accounts. Shared by every test run: read from them, never assert on their totals. */
 export const DEMO_USER: Credentials = {
@@ -38,10 +40,15 @@ export function uniqueEmail(prefix = "e2e"): string {
  * Supabase admin API. The new-user trigger gives it a profile and an email
  * destination. Use this instead of the demo accounts whenever the test
  * writes data or asserts on a list.
+ *
+ * A test that sends email (an alert email, "Send test") must call
+ * `deleteUser()` when it is done: every email counts toward the system's
+ * 80 a day, which all test runs share, and deleting the account removes its
+ * notifications and test sends from that count.
  */
 export async function createUser(
   options: { admin?: boolean } = {},
-): Promise<Credentials> {
+): Promise<TestUser> {
   const supabase = adminClient();
   const credentials = {
     email: uniqueEmail(options.admin ? "e2e-admin" : "e2e-user"),
@@ -68,7 +75,15 @@ export async function createUser(
     }
   }
 
-  return credentials;
+  return { ...credentials, id: data.user.id };
+}
+
+/** Deletes an account a test created, with everything it owns. */
+export async function deleteUser(user: TestUser): Promise<void> {
+  const { error } = await adminClient().auth.admin.deleteUser(user.id);
+  if (error) {
+    throw new Error(`Could not delete the test user: ${error.message}`);
+  }
 }
 
 /** Signs in through the sign-in page and waits for the alerts page. */
