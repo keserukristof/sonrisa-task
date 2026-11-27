@@ -6,7 +6,9 @@ import { RetryButton } from "./retry-button";
 import { buildSourceRows, type PollRecord } from "./source-rows";
 import { SourceStatus } from "./source-status";
 
-const COLUMNS = "sm:grid-cols-[1.4fr_2fr_0.8fr_0.8fr]";
+const COLUMNS = "sm:grid-cols-6";
+const SOURCE_SPAN = "sm:col-span-2";
+const POLL_SPAN = "sm:col-span-2";
 
 function Heading() {
   return <h2 className="mb-3 text-lg font-semibold">Sources</h2>;
@@ -79,8 +81,8 @@ export async function SourceHealthSection() {
           aria-hidden="true"
           className={`text-muted-foreground border-border hidden gap-4 border-b px-4 py-2 text-sm sm:grid ${COLUMNS}`}
         >
-          <span>Source</span>
-          <span>Last poll</span>
+          <span className={SOURCE_SPAN}>Source</span>
+          <span className={POLL_SPAN}>Last poll</span>
           <span>Events stored</span>
           <span>Status</span>
         </div>
@@ -90,7 +92,9 @@ export async function SourceHealthSection() {
               key={row.id}
               className={`grid gap-1 px-4 py-3 sm:items-start sm:gap-4 ${COLUMNS}`}
             >
-              <div className="flex items-start justify-between gap-3 sm:block">
+              <div
+                className={`flex items-start justify-between gap-3 sm:block ${SOURCE_SPAN}`}
+              >
                 <div>
                   <p className="font-semibold">{row.name}</p>
                   <p className="text-muted-foreground text-sm">
@@ -101,7 +105,7 @@ export async function SourceHealthSection() {
                   <SourceStatus status={row.status} />
                 </div>
               </div>
-              <div className="text-sm">
+              <div className={`text-sm ${POLL_SPAN}`}>
                 {row.lastPoll === null ? (
                   <p>Never polled</p>
                 ) : (

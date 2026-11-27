@@ -1,22 +1,15 @@
 import "server-only";
 import type { NotificationStatus } from "@/lib/alerting/types";
+import { requireAdmin } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
+import { fetchPageOrFirst, PAGE_SIZE, type Page } from "../paging";
 import {
-  PAGE_SIZE,
   parseAdminNotifications,
   toAdminNotificationRow,
   type AdminNotificationRowData,
 } from "./rows";
 
-export type AdminNotificationPage =
-  | {
-      ok: true;
-      rows: AdminNotificationRowData[];
-      /** The page shown, from 1. */
-      page: number;
-      hasNext: boolean;
-    }
-  | { ok: false };
+export type AdminNotificationPage = Page<AdminNotificationRowData>;
 
 async function fetchPage(status: NotificationStatus | null, page: number) {
   const supabase = await createClient();
@@ -29,20 +22,17 @@ async function fetchPage(status: NotificationStatus | null, page: number) {
 }
 
 /**
- * Every user's notifications, newest first, optionally of one status. The
- * database function returns nothing to a non-admin. A page past the end shows
- * the first page.
+ * Every user's notifications, newest first, optionally of one status. Admin
+ * only. A page past the end shows the first page.
  */
 export async function getAdminNotificationPage(
   status: NotificationStatus | null,
   requested: number,
 ): Promise<AdminNotificationPage> {
-  let page = requested;
-  let result = await fetchPage(status, page);
-  if (!result.error && result.data.length === 0 && page > 1) {
-    page = 1;
-    result = await fetchPage(status, page);
-  }
+  await requireAdmin();
+  const { page, result } = await fetchPageOrFirst(requested, (p) =>
+    fetchPage(status, p),
+  );
   if (result.error) return { ok: false };
 
   const raw = parseAdminNotifications(result.data);

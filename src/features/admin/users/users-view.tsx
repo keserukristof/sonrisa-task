@@ -3,7 +3,7 @@ import { Notice } from "@/components/notice";
 import { Pager } from "@/components/pager";
 import { buttonVariants } from "@/components/ui/button";
 import { getAdminUserPage } from "./queries";
-import { parsePage } from "./rows";
+import { parsePage } from "../paging";
 import { UserList } from "./user-list";
 
 /** Request-time Server Component: render it inside `<Suspense>`. */

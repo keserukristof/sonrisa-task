@@ -7,6 +7,7 @@ import { AdminNotificationListSkeleton } from "@/features/admin/notifications/no
 import {
   AdminNotificationsView,
   StatusFilter,
+  StatusFilterSkeleton,
 } from "@/features/admin/notifications/notifications-view";
 import { requireAdmin } from "@/lib/auth/session";
 
@@ -27,7 +28,7 @@ async function Content({
   await requireAdmin();
   return (
     <AdminFrame current="notifications">
-      <Suspense fallback={null}>
+      <Suspense fallback={<StatusFilterSkeleton />}>
         <StatusFilter searchParams={searchParams} />
       </Suspense>
       <Suspense fallback={<AdminNotificationListSkeleton />}>

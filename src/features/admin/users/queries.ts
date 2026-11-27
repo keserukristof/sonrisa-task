@@ -1,21 +1,10 @@
 import "server-only";
+import { requireAdmin } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
-import {
-  PAGE_SIZE,
-  parseAdminUsers,
-  toAdminUserRow,
-  type AdminUserRowData,
-} from "./rows";
+import { fetchPageOrFirst, PAGE_SIZE, type Page } from "../paging";
+import { parseAdminUsers, toAdminUserRow, type AdminUserRowData } from "./rows";
 
-export type AdminUserPage =
-  | {
-      ok: true;
-      rows: AdminUserRowData[];
-      /** The page shown, from 1. */
-      page: number;
-      hasNext: boolean;
-    }
-  | { ok: false };
+export type AdminUserPage = Page<AdminUserRowData>;
 
 async function fetchPage(page: number) {
   const supabase = await createClient();
@@ -29,12 +18,8 @@ async function fetchPage(page: number) {
 export async function getAdminUserPage(
   requested: number,
 ): Promise<AdminUserPage> {
-  let page = requested;
-  let result = await fetchPage(page);
-  if (!result.error && result.data.length === 0 && page > 1) {
-    page = 1;
-    result = await fetchPage(page);
-  }
+  await requireAdmin();
+  const { page, result } = await fetchPageOrFirst(requested, fetchPage);
   if (result.error) return { ok: false };
 
   const raw = parseAdminUsers(result.data);

@@ -1,5 +1,6 @@
 import "server-only";
 import { z } from "zod";
+import { requireAdmin } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import type { PollRecord } from "./source-rows";
 
@@ -20,6 +21,7 @@ const budgetRows = z.array(
 
 /** The latest poll of each source that has been polled. Admin only. */
 export async function getSourcePolls(): Promise<PollRecord[]> {
+  await requireAdmin();
   const supabase = await createClient();
   const { data, error } = await supabase.rpc("admin_source_health");
   if (error) throw new Error("Could not load the source health.");
@@ -37,6 +39,7 @@ export type EmailBudget = { emailsToday: number; testSendsToday: number };
 
 /** Today's (UTC) email and test-send counts. Admin only. */
 export async function getEmailBudget(): Promise<EmailBudget> {
+  await requireAdmin();
   const supabase = await createClient();
   const { data, error } = await supabase.rpc("admin_email_budget");
   if (error) throw new Error("Could not load the email budget.");

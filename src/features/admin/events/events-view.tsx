@@ -5,7 +5,7 @@ import { Notice } from "@/components/notice";
 import { Pager } from "@/components/pager";
 import { buttonVariants } from "@/components/ui/button";
 import { EventList } from "./event-list";
-import { parsePage } from "./event-row";
+import { parsePage } from "../paging";
 import { getEventPage } from "./queries";
 
 /** Request-time Server Component: render it inside `<Suspense>`. */

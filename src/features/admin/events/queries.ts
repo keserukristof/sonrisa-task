@@ -1,21 +1,10 @@
 import "server-only";
+import { requireAdmin } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
-import {
-  PAGE_SIZE,
-  parseRawEvents,
-  toEventRow,
-  type EventRowData,
-} from "./event-row";
+import { fetchPageOrFirst, PAGE_SIZE, type Page } from "../paging";
+import { parseRawEvents, toEventRow, type EventRowData } from "./event-row";
 
-export type EventPage =
-  | {
-      ok: true;
-      rows: EventRowData[];
-      /** The page shown, from 1. */
-      page: number;
-      hasNext: boolean;
-    }
-  | { ok: false };
+export type EventPage = Page<EventRowData>;
 
 const COLUMNS = "id, source, category, severity, title, occurred_at, simulated";
 
@@ -31,16 +20,12 @@ async function fetchPage(page: number) {
 }
 
 /**
- * Every event, newest first. Only the admin page calls it, after
- * `requireAdmin()`. A page past the end shows the first page.
+ * Every event, newest first. Admin only. A page past the end shows the first
+ * page.
  */
 export async function getEventPage(requested: number): Promise<EventPage> {
-  let page = requested;
-  let result = await fetchPage(page);
-  if (!result.error && result.data.length === 0 && page > 1) {
-    page = 1;
-    result = await fetchPage(page);
-  }
+  await requireAdmin();
+  const { page, result } = await fetchPageOrFirst(requested, fetchPage);
   if (result.error) return { ok: false };
 
   const raw = parseRawEvents(result.data);
