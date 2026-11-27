@@ -54,6 +54,9 @@ if (!env.has("SUPABASE_SECRET_KEY")) {
 if (!env.has("TICK_SECRET")) {
   missing.push(["TICK_SECRET", randomBytes(32).toString("hex")]);
 }
+if (!env.has("SLACK_TARGET_KEY")) {
+  missing.push(["SLACK_TARGET_KEY", randomBytes(32).toString("hex")]);
+}
 if (!env.has("APP_URL")) {
   missing.push(["APP_URL", "http://localhost:3000"]);
 }
@@ -68,12 +71,15 @@ if (missing.length > 0) {
 }
 
 const tickSecret = readEnv().get("TICK_SECRET");
+const slackTargetKey = readEnv().get("SLACK_TARGET_KEY");
 const projectId = readFileSync("supabase/config.jsonc", "utf8").match(
   /"project_id":\s*"([^"]+)"/,
 )?.[1];
 
-if (!tickSecret || !projectId) {
-  console.error("✖ Could not find TICK_SECRET or the Supabase project id.");
+if (!tickSecret || !slackTargetKey || !projectId) {
+  console.error(
+    "✖ Could not find TICK_SECRET, SLACK_TARGET_KEY or the Supabase project id.",
+  );
   process.exit(1);
 }
 
@@ -95,6 +101,13 @@ begin
     perform vault.create_secret(${quote(tickSecret)}, 'tick_secret');
   else
     perform vault.update_secret(v_id, ${quote(tickSecret)});
+  end if;
+
+  select id into v_id from vault.secrets where name = 'slack_target_key';
+  if v_id is null then
+    perform vault.create_secret(${quote(slackTargetKey)}, 'slack_target_key');
+  else
+    perform vault.update_secret(v_id, ${quote(slackTargetKey)});
   end if;
 end $$;
 `;

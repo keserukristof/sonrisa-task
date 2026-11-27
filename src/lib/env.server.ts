@@ -25,6 +25,12 @@ const serverEnvSchema = z.object({
   COINGECKO_API_KEY: z.string().min(1).optional(),
   /** "true" only in production: lets the tick call the real sources. */
   REAL_POLLING: flag,
+  /**
+   * Proves to the database that a request for a Slack webhook URL comes from
+   * this server (`slack_test_target`). The same value is the Vault secret
+   * `slack_target_key`. Without it, "Send test" for Slack cannot send.
+   */
+  SLACK_TARGET_KEY: z.string().min(32).optional(),
   /** Set by Vercel on its deployments. Absent locally and in CI. */
   VERCEL_ENV: z.enum(["production", "preview", "development"]).optional(),
 });

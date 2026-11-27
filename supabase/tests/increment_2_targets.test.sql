@@ -1,9 +1,24 @@
--- Increment 2 contracts (#17): the Slack test target and the market cooldown.
+-- Increment 2 contracts (#17) and their security audit
+-- (docs/reviews/2-security-auditor-contracts.md): the Slack test target and
+-- its server key, anonymous and cross-user calls, the admin reads for a
+-- non-admin, and the market cooldown.
 begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(6);
+select plan(17);
+
+-- The server key, as the database owner. Locally `scripts/local-env.mjs`
+-- stores it; create one if this database has none.
+do $$
+begin
+  if not exists (select 1 from vault.secrets where name = 'slack_target_key') then
+    perform vault.create_secret(repeat('k', 64), 'slack_target_key');
+  end if;
+end $$;
+create temp table server_key as
+  select decrypted_secret as key from vault.decrypted_secrets where name = 'slack_target_key';
+grant select on server_key to authenticated;
 
 insert into auth.users (instance_id, id, aud, role, email)
 values
@@ -21,25 +36,79 @@ create temp table claimed as
   select (public.claim_test_send((select id from public.destinations where name = 'Target' and user_id = 'ffffffff-2222-4000-8000-000000000001'))).test_send_id as id;
 grant select on claimed to authenticated;
 
+-- The URL needs the server's key ---------------------------------------------
+
 select is(
-  public.slack_test_target((select id from claimed)),
+  public.slack_test_target((select id from claimed), (select key from server_key)),
   'https://hooks.slack.com/services/T000/B000/target01',
-  'the owner gets the URL for a test send they just claimed');
+  'the owner''s server gets the URL for a test send just claimed');
+
+select is(
+  public.slack_test_target((select id from claimed), 'not-the-key'),
+  null,
+  'a wrong key gets nothing: a browser with the session cannot read the URL');
+
+select is(
+  public.slack_test_target((select id from claimed), null),
+  null,
+  'no key gets nothing');
+
+-- Another user ---------------------------------------------------------------
 
 select pg_temp.act_as('ffffffff-2222-4000-8000-000000000002');
-select is(
-  public.slack_test_target((select id from claimed)),
-  null,
-  'another user gets nothing for it');
 
+select is(
+  public.slack_test_target((select id from claimed), (select key from server_key)),
+  null,
+  'another user gets nothing for it, even with the key');
+
+select throws_ok(
+  $$ select public.claim_test_send((select id from public.destinations where name = 'Target' and user_id = 'ffffffff-2222-4000-8000-000000000001')) $$,
+  'P0002', null,
+  'another user cannot claim a test of it');
+
+select throws_ok(
+  $$ select public.finish_test_send((select id from claimed), false, 'x', 'Marked broken by a stranger.') $$,
+  'P0002', null,
+  'another user cannot finish its test send or mark it broken');
+
+select is(
+  (select count(*)::int from public.admin_email_budget()) + (select count(*)::int from public.admin_source_health())
+    + (select count(*)::int from public.admin_notifications(null, 100, 0)),
+  0,
+  'a non-admin gets nothing from the admin budget, source health and notifications');
+
+-- Expiry and finishing -------------------------------------------------------
+
+reset role;
+update public.test_sends set created_at = now() - interval '2 minutes' where id = (select id from claimed);
+select pg_temp.act_as('ffffffff-2222-4000-8000-000000000001');
+
+select is(
+  public.slack_test_target((select id from claimed), (select key from server_key)),
+  null,
+  'a test send claimed more than a minute ago gives nothing');
+
+reset role;
+update public.test_sends set created_at = now() where id = (select id from claimed);
 select pg_temp.act_as('ffffffff-2222-4000-8000-000000000001');
 select public.finish_test_send((select id from claimed), true);
+
 select is(
-  public.slack_test_target((select id from claimed)),
+  public.slack_test_target((select id from claimed), (select key from server_key)),
   null,
   'a finished test send gives nothing');
 
+-- An anonymous visitor -------------------------------------------------------
+
 reset role;
+select ok(not has_function_privilege('anon', 'public.slack_test_target(uuid, text)', 'execute'), 'anon cannot read a Slack test target');
+select ok(not has_function_privilege('anon', 'public.add_slack_destination(text, text)', 'execute'), 'anon cannot add a Slack destination');
+select ok(not has_function_privilege('anon', 'public.remove_destination(uuid)', 'execute'), 'anon cannot remove a destination');
+select ok(not has_function_privilege('anon', 'public.admin_notifications(text, integer, integer)', 'execute'), 'anon cannot call the admin reads');
+select ok(not has_function_privilege('anon', 'public.finish_test_send(uuid, boolean, text, text)', 'execute'), 'anon cannot finish a test send');
+
+-- At most one market event per coin per 6 hours ----------------------------
 
 insert into public.events (source, external_id, category, severity, title, occurred_at)
 values ('coingecko', 'inc2coin:2026-11-27T10', 'markets', 'moderate', 'Inc2 coin up', '2026-11-27 10:00+00');
