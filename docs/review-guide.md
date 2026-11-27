@@ -163,17 +163,16 @@ Checked on https://sonrisa-task.vercel.app after the deploy, with screenshots in
 
 - `/api/health` returns `"status":"ok"` with the database clock.
 - The landing, sign-in and sign-up pages render with the approved design; `/admin` signed out shows the not-found page and reveals nothing.
-- The scheduled job (`pg_cron`, every minute) reaches the deployed tick route with its secret from Vault.
+- The scheduled job (`pg_cron`, every minute) reaches the deployed tick route with its secret from Vault, and the tick runs: its first production run (21:15 UTC) polled three sources, stored six real USGS earthquakes and matched them; the Guardian and CoinGecko failed for want of keys, as expected.
 - The served stylesheet carries the Heads-up tokens. The first deploy did not: Vercel's remote build served the starter's palette, caught by comparing screenshots and grepping the CSS, and fixed by deploying a verified local build.
 
 **Not working in production yet, and why:**
 
-| What                                                  | Why                                                                                                    | What turns it on                                                  |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
-| The tick (polling, matching, delivery)                | `SUPABASE_SECRET_KEY` in Vercel is a placeholder: the agent does not copy credentials between services | The project owner sets the real key in Vercel and redeploys       |
-| Email (alerts, tests, sign-up confirmation to others) | No Resend key; Resend's test sender reaches only its owner                                             | A Resend key, and a verified domain for other recipients          |
-| The Guardian and CoinGecko                            | No API keys                                                                                            | `GUARDIAN_API_KEY`, `COINGECKO_API_KEY`                           |
-| Signed-in flows checked by hand                       | No account could be confirmed without email                                                            | Reviewer accounts created and confirmed in the Supabase dashboard |
+| What                                                  | Why                                                        | What turns it on                                                  |
+| ----------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------- |
+| Email (alerts, tests, sign-up confirmation to others) | No Resend key; Resend's test sender reaches only its owner | A Resend key, and a verified domain for other recipients          |
+| The Guardian and CoinGecko                            | No API keys                                                | `GUARDIAN_API_KEY`, `COINGECKO_API_KEY`                           |
+| Signed-in flows checked by hand                       | No account could be confirmed without email                | Reviewer accounts created and confirmed in the Supabase dashboard |
 
 Locally, every flow runs end to end, and the e2e suite (98 tests on desktop and mobile) covers them.
 
